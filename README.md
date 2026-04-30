@@ -8,12 +8,14 @@
 | 폴더 | 내용 |
 |---|---|
 | [`videos/`](videos/) | 26 페르소나 walkthrough 영상 (각 ~60초, mp4 + en/ko subtitle muxed) |
+| [`videos/features/`](videos/features/) | 17 feature spotlight 영상 (각 30초, 단일 magic moment) — BASIC 6 + ADVANCED 11 |
 | [`samples/`](samples/) | 영상의 모든 워크플로우를 직접 따라할 수 있는 sample workspace |
 | [`docs/INDEX.md`](docs/INDEX.md) | 페르소나 카탈로그 (영상 ↔ 샘플 ↔ 워크스루 cross-link) |
+| [`docs/FEATURES.md`](docs/FEATURES.md) | 17 feature spotlight 카탈로그 |
 
 ## 빠르게 시작
 
-1. **HTMLook Pro 설치** — [htmlook.deep-on.com](https://htmlook.deep-on.com) (혹은 자체 빌드)
+1. **HTMLook Pro 설치** — [htmlook.app](https://htmlook.app) (혹은 자체 빌드)
 2. 이 레포 clone:
    ```bash
    git clone git@github.com:deep-on/htmlook_campus.git
