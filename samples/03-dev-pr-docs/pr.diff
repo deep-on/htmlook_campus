@@ -1,0 +1,25 @@
+commit a3f1c20
+Author: ria <ria@apex.dev>
+Date:   Wed Apr 30 11:14:02 2026 +0900
+
+    feat(api): rename `since` query param to `from` and accept ISO-8601
+
+diff --git a/src/api/events.ts b/src/api/events.ts
+index 6c7e8f0..2d4a91b 100644
+--- a/src/api/events.ts
++++ b/src/api/events.ts
+@@ -12,7 +12,7 @@ export async function listEvents(req: Request) {
+-  const since = req.query.since;          // unix ms
+-  if (!since) return badRequest('since required');
+-  const cursor = Number(since);
++  const from = req.query.from;            // ISO-8601 string
++  if (!from) return badRequest('from required');
++  const cursor = Date.parse(String(from));
+
+diff --git a/src/api/events.test.ts b/src/api/events.test.ts
+index ...
++++ b/src/api/events.test.ts
+@@ -3,5 +3,5 @@
+-  it('rejects when since missing', () => { ... });
++  it('rejects when from missing', () => { ... });
++  it('parses ISO-8601 from', () => { ... });

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Run Dashboard — Wireframe (v0.4)</title>
+<style>
+  body { font-family: -apple-system, system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1.5rem; color: #1f2937; }
+  h1 { font-size: 1.4rem; }
+  table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 0.92rem; }
+  th, td { text-align: left; padding: 0.5rem 0.6rem; border-bottom: 1px solid #e5e7eb; }
+  th { background: #f3f4f6; }
+  .ok { color: #15803d; }
+  .err { color: #b91c1c; }
+  .chip-rail { display: flex; gap: 0.5rem; margin: 1rem 0 0.4rem; flex-wrap: wrap; }
+  .chip { padding: 0.32rem 0.85rem; border: 1px solid #d1d5db; border-radius: 999px; font-size: 0.85rem; cursor: pointer; background: white; }
+  .chip.active { background: #4f46e5; color: white; border-color: #4f46e5; }
+  .clear { padding: 0.32rem 0.7rem; border: none; background: transparent; color: #6b7280; font-size: 0.85rem; cursor: pointer; }
+</style>
+</head>
+<body>
+  <h1>Run Dashboard</h1>
+
+  <nav class="chip-rail" aria-label="Filter runs">
+    <button class="chip active">Status</button>
+    <button class="chip">Machine</button>
+    <button class="chip">Operator</button>
+    <button class="chip">Shift</button>
+    <button class="clear">Clear</button>
+  </nav>
+
+  <table>
+    <thead><tr><th>Time</th><th>Machine</th><th>Op</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>14:02</td><td>M-04</td><td>Park</td><td class="ok">ok</td></tr>
+      <tr><td>14:18</td><td>M-07</td><td>Han</td><td class="ok">ok</td></tr>
+      <tr><td>14:31</td><td>M-04</td><td>Park</td><td class="err">fail</td></tr>
+      <tr><td>14:48</td><td>M-09</td><td>Cho</td><td class="ok">ok</td></tr>
+    </tbody>
+  </table>
+</body>
+</html>

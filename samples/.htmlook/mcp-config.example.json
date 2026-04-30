@@ -1,0 +1,41 @@
+{
+  "_comment": "Sample MCP config to plug HTMLook Pro into your AI client (Claude Code, Cursor, Windsurf, etc). Merge this into your client's MCP config file.",
+  "_install_steps": [
+    "1. HTMLook Pro must be running with MCP server enabled (Settings → MCP → Enable)",
+    "2. Note the MCP socket/port shown in HTMLook Pro status bar",
+    "3. Add the relevant entry below to your client's mcp.json"
+  ],
+  "mcpServers": {
+    "htmlook": {
+      "_description": "HTMLook Pro embedded MCP server (workspace tools + cite/apply_edit)",
+      "command": "/Applications/HTMLook Pro.app/Contents/MacOS/htmlook",
+      "args": ["--mcp-server"],
+      "_alternative_via_socket": "If HTMLook Pro is already running, point to the socket it announces (path shown in status bar)."
+    }
+  },
+  "_tools_exposed_when_connected": [
+    "htmlook_active_file",
+    "htmlook_active_file_thumbnail",
+    "htmlook_apply_edit",
+    "htmlook_cite",
+    "htmlook_element_active",
+    "htmlook_hyperframes",
+    "htmlook_link",
+    "htmlook_links",
+    "htmlook_outline",
+    "htmlook_pane_pair",
+    "htmlook_ping",
+    "htmlook_region_current_png",
+    "htmlook_selection_html",
+    "htmlook_selection_text",
+    "htmlook_video_bookmarks",
+    "htmlook_video_clip_range",
+    "htmlook_video_info",
+    "htmlook_video_position",
+    "htmlook_video_seek",
+    "htmlook_workspace_files",
+    "htmlook_workspace_info",
+    "htmlook_workspace_tools",
+    "htmlook_workspace_tree"
+  ]
+}

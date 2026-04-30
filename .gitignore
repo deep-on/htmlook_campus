@@ -1,0 +1,8 @@
+.DS_Store
+*.bak
+*.swp
+*.tmp
+work-*/
+__pycache__/
+*.pyc
+.htmlook/cache/

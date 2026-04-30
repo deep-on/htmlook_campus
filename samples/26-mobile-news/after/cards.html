@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>Mobile cards — Apex IDE (filled)</title>
+<style>
+  body { font-family: 'Apple SD Gothic Neo', -apple-system, sans-serif; margin: 0; min-height: 100vh; background: #0f172a; padding: 2rem; display: grid; grid-template-columns: repeat(auto-fit, 280px); gap: 1.4rem; justify-content: center; }
+  .card { width: 280px; aspect-ratio: 9/16; background: white; border-radius: 18px; padding: 1.3rem 1.1rem; display: flex; flex-direction: column; gap: 0.7rem; box-shadow: 0 18px 40px rgba(0,0,0,0.35); }
+  .badge { font-size: 0.65rem; letter-spacing: 0.2em; color: #4f46e5; font-weight: 700; }
+  h3 { font-size: 1.2rem; margin: 0; line-height: 1.3; color: #0f172a; }
+  .body { font-size: 0.88rem; line-height: 1.5; color: #334155; }
+  .quote { font-style: italic; font-size: 1.05rem; line-height: 1.4; color: #1f2937; border-left: 3px solid #4f46e5; padding-left: 0.7rem; }
+  ul { margin: 0; padding-left: 1.1rem; font-size: 0.85rem; line-height: 1.5; color: #334155; }
+  ul li { margin: 0.2rem 0; }
+  .src { font-size: 0.75rem; color: #6b7280; margin-top: auto; }
+  .src a { color: #4f46e5; text-decoration: none; }
+</style>
+</head>
+<body>
+  <article class="card">
+    <div class="badge">CARD 1 · TLDR</div>
+    <h3>코드보다 *cite-and-edit* 가 1차 단위</h3>
+    <p class="body">Apex Studio 가 28일 공개한 새 IDE 는 LLM 을 단순 부착한 편집기와 달리, 한 번의 cite 로 여러 파일을 동시에 patch 하는 round trip 을 기본 동작으로 깔았다.</p>
+  </article>
+
+  <article class="card">
+    <div class="badge">CARD 2 · 핵심 데이터</div>
+    <h3>숫자 4 개</h3>
+    <ul>
+      <li>cite → edit → reload 평균 <strong>8.7 초</strong></li>
+      <li>동시 patch <strong>최대 6 파일</strong></li>
+      <li>drift 재작업 <strong>−44%</strong> (베타 7주)</li>
+      <li>유료 전환 <strong>18%</strong> (6,400 팀 中)</li>
+    </ul>
+  </article>
+
+  <article class="card">
+    <div class="badge">CARD 3 · 헤드라인 인용</div>
+    <p class="quote">"모델은 이미 commodity 이고, 모델 위에 둘러싸인 워크플로우가 진짜 product 다."</p>
+    <p class="body">— Apex Studio CTO, 발표 영상 14:14</p>
+  </article>
+
+  <article class="card">
+    <div class="badge">CARD 4 · 출처 + 링크</div>
+    <ul>
+      <li>Apex Studio 공식 블로그 (2026-04-28)</li>
+      <li>발표 영상, 14:14</li>
+      <li>베타 사용자 후기 — *workflow as product* 섹션</li>
+    </ul>
+    <p class="src"><a href="article.md">기사 전문 →</a></p>
+  </article>
+</body>
+</html>

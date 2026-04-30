@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-200 -200 400 400" font-family="-apple-system, system-ui, sans-serif">
+  <rect x="-200" y="-200" width="400" height="400" fill="#fef3c7"/>
+  <polygon points="0,-120 22,-67 70,-94 47,-43 117,-37 70,-1 117,38 60,40 70,94 22,67 0,120 -22,67 -70,94 -60,40 -117,38 -70,-1 -117,-37 -47,-43 -70,-94 -22,-67"
+           fill="none" stroke="#d97706" stroke-width="4" stroke-linejoin="round"/>
+  <text x="0" y="170" font-size="14" fill="#92400e" text-anchor="middle">🌟 10각 별 — 72도</text>
+</svg>

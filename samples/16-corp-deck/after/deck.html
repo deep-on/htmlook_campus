@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Q3 2026 — CFO deck</title>
+<style>
+  body { font-family: -apple-system, system-ui, sans-serif; margin: 0; background: #f3f4f6; color: #1f2937; }
+  .slide { width: 720px; aspect-ratio: 16/9; background: white; border-radius: 12px; box-shadow: 0 18px 40px rgba(31, 41, 55, 0.08); margin: 2rem auto; padding: 2.5rem 3rem; display: flex; flex-direction: column; gap: 0.8rem; position: relative; }
+  h2 { font-size: 1.6rem; margin: 0; letter-spacing: -0.01em; }
+  .sub { color: #6b7280; font-size: 0.95rem; }
+  ul { margin: 0; padding-left: 1.4rem; line-height: 1.6; }
+  .chart { background: #f3f4f6; border-radius: 10px; padding: 1.2rem; flex: 1; display: flex; align-items: center; justify-content: center; color: #4f46e5; font-weight: 600; font-size: 0.95rem; }
+  .notes { background: #fffbeb; border-left: 3px solid #f59e0b; padding: 0.8rem 1.1rem; font-size: 0.85rem; color: #78350f; line-height: 1.55; }
+  .notes strong { color: #92400e; }
+</style>
+</head>
+<body>
+  <section class="slide">
+    <h2>Atlas Manufacturing — Q3 2026</h2>
+    <p class="sub">For the CFO · prepared 2026-04-30</p>
+    <div class="chart">[ cover · brand mark ]</div>
+    <div class="notes"><strong>Notes.</strong> Q3 closed strong, EBITDA +11.6% vs plan. Three slides cover KPI snapshot, variance decomposition, and outlook.</div>
+  </section>
+
+  <section class="slide">
+    <h2>KPI snapshot</h2>
+    <p class="sub">Cited from <code>q3-report.md § KPI</code></p>
+    <ul>
+      <li><strong>Revenue $128.4M</strong> — +7.0% vs plan.</li>
+      <li><strong>EBITDA $34.6M</strong> — +11.6% vs plan.</li>
+      <li><strong>Customers 412</strong> — +18 net new.</li>
+    </ul>
+    <div class="chart">[ KPI bar chart — Revenue / EBITDA / Customers ]</div>
+    <div class="notes"><strong>Notes.</strong> Lead with EBITDA — it's the headline. Revenue beat is the proximate driver, but tighter S&M efficiency contributed almost as much. Customer count is solid net new — flag the 412 milestone.</div>
+  </section>
+
+  <section class="slide">
+    <h2>Variance — EBITDA +$3.6M decomposed</h2>
+    <p class="sub">Cited from <code>q3-report.md § Variance</code></p>
+    <ul>
+      <li><strong>+$2.1M</strong> Revenue beat contribution.</li>
+      <li><strong>+$2.0M</strong> S&M efficiency.</li>
+      <li><strong>+$0.2M</strong> G&A underspend.</li>
+      <li><strong>−$0.7M</strong> CoGS overrun (raw materials).</li>
+    </ul>
+    <div class="chart">[ waterfall chart — plan → drivers → actual ]</div>
+    <div class="notes"><strong>Notes.</strong> The CoGS overrun on raw materials is the single watch-item. Operations review is scheduled for the week of 2026-05-12. Recommend re-baselining Q4 to incorporate the Revenue run-rate uplift but keep the CoGS line conservative until ops review lands.</div>
+  </section>
+</body>
+</html>

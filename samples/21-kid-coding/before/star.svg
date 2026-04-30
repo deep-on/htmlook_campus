@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-200 -200 400 400" font-family="-apple-system, system-ui, sans-serif">
+  <rect x="-200" y="-200" width="400" height="400" fill="#fef3c7"/>
+  <polygon points="0,-120 35,-37 117,-37 51,15 76,93 0,46 -76,93 -51,15 -117,-37 -35,-37"
+           fill="none" stroke="#d97706" stroke-width="6" stroke-linejoin="round"/>
+  <text x="0" y="170" font-size="14" fill="#92400e" text-anchor="middle">⭐ 5각 별 — 144도</text>
+</svg>
