@@ -83,7 +83,8 @@ mux 하고 두 변형 (.en+ko / .en+ko.en-default) 출력 + sidecar VTT 복사.
 3. HTMLook 소스에서 해당 기능 확인:
    - UI: `src/lib/components/`, `src/apps/AppPro.svelte`
    - MCP: `src-tauri/src/pro_features/mcp_server/server.rs` (도구 description)
-   - 단축키: `src-tauri/src/lib.rs` (Tauri menu accelerator)
+   - **단축키**: `src-tauri/src/lib.rs` 의 Tauri menu accelerator (`MenuItemBuilder::with_id(...).accelerator("CmdOrCtrl+...")`)
+     ⚠️ AppPro.svelte 의 keydown 만 보면 메뉴 단축키를 놓침. 단축키 검증은 lib.rs 부터.
 4. 일치하지 않으면 narration 또는 composition 수정 → 재 TTS → 재 mix → 재 mux
 
 ### 이번 캠퍼스에서 fix 된 false claims
@@ -99,6 +100,7 @@ mux 하고 두 변형 (.en+ko / .en+ko.en-default) 출력 + sidecar VTT 복사.
 | advanced-04 multi-pane | "⌘1/⌘2/⌘3" (없음) → 실제 단축키 ⌘D + ⌘J |
 | advanced-10 outline | "dual-pane sync jump" (없음) → preview-only jump |
 | advanced-11 cross-link | "rename → auto-rewrite" (없음) → ".htmlook/links.json sidecar 기록" |
+| advanced-04 multi-pane | "⌘D + ⌘J" (⌘D 는 split terminal 임) → 실제 단축키 ⌘1 / ⌘2 / ⌘3 / ⌘J 로 정정. ⌘1 = Preview, ⌘2 = Source, ⌘3 = Split view, ⌘J = Terminal panel. Tauri 메뉴 accelerator 로 정의 (`src-tauri/src/lib.rs:1644-1655`) — 이전 audit 가 AppPro.svelte 의 keydown 만 보고 잘못 판단했던 점도 [`PRODUCTION.md`](PRODUCTION.md) 의 검증 절차에 반영함. |
 
 ## Sample Workspace 표준
 
