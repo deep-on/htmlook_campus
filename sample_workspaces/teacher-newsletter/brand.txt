@@ -1,0 +1,46 @@
+햇살초등학교 (Sunny Elementary) — fictional school for the
+teacher-newsletter scenario.
+
+Tagline:        Policy on the left, parents on the right
+URL:            sunny-elem.kr (fictional)
+Note shown:     2026 봄 학기 · 3-1반 가정통신문 · 4월 둘째 주
+One-liner:      Formal policy → parent-friendly note.
+
+Palette
+  --paper       #ffffff   white note paper
+  --cream-bg    #fffbeb   warm cream canvas
+  --cream       #fef3c7   highlighter cream (bullets)
+  --blue        #3b82f6   primary brand (soft school blue)
+  --slate       #1e293b   ink (titles, body)
+  --soft        #64748b   muted meta text
+  --green       #16a34a   ✓ accept
+  --red         #dc2626   ✗ decline (and 교육청 seal)
+
+Typography
+  Display       Inter / Pretendard, 700-800 weight, tight tracking
+  Body          -apple-system / Inter, 400-600
+  Formal memo   Iowan Old Style / Times New Roman, italic for
+                quoted policy lines
+  Mono          ui-monospace / SF Mono, terminal & line numbers
+
+Motion language
+  Crest pops with a back-out at 0.15s. Title kerns in tight, then
+  meta fields fade in left-to-right. Bullet rows stagger from the
+  left; the ✓ / ✗ boxes spin in last with a back-out so parents'
+  eyes land there. Date pulses out from a wide-letter-spacing
+  state. Don't drift the background — the page sits like a real
+  letter on a kitchen table.
+
+Copy guardrails
+  Header line:        "가정통신문" + grade-class + term
+  Bullet voice:       direct, what-parents-need-to-do, present
+                      tense. One concrete date or place per bullet.
+  Reply slip:         "✂ 회신서" header + ✓ / ✗ + 학생/보호자/날짜
+  Signoff:            "담임 · 김민지" — never "담임선생님 올림"
+  Footer:             "햇살초등학교" + printed via HTMLook Pro
+  Voice:              warm, calm, parent-respectful. No
+                      exclamation marks. No emoji (sectioning
+                      marks ✂ ✓ ✗ are OK). No marketing fluff.
+  Avoid:              "smart", "AI-powered", "magic", "blazing".
+                      Also: do not keep the formal "본 안내문에
+                      따라" voice in the friendly side.

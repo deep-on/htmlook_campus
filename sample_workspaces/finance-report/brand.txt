@@ -1,0 +1,62 @@
+Atlas Manufacturing — fictional mid-cap industrial company for the
+finance-report scenario.
+
+Domain:         Corporate finance / FP&A
+Tagline:        Cells become narratives.
+URL:            atlas.mfg/cfo
+Document shown: Q3 2026 CFO Brief — exec summary draft (report.html)
+Source model:   q3_model.xlsx — revenue / cost / EBITDA breakdown,
+                multi-tab (Revenue, COGS, OpEx, EBITDA, Variance)
+One-liner:      Three cells, three paragraphs, one signed brief.
+
+Palette
+  --navy        #0a1929   corporate navy background
+  --navy-2      #112a45   navy panel surface
+  --gold        #fbbf24   gold highlight (kpi headline, brand mark)
+  --alert       #ea580c   alert orange (negative variance)
+  --ok          #10b981   muted green (positive variance)
+  --cream       #f5e6c8   soft cream body text
+  --cream-soft  rgba(245, 230, 200, 0.62)   muted cream
+  --rule        rgba(245, 230, 200, 0.18)   thin gold-leaning rule
+  --ink-strong  #ffffff   strong heading text
+
+Typography
+  Display       "Tiempos Headline", "Source Serif Pro", Georgia, serif
+                — 700 weight for the brief title, 600 for section heads.
+                Tight tracking on display (-1.5px), normal on heading
+                row labels.
+  Body          "Charter", "Source Serif Pro", Georgia, serif —
+                400-500, 1.5 line-height. Reads like a Bloomberg
+                tearsheet or a board-pack one-pager.
+  Mono (cells,
+   tickers,
+   deltas)     "JetBrains Mono", "SF Mono", ui-monospace — for cell
+                refs (e.g. EBITDA!B14), tickers, dollar deltas, and
+                the variance-table digits.
+
+Motion language
+  CFO tearsheet — title pulses on, three variance rows reveal one by
+  one (each row: row label fades, then the delta number ticks up,
+  then the up/down arrow attaches, then the one-line narrative drops
+  underneath). Footer sign-off rises last with the date and
+  signatory block. Wordmark dissolves over the navy panel at the
+  end. No glow, no sparkle — this is a CFO document, not a hype
+  ad.
+
+Copy guardrails
+  Three rows:        Revenue, EBITDA, Working Capital — each with a
+                     dollar delta, an arrow (▲ for positive, ▼ for
+                     negative), and a one-sentence narrative
+                     ("Q3 EBITDA vs plan: -$2.1M, driven by ...").
+  Narrative voice:   board-ready, factual, no adjectives, prefers
+                     active verbs ("driven by", "offset by", "absorbed
+                     in", "carried forward").
+  Sign-off:          name + title + date in serif, with a thin gold
+                     rule above ("J. Whitford · CFO · 29 Apr 2026").
+  Wordmark:          "Atlas · CFO Brief" — serif display, gold accent
+                     on "Atlas", cream on the rest.
+  Voice:             quiet, authoritative. No exclamation marks, no
+                     emoji, no marketing fluff.
+  Avoid:             "crushed it", "blowout quarter", "all-time
+                     high" without a comparable, "AI-powered" — this
+                     is for a board, not LinkedIn.

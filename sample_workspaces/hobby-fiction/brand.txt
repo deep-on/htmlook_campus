@@ -1,0 +1,47 @@
+hobby-fiction — fictional SF mystery one-chapter scenario.
+
+Tagline:        Outline → finished scene, in character.
+Audience:       Hobby fiction writers (KO), weekend craft
+Project shown:  화성의 마지막 편지 — Chapter 1, 1500 단어
+One-liner:      플롯 고정. 한 장면을 완성하다.
+
+Palette
+  --bg          #faf6ef   warm parchment, paper at dusk
+  --paper       #ffffff   pane background (the page)
+  --ink         #1e293b   body text, ink-slate
+  --rose        #e11d48   accent, the underline of pinned plot
+  --soft        #64748b   muted slate for metadata
+  --wash        #f4ede0   sidebar parchment wash
+  --rule        #d6d3d1   thin rule lines between sections
+
+Typography
+  Display       "Cormorant Garamond", "Pretendard", serif fallback
+                — old-paper feel. 700 weight on titles, 400 on body.
+  Body          "Iowan Old Style", "Pretendard", "Source Serif Pro",
+                serif. Generous leading (1.7) for a chapter pane.
+  Mono (paths,
+   commands)    ui-monospace, "SF Mono", Menlo. Used only in the
+                terminal panel — never inside the chapter pane.
+
+Motion language
+  Typewriter reveal on dialogue lines (one word at a time, slow
+  cursor blink). No bouncing, no scaling pop-ins — fiction prose
+  is paper, not advertising. Pinned plot points get a soft
+  rose underline that draws in left-to-right (1.2 s). Character
+  consistency cards (the chips) fade in as a stagger, never
+  flip or rotate.
+
+Copy guardrails
+  Hook copy:           "Pin the plot. Write the scene."
+  Brand mark:          "Outline → finished scene, in character."
+  Voice:               careful, considered, lower-case-ish. No
+                       exclamation marks in the marketing copy.
+                       Korean register: "합니다체" for narration,
+                       "해체" for dialogue if and only if the
+                       character would actually use it.
+  Avoid:               "AI-written", "blazing", "10×", emoji,
+                       all caps. Never say "perfect"; the work
+                       is a draft.
+  Encouragement:       end every prompt with a craft note —
+                       "이 한 줄이 어색하면 다시 써도 돼.", not
+                       a thumbs-up emoji.

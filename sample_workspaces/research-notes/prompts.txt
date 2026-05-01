@@ -1,0 +1,55 @@
+LLM prompts for the research-notes scenario — English ×5.
+Drop any of these into your LLM (Claude, Codex, Llama via Ollama,
+Gemini, GPT, etc.) with the HTMLook MCP attached. The two named
+moves — cite a section, append to bibliography — are [1] and [3].
+
+Copy each prompt verbatim. The LLM is reading Chen et al. 2026,
+"Sparse Cross-Modal Attention for Long-Context Vision-Language
+Models", and writing into the personal notebook at notes.md.
+
+────────────────────────────────────────────────────────────────────
+[1] Cite the methods paragraph (the main move)
+────────────────────────────────────────────────────────────────────
+You are reading Chen et al. 2026 on the left pane and notes.md is
+open on the right. Use htmlook_cite to read the Methods paragraph on
+page 4, section 3.2 ("Sparse Cross-Modal Attention"). Quote the
+exact sentence that defines the operator, then summarize it in one
+sentence I could paste under "## Findings" in notes.md. Suggest a
+short citekey of the form authoryearkeyword (lowercase, no spaces).
+
+────────────────────────────────────────────────────────────────────
+[2] Pull the headline number from Results §4.1
+────────────────────────────────────────────────────────────────────
+Use htmlook_cite to anchor the Results paragraph on page 6, section
+4.1 ("Long-Context Benchmarks"). Quote the sentence that reports the
+FLOPs reduction on >32k-token contexts and the accuracy delta on
+ScienceQA-Long. Return both numbers and the page line they appear on
+so I can footnote them in the notes.
+
+────────────────────────────────────────────────────────────────────
+[3] Append finding + bibliography entry (the second main move)
+────────────────────────────────────────────────────────────────────
+Now apply an edit to notes.md. Under "## Findings", append a row
+with the one-sentence finding from prompt [1] followed by a [N]
+marker (use the next free number). Under "## Bibliography", append
+the entry in author-year-title-DOI format using the citekey from
+prompt [1] and the DOI 10.5281/zenodo.0000000. Return the edit as a
+unified diff so I can htmlook_apply_edit it directly.
+
+────────────────────────────────────────────────────────────────────
+[4] Suggest a connecting reference
+────────────────────────────────────────────────────────────────────
+Given the finding you just appended, propose one related prior work
+(real or plausibly real) that this paper builds on or contradicts.
+Return: title, author family-name, year, citekey, and a single
+sentence explaining the connection. Do not append it to the
+bibliography yet — I want to verify the citation first.
+
+────────────────────────────────────────────────────────────────────
+[5] Section dive: move to the next section
+────────────────────────────────────────────────────────────────────
+Open page 7, section 4.2 ("Ablations") on the left pane
+(htmlook_set_pane left paper.pdf#page=7). Cite the ablation
+paragraph that varies the number of cross-modal heads. Summarize the
+trend in one sentence and append it as a new finding row under
+"## Findings" in notes.md, reusing the existing citekey.

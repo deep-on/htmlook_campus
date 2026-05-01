@@ -1,0 +1,64 @@
+Ollama prompts for the hf-llama scenario — Korean + English, 5 each.
+Drop any of these into `ollama run llama3.2 …` (or any local Llama
+runtime) with the HTMLook MCP attached.
+
+Copy the prompt verbatim. Llama is more terse than Claude — short,
+concrete prompts work better.
+
+────────────────────────────────────────────────────────────────────
+한국어 (Korean) ×5
+────────────────────────────────────────────────────────────────────
+
+[1] 단순 의뢰 (메인)
+Vault Local AI 의 15초 제품 런칭 티저를 만들어줘. 검정 캔버스 위에
+amber → 코럴 그라디언트, 키네틱 타이포로 "Your AI", "Your data",
+"Your machine" 세 키 카피, 마지막 3초는 자물쇠 lock 모션 +
+vaultlocal.ai. lint 통과 후 렌더.
+
+[2] Refinement — 한 카피 늘리기
+"Your AI" 가 너무 짧아. 글자 stagger 를 0.045 → 0.09 로 늘리고,
+scale pulse 도 1.04 → 1.08 로 강조. 동일 시간 안에서 더 묵직하게.
+
+[3] Outro 강조
+자물쇠 outro 가 너무 가벼워. 자물쇠 body 가 먼저 떨어지고,
+shackle 이 위에서 "lock" 닫히듯 회전, keyhole 이 마지막에 pop.
+back.out easing 으로 묵직하게.
+
+[4] 다른 도메인 변주
+같은 컨셉으로 의료 SaaS 버전. "MedVault Local AI", URL 은
+medvault.ai, 카피 "Your records", "Your patients", "Your machine".
+색상은 amber → emerald (#10b981) 로.
+
+[5] 9:16 portrait 변주
+지금 composition 을 1080×1920 portrait 로 다시 작성. 글자 크기
+80% 로 맞추고, kinetic 타이포는 줄을 위아래로 쌓아.
+
+────────────────────────────────────────────────────────────────────
+English ×5
+────────────────────────────────────────────────────────────────────
+
+[1] Simple request (main)
+Build a 15-second product launch teaser for Vault Local AI. Black
+canvas with an amber→coral gradient, kinetic typography on three
+keywords ("Your AI", "Your data", "Your machine"), and a padlock
+lock motion + vaultlocal.ai outro in the last 3 seconds. Lint clean,
+then render.
+
+[2] Refinement — make one keyword heavier
+"Your AI" reads too quick. Increase letter stagger 0.045 → 0.09 and
+scale pulse 1.04 → 1.08 within the same 5-second window. Heavier
+emphasis without changing duration.
+
+[3] Outro punch
+The padlock outro feels too light. Drop the padlock body first
+(back.out), then have the shackle rotate down to "lock" closed, and
+pop the keyhole last. Each step heavier than the previous.
+
+[4] Domain variant
+Same concept, medical-SaaS variant. "MedVault Local AI", URL
+medvault.ai, copy "Your records", "Your patients", "Your machine".
+Recolor amber → emerald (#10b981).
+
+[5] 9:16 portrait variant
+Re-author this composition for 1080×1920 portrait. Scale type to 80%
+and stack the kinetic words vertically.

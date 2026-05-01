@@ -1,0 +1,56 @@
+Notes · Week 5 — fictional study notebook for the student-notes scenario.
+
+Tagline:        Lecture → notes + flashcards, simultaneously.
+Course shown:   ML 301 — Deep Learning · Lecture 5 · Self-Attention
+Author:         3rd-year CS undergrad, exam in 9 days
+One-liner:      Cite the slide. Get a flashcard back.
+
+Palette
+  --paper       #fef3c7   notebook beige, primary canvas
+  --paper-2     #fde68a   margin / tab tone, slightly deeper
+  --ink         #1e293b   ink slate, primary text
+  --ink-soft    #475569   muted ink for metadata, slide nums
+  --rule        rgba(30, 41, 59, 0.10)   row separators
+  --rule-2      rgba(30, 41, 59, 0.20)   header rules, card edges
+  --hi          #fbbf24   highlighter yellow, key-term wash
+  --hi-soft     rgba(251, 191, 36, 0.32)
+  --purple      #a855f7   second highlight, exam-question marker
+  --purple-soft rgba(168, 85, 247, 0.18)
+  --mint        #16a34a   "got it" / answered flashcard
+  --pen-blue    #2563eb   inline pen-mark accent
+
+Typography
+  Display       Inter / Pretendard / system-ui, 700-800 weight, tight tracking
+  Body          system-ui, 400-500
+  Hand-margin   "Caveat" / "Patrick Hand" / cursive fallback — used
+                only for tiny margin notes ("← Q-K dot"), never body
+  Mono (URLs,
+   formulas,
+   slide refs)  SF Mono / Menlo / ui-monospace, 2-4px tracking
+
+Motion language
+  Notebook reveal — slide cite paints a yellow highlighter band;
+  bullet summaries stagger by line (~120 ms); flashcard deck flips
+  Q→A with a brief 3D rotateY (no infinite loops); exam-prep
+  questions land in a purple-tinted column; the "Notes · Week 5"
+  wordmark fades in last with a thin pen-blue underline drawing
+  left-to-right. No background drift — keep the canvas like a real
+  notebook page that someone is studying from.
+
+Copy guardrails
+  Wordmark:           "Notes · Week 5"
+  Slide ref:          "Lecture 5 · Self-Attention · slide 5"
+  Three summary bullets:
+                      Q · K · V are linear projections of the input
+                      Attention(Q, K, V) = softmax(QKᵀ/√d_k) V
+                      Each head learns a different relation pattern
+  Four flashcards:    Q1 What is self-attention?  /  A1 token-to-token similarity
+                      Q2 Why divide by √d_k?      /  A2 keep softmax in stable range
+                      Q3 What does Q·Kᵀ encode?  /  A3 pairwise relevance
+                      Q4 Multi-head benefit?      /  A4 multiple relation subspaces
+  Exam prompt:        "Sketch the attention formula and explain each term."
+  Voice:              quiet, study-y, factual. No exclamation marks,
+                       no emoji, no marketing fluff.
+  Avoid:              "ace", "nail it", "blazing", "magic",
+                       "AI-powered" — this is a working notebook,
+                       not a launch deck.

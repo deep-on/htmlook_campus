@@ -1,0 +1,59 @@
+LLM prompts for the legal-redline scenario — English ×5.
+Drop any of these into your LLM (Claude, Codex, Llama via Ollama,
+Gemini, GPT, etc.) with the HTMLook MCP attached. The named moves
+are clause-by-clause grade-and-counter passes.
+
+Copy each prompt verbatim. The LLM is reviewing Master Services
+Agreement v2 (Acme × Vault) on behalf of Vault, a Series-B
+startup, with the contract PDF on the left pane and the redline
+memo (redline-memo.md) on the right pane.
+
+────────────────────────────────────────────────────────────────────
+[1] Clause 1.1 — Definitions
+────────────────────────────────────────────────────────────────────
+You are in-house counsel at Vault reviewing Acme's Master
+Services Agreement v2. The PDF is open on the left pane; the
+redline memo is on the right (redline-memo.md). Use
+htmlook_cite("left", "clause 1.1") to read the Definitions
+clause. Grade risk for a Series-B startup (HIGH / MEDIUM / LOW).
+If MEDIUM or higher, draft counter-language. Append a row to
+redline-memo.md in the three-column format
+(Original | Risk | Counter). Return as a unified diff so I can
+htmlook_apply_edit it.
+
+────────────────────────────────────────────────────────────────────
+[2] Clause 2.3 — Liability cap
+────────────────────────────────────────────────────────────────────
+Now clause 2.3 (Liability cap). htmlook_cite("left",
+"clause 2.3"). The current cap is "fees paid in the prior 3
+months" — flag this as HIGH for a startup with a 12-month
+contract. Draft counter-language pegging the cap to "fees paid
+in the prior 12 months" with a 2x multiplier for IP indemnity.
+Append the row to redline-memo.md as a unified diff.
+
+────────────────────────────────────────────────────────────────────
+[3] Clause 5.2 — Intellectual Property
+────────────────────────────────────────────────────────────────────
+Clause 5.2 — IP assignment. htmlook_cite("left", "clause 5.2").
+The clause currently assigns all IP including pre-existing
+materials to Acme. Grade HIGH. Draft counter-language carving
+out (a) Vault background IP, (b) open-source contributions, and
+(c) anything created off the engagement. Append the row.
+
+────────────────────────────────────────────────────────────────────
+[4] Clause 7.1 — Termination
+────────────────────────────────────────────────────────────────────
+Clause 7.1 — Termination for convenience. htmlook_cite("left",
+"clause 7.1"). Acme can terminate on 30 days' notice; Vault
+needs 90 days. Grade MEDIUM. Draft a symmetric counter (60 days
+either side, with a wind-down obligation for in-flight work).
+Append the row.
+
+────────────────────────────────────────────────────────────────────
+[5] Memo summary
+────────────────────────────────────────────────────────────────────
+Now read all four rows you appended to redline-memo.md. Write
+the summary card at the top of the memo: total clauses
+reviewed, count by risk grade, two-sentence partner-call
+talking point, and the single deal-breaker if any. Return as a
+unified diff inserting the summary block above clause 1.1.

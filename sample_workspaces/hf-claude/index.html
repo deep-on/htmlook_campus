@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Acme Cloud — 15s product launch teaser</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #050511;
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", "Pretendard",
+          system-ui, sans-serif;
+        color: #fff;
+      }
+      :root {
+        --cyan: #06b6d4;
+        --magenta: #ec4899;
+        --bg: #050511;
+        --ink: #ffffff;
+        --soft: rgba(255, 255, 255, 0.55);
+      }
+
+      .clip {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        will-change: opacity, transform;
+      }
+      .scene-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 80px 120px;
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      /* Shared gradient background that pulses through every scene */
+      .bg-gradient {
+        position: absolute;
+        inset: -10%;
+        background: radial-gradient(
+            900px circle at 30% 30%,
+            rgba(6, 182, 212, 0.55) 0%,
+            transparent 55%
+          ),
+          radial-gradient(
+            900px circle at 70% 75%,
+            rgba(236, 72, 153, 0.5) 0%,
+            transparent 55%
+          ),
+          var(--bg);
+        filter: blur(40px);
+      }
+      .scene-content > .layer {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ── Scene 1 — Intro (0-3s) ──────────────────────────────── */
+      .intro-tag {
+        font-size: 32px;
+        letter-spacing: 8px;
+        color: var(--soft);
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+      .intro-bar {
+        margin-top: 24px;
+        width: 240px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--cyan), var(--magenta));
+        border-radius: 2px;
+        transform-origin: left center;
+      }
+
+      /* ── Scene 2 — "ship faster" (3-8s) ──────────────────────── */
+      .kinetic {
+        font-size: 280px;
+        font-weight: 800;
+        letter-spacing: -10px;
+        line-height: 0.95;
+        text-align: center;
+      }
+      .kinetic .word {
+        display: inline-block;
+        white-space: nowrap;
+      }
+      .kinetic .l {
+        display: inline-block;
+        will-change: transform, opacity;
+      }
+      .kinetic.gradient .l {
+        background: linear-gradient(135deg, var(--cyan) 0%, var(--magenta) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      /* ── Scene 3 — "cloud-native" + "today" (8-12s) ──────────── */
+      .stack {
+        text-align: center;
+      }
+      .stack .row {
+        font-size: 200px;
+        font-weight: 800;
+        letter-spacing: -8px;
+        line-height: 1;
+      }
+      .stack .row .l {
+        display: inline-block;
+        will-change: transform, opacity;
+      }
+      .stack .row.cyan .l {
+        background: linear-gradient(135deg, var(--cyan) 0%, #67e8f9 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .stack .row.magenta .l {
+        background: linear-gradient(135deg, var(--magenta) 0%, #f9a8d4 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .stack .row.cyan {
+        margin-bottom: 20px;
+      }
+
+      /* ── Scene 4 — Logo + URL outro (12-15s) ─────────────────── */
+      .outro {
+        text-align: center;
+      }
+      .outro .logo-mark {
+        display: inline-flex;
+        align-items: center;
+        gap: 24px;
+        font-size: 130px;
+        font-weight: 800;
+        letter-spacing: -4px;
+      }
+      .outro .logo-glyph {
+        width: 110px;
+        height: 110px;
+        border-radius: 26px;
+        background: linear-gradient(135deg, var(--cyan), var(--magenta));
+        display: grid;
+        place-items: center;
+        font-size: 80px;
+        font-weight: 900;
+        letter-spacing: 0;
+        color: var(--bg);
+      }
+      .outro .url {
+        margin-top: 40px;
+        font-size: 38px;
+        font-weight: 500;
+        color: var(--soft);
+        letter-spacing: 4px;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="15"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- Shared gradient bg sits below every scene's content. We
+           render it once at root level and let scene-content layers
+           overlay it. -->
+      <div class="bg-gradient" id="bg-gradient" aria-hidden="true"></div>
+
+      <!-- Scene 1 — intro (0-3s) -->
+      <div id="s1" class="clip" data-start="0" data-duration="3" data-track-index="1">
+        <div class="scene-content">
+          <div class="layer intro">
+            <div class="intro-tag">A new way to ship</div>
+            <div class="intro-bar"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 2 — "ship faster" (3-8s) -->
+      <div id="s2" class="clip" data-start="3" data-duration="5" data-track-index="1">
+        <div class="scene-content">
+          <div class="layer kinetic gradient">
+            <div class="word"
+              ><span class="l">s</span><span class="l">h</span><span class="l">i</span><span class="l">p</span></div>
+            <div style="height: 16px"></div>
+            <div class="word"
+              ><span class="l">f</span><span class="l">a</span><span class="l">s</span><span class="l">t</span><span class="l">e</span><span class="l">r</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3 — "cloud-native" + "today" (8-12s) -->
+      <div id="s3" class="clip" data-start="8" data-duration="4" data-track-index="1">
+        <div class="scene-content">
+          <div class="layer stack">
+            <div class="row cyan"
+              ><span class="l">c</span><span class="l">l</span><span class="l">o</span><span class="l">u</span><span class="l">d</span><span class="l">-</span><span class="l">n</span><span class="l">a</span><span class="l">t</span><span class="l">i</span><span class="l">v</span><span class="l">e</span></div>
+            <div class="row magenta"
+              ><span class="l">t</span><span class="l">o</span><span class="l">d</span><span class="l">a</span><span class="l">y</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 4 — logo + URL outro (12-15s) -->
+      <div id="s4" class="clip" data-start="12" data-duration="3" data-track-index="1">
+        <div class="scene-content">
+          <div class="layer outro">
+            <div class="logo-mark">
+              <span class="logo-glyph">A</span>
+              <span class="logo-text">Acme&nbsp;Cloud</span>
+            </div>
+            <div class="url">acmecloud.dev</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+
+      // Background gradient drifts gently for the entire 15 s — gives
+      // every scene a subtle living quality.
+      tl.fromTo("#bg-gradient", { rotate: -2, scale: 1 }, { rotate: 2, scale: 1.06, duration: 15, ease: "none" }, 0);
+
+      // ── Scene 1 — intro (0-3 s) ──
+      tl.fromTo("#s1", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" }, 0);
+      tl.from("#s1 .intro-tag", { opacity: 0, y: 18, duration: 0.7, ease: "power3.out" }, 0.2);
+      tl.from("#s1 .intro-bar", { scaleX: 0, duration: 0.9, ease: "power3.out" }, 0.6);
+      tl.to("#s1", { opacity: 0, duration: 0.4, ease: "power2.in" }, 2.6);
+      tl.set("#s1", { opacity: 0 }, 3);
+
+      // ── Scene 2 — "ship faster" (3-8 s) ──
+      tl.set("#s2", { opacity: 1 }, 3);
+      tl.from("#s2 .word:nth-of-type(1) .l", {
+        opacity: 0,
+        y: 80,
+        rotate: 6,
+        duration: 0.55,
+        ease: "power3.out",
+        stagger: 0.045,
+      }, 3.05);
+      tl.from("#s2 .word:nth-of-type(3) .l", {
+        opacity: 0,
+        y: 80,
+        rotate: -6,
+        duration: 0.55,
+        ease: "power3.out",
+        stagger: 0.045,
+      }, 4.05);
+      // Subtle scale pulse to hold attention
+      tl.to("#s2 .kinetic", { scale: 1.04, duration: 1.6, ease: "sine.inOut" }, 5.4);
+      tl.to("#s2", { opacity: 0, duration: 0.5, ease: "power2.in" }, 7.5);
+      tl.set("#s2", { opacity: 0 }, 8);
+
+      // ── Scene 3 — "cloud-native" / "today" (8-12 s) ──
+      tl.set("#s3", { opacity: 1 }, 8);
+      tl.from("#s3 .row.cyan .l", {
+        opacity: 0,
+        x: -40,
+        duration: 0.45,
+        ease: "power3.out",
+        stagger: 0.035,
+      }, 8.1);
+      tl.from("#s3 .row.magenta .l", {
+        opacity: 0,
+        x: 40,
+        duration: 0.45,
+        ease: "power3.out",
+        stagger: 0.045,
+      }, 9.6);
+      tl.to("#s3", { opacity: 0, duration: 0.45, ease: "power2.in" }, 11.55);
+      tl.set("#s3", { opacity: 0 }, 12);
+
+      // ── Scene 4 — outro (12-15 s) ──
+      tl.set("#s4", { opacity: 1 }, 12);
+      tl.from("#s4 .logo-glyph", {
+        opacity: 0,
+        scale: 0.6,
+        rotate: -20,
+        duration: 0.7,
+        ease: "back.out(1.6)",
+      }, 12.1);
+      tl.from("#s4 .logo-text", { opacity: 0, x: -40, duration: 0.6, ease: "power3.out" }, 12.45);
+      tl.from("#s4 .url", { opacity: 0, y: 14, duration: 0.6, ease: "power2.out" }, 12.95);
+      tl.to("#s4 .url", { opacity: 0.85, duration: 0.6 }, 14.4);
+    </script>
+  </body>
+</html>

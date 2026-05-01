@@ -1,0 +1,59 @@
+Pythagoras · 풀이 노트 — fictional homework notebook for the homework-helper scenario.
+
+Tagline:        Problem → solution + practice set, in one cite.
+Course shown:   8th-grade Geometry · Pythagorean Theorem · Homework #3
+Author:         Middle-school student, 3 problems due tomorrow
+One-liner:      Cite the problem. Step-by-step solution.
+
+Palette
+  --paper       #ffffff   classroom paper white, primary canvas
+  --paper-2     #f0fdf4   margin / soft tint, mint-green wash
+  --ink         #0f172a   pencil-ink dark, primary text
+  --ink-soft    #475569   muted ink for metadata
+  --rule        rgba(15, 23, 42, 0.08)   row separators
+  --rule-2      rgba(15, 23, 42, 0.18)   header rules, card edges
+  --green       #16a34a   school green, primary accent (problem nums, ✓)
+  --teal        #0891b2   math teal, secondary accent (formula, ID pills)
+  --hi          #fbbf24   highlighter yellow, key-step wash
+  --hi-soft     rgba(251, 191, 36, 0.30)
+  --red         #ef4444   "wrong-attempt" / careful-here marker
+
+Typography
+  Display       Inter / Pretendard / system-ui, 700-800 weight, tight tracking
+  Body          system-ui, 400-500
+  Math (formulas,
+   variables,
+   answers)     "STIX Two Math" / "Latin Modern Math" / serif fallback,
+                also SF Mono for code-like steps
+  Mono (problem
+   numbers,
+   IDs)        SF Mono / Menlo / ui-monospace, 4-8px tracking, often uppercase
+
+Motion language
+  Workbook reveal — problem cite paints a teal margin-rule;
+  solution steps stagger by line (~140 ms) with each step number
+  popping (back-out ease) before the equation lands; the answer
+  box scales in with a brief check-mark draw; the "비슷한 문제 3개"
+  practice-set appears as three card peels staggered left-to-right;
+  the "Pythagoras · 풀이 노트" wordmark fades in last with a thin
+  green underline drawing left-to-right. No background drift —
+  keep the canvas like a clean homework page that someone is
+  actually writing in.
+
+Copy guardrails
+  Wordmark:           "Pythagoras · 풀이 노트"
+  Problem ref:        "문제 1 · 직각삼각형 ABC, ∠C = 90°, a = 5, b = 12. c = ?"
+  Three solution steps:
+                      Step 1 — 피타고라스 정리: a² + b² = c²
+                      Step 2 — 5² + 12² = 25 + 144 = 169
+                      Step 3 — c = √169 = 13
+  Three practice problems:
+                      Q1 — a = 6, b = 8, find c
+                      Q2 — a = 9, c = 15, find b
+                      Q3 — 한 변이 3, 빗변이 5인 직각삼각형의 넓이
+  Concept reminder:   "직각삼각형에서만 성립. 빗변(c)은 직각의 맞은편."
+  Voice:              quiet, classroom-y, factual. No exclamation
+                       marks, no emoji, no "good job" cheerleading.
+  Avoid:              "ace", "easy", "no problem", "you got this",
+                       "AI-powered" — this is a working homework
+                       page, not a gamified app.

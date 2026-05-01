@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>단원평가 — 15s teacher-quiz teaser</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0; width: 1920px; height: 1080px;
+        overflow: hidden; background: #fafafa;
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", "Pretendard", system-ui, sans-serif;
+        color: #1f2937;
+      }
+      :root {
+        --green: #16a34a; --board: #1f2937; --paper: #fafafa;
+        --red: #dc2626; --ink: #111827; --soft: #6b7280;
+        --line: #d1d5db; --hi: #fef3c7;
+      }
+
+      .clip { position: absolute; inset: 0; opacity: 0; will-change: opacity, transform; }
+      .scene-content {
+        width: 100%; height: 100%;
+        display: flex; align-items: center; justify-content: center;
+        padding: 80px 120px; box-sizing: border-box; position: relative;
+      }
+
+      /* paper background — subtle ruled grid */
+      .paper-bg {
+        position: absolute; inset: 0;
+        background:
+          repeating-linear-gradient(0deg, transparent 0 38px, rgba(31, 41, 55, 0.04) 38px 39px),
+          var(--paper);
+      }
+
+      /* ── Scene 1 — Quiz header (0-3s) ─────────────────────────── */
+      .quiz-header {
+        width: 1280px; text-align: center;
+        font-family: "Iowan Old Style", "Times New Roman", Georgia, serif;
+      }
+      .quiz-header .school {
+        font-size: 24px; color: var(--soft); letter-spacing: 4px;
+        text-transform: uppercase; margin-bottom: 14px; font-weight: 600;
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
+      }
+      .quiz-header .title {
+        font-size: 110px; font-weight: 800; letter-spacing: -3px;
+        color: var(--board); line-height: 1;
+        margin-bottom: 16px;
+      }
+      .quiz-header .sub {
+        font-size: 38px; color: var(--green); font-weight: 700;
+        letter-spacing: -0.5px;
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
+      }
+      .quiz-header .meta-row {
+        margin-top: 36px;
+        display: flex; justify-content: center; gap: 60px;
+        font-size: 22px; color: var(--ink);
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
+      }
+      .quiz-header .meta-row .field {
+        border-bottom: 2px solid var(--board);
+        padding: 6px 36px 4px;
+      }
+      .quiz-header .meta-row .field .lbl {
+        font-size: 13px; color: var(--soft); letter-spacing: 2px;
+        text-transform: uppercase; margin-right: 10px;
+      }
+      .quiz-header .stamp {
+        position: absolute;
+        top: 30px; right: 60px;
+        border: 4px solid var(--red); color: var(--red);
+        padding: 8px 18px; font-size: 22px; font-weight: 800;
+        letter-spacing: 4px; text-transform: uppercase;
+        transform: rotate(-8deg);
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
+      }
+
+      /* ── Scene 2 — multiple choice stagger (3-7s) ─────────────── */
+      .mc-list {
+        width: 1300px;
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", "Pretendard", system-ui, sans-serif;
+      }
+      .mc-section-head {
+        font-size: 32px; font-weight: 800; color: var(--board);
+        border-bottom: 4px double var(--board);
+        padding-bottom: 8px; margin-bottom: 24px;
+        letter-spacing: -1px;
+      }
+      .mc-section-head .badge {
+        background: var(--green); color: #fff;
+        padding: 3px 12px; border-radius: 4px;
+        font-size: 18px; margin-left: 14px;
+        letter-spacing: 1px; font-weight: 700;
+      }
+      .mc-q {
+        font-size: 24px; line-height: 1.4; color: var(--ink);
+        margin-bottom: 16px;
+      }
+      .mc-q .num {
+        display: inline-block; width: 36px;
+        font-weight: 800; color: var(--board);
+      }
+      .mc-q .stem { font-weight: 600; }
+      .mc-q .opts {
+        margin-top: 6px; margin-left: 36px;
+        font-size: 21px; color: var(--soft);
+        display: flex; gap: 32px;
+      }
+      .mc-q .opts .o { display: flex; gap: 8px; }
+      .mc-q .opts .circ {
+        display: inline-block; width: 22px; height: 22px;
+        border: 2px solid var(--soft); border-radius: 50%;
+        text-align: center; font-size: 13px; line-height: 18px;
+        font-weight: 700; color: var(--soft);
+      }
+
+      /* ── Scene 3 — short answer (7-11s) ───────────────────────── */
+      .sa-list {
+        width: 1300px;
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", "Pretendard", system-ui, sans-serif;
+      }
+      .sa-q {
+        font-size: 26px; line-height: 1.45; color: var(--ink);
+        margin-bottom: 28px;
+      }
+      .sa-q .num {
+        display: inline-block; width: 40px;
+        font-weight: 800; color: var(--board);
+      }
+      .sa-q .stem { font-weight: 600; }
+      .sa-line {
+        margin-left: 40px; margin-top: 10px;
+        height: 38px;
+        border-bottom: 2px solid var(--board);
+      }
+      .sa-line.short { width: 70%; }
+      .sa-line.long { width: 92%; }
+
+      /* ── Scene 4 — answer key + rubric + watermark (11-15s) ──── */
+      .answer-card {
+        width: 1380px; padding: 40px 56px;
+        background: #fff;
+        border: 2px solid var(--board);
+        border-radius: 14px;
+        box-shadow: 0 10px 30px rgba(31, 41, 55, 0.12);
+        position: relative;
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", "Pretendard", system-ui, sans-serif;
+      }
+      .answer-card .head {
+        display: flex; align-items: baseline; justify-content: space-between;
+        border-bottom: 3px solid var(--board);
+        padding-bottom: 14px; margin-bottom: 24px;
+      }
+      .answer-card .head .ttl {
+        font-size: 42px; font-weight: 800; color: var(--board);
+        letter-spacing: -1px;
+      }
+      .answer-card .head .meta {
+        font-size: 20px; color: var(--green); font-weight: 700;
+        letter-spacing: 2px; text-transform: uppercase;
+      }
+      .answer-card .grid {
+        display: grid; grid-template-columns: 1fr 1.4fr; gap: 36px;
+      }
+      .answer-card .key {
+        display: flex; flex-direction: column; gap: 14px;
+      }
+      .answer-card .key .row {
+        display: flex; align-items: center; gap: 16px;
+        font-size: 24px; color: var(--ink);
+      }
+      .answer-card .key .row .qn {
+        background: var(--green); color: #fff;
+        width: 38px; height: 38px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 800; font-size: 18px;
+      }
+      .answer-card .key .row .ans {
+        font-weight: 600;
+      }
+      .answer-card .key .row .check {
+        color: var(--red); font-weight: 800; font-size: 26px; margin-left: auto;
+      }
+      .answer-card .rubric .rub-head {
+        font-size: 22px; font-weight: 800; color: var(--board);
+        letter-spacing: -0.5px; margin-bottom: 12px;
+        display: flex; align-items: center; gap: 10px;
+      }
+      .answer-card .rubric .rub-head .pen {
+        color: var(--red); font-size: 22px;
+      }
+      .answer-card .rubric .lvl {
+        display: grid; grid-template-columns: 80px 1fr 80px;
+        align-items: center; gap: 14px;
+        padding: 10px 14px; border-radius: 8px;
+        font-size: 18px; color: var(--ink);
+        margin-bottom: 8px;
+      }
+      .answer-card .rubric .lvl.l1 { background: rgba(22, 163, 74, 0.10); }
+      .answer-card .rubric .lvl.l2 { background: rgba(22, 163, 74, 0.18); }
+      .answer-card .rubric .lvl.l3 { background: rgba(22, 163, 74, 0.28); }
+      .answer-card .rubric .lvl .grade {
+        font-weight: 800; color: var(--board);
+      }
+      .answer-card .rubric .lvl .pts {
+        font-weight: 800; color: var(--green); text-align: right;
+      }
+      .watermark {
+        position: absolute;
+        bottom: 60px; left: 0; right: 0;
+        text-align: center;
+        font-size: 22px; color: var(--soft); letter-spacing: 6px;
+        font-weight: 600; text-transform: uppercase;
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
+      }
+      .watermark .green { color: var(--green); }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="15"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div class="paper-bg" id="paper-bg" aria-hidden="true"></div>
+
+      <!-- Scene 1 — header (0-3s) -->
+      <div id="s1" class="clip" data-start="0" data-duration="3" data-track-index="1">
+        <div class="scene-content">
+          <div class="quiz-header">
+            <div class="stamp" id="s1-stamp">단원평가</div>
+            <div class="school">SEONGSAN MIDDLE SCHOOL · GRADE 2 ENGLISH</div>
+            <div class="title">Unit 1 단원평가</div>
+            <div class="sub">Chapter 1 · School Life</div>
+            <div class="meta-row">
+              <div class="field"><span class="lbl">반</span>2-3</div>
+              <div class="field"><span class="lbl">번호</span>__</div>
+              <div class="field"><span class="lbl">이름</span>__________</div>
+              <div class="field"><span class="lbl">점수</span>__ / 100</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 2 — multiple choice stagger (3-7s) -->
+      <div id="s2" class="clip" data-start="3" data-duration="4" data-track-index="1">
+        <div class="scene-content">
+          <div class="mc-list">
+            <div class="mc-section-head">I. 객관식 <span class="badge">5문항 · 50점</span></div>
+            <div class="mc-q" data-mc="0">
+              <span class="num">1.</span><span class="stem">Choose the correct verb form for the sentence.</span>
+              <div class="opts"><span class="o"><span class="circ">①</span>go</span><span class="o"><span class="circ">②</span>goes</span><span class="o"><span class="circ">③</span>going</span><span class="o"><span class="circ">④</span>went</span><span class="o"><span class="circ">⑤</span>gone</span></div>
+            </div>
+            <div class="mc-q" data-mc="1">
+              <span class="num">2.</span><span class="stem">Which word means "교실" in English?</span>
+              <div class="opts"><span class="o"><span class="circ">①</span>library</span><span class="o"><span class="circ">②</span>cafeteria</span><span class="o"><span class="circ">③</span>classroom</span><span class="o"><span class="circ">④</span>gym</span><span class="o"><span class="circ">⑤</span>office</span></div>
+            </div>
+            <div class="mc-q" data-mc="2">
+              <span class="num">3.</span><span class="stem">Pick the sentence with a present continuous verb.</span>
+              <div class="opts"><span class="o"><span class="circ">①</span>I read.</span><span class="o"><span class="circ">②</span>I am reading.</span><span class="o"><span class="circ">③</span>I read it.</span><span class="o"><span class="circ">④</span>I have read.</span><span class="o"><span class="circ">⑤</span>I will read.</span></div>
+            </div>
+            <div class="mc-q" data-mc="3">
+              <span class="num">4.</span><span class="stem">Which question matches the answer "Yes, I do."?</span>
+              <div class="opts"><span class="o"><span class="circ">①</span>Are you?</span><span class="o"><span class="circ">②</span>Do you?</span><span class="o"><span class="circ">③</span>Will you?</span><span class="o"><span class="circ">④</span>Have you?</span><span class="o"><span class="circ">⑤</span>Did you?</span></div>
+            </div>
+            <div class="mc-q" data-mc="4">
+              <span class="num">5.</span><span class="stem">Choose the best translation of "나는 매일 학교에 걸어간다."</span>
+              <div class="opts"><span class="o"><span class="circ">①</span>I walk to school every day.</span><span class="o"><span class="circ">②</span>I walked to school.</span><span class="o"><span class="circ">③</span>I am walking.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3 — short answer (7-11s) -->
+      <div id="s3" class="clip" data-start="7" data-duration="4" data-track-index="1">
+        <div class="scene-content">
+          <div class="sa-list">
+            <div class="mc-section-head">II. 서술형 <span class="badge">2문항 · 50점</span></div>
+            <div class="sa-q" data-sa="0">
+              <span class="num">6.</span><span class="stem">Complete the dialogue using a present continuous verb. Write one full sentence.</span>
+              <div class="sa-line short"></div>
+              <div class="sa-line long"></div>
+            </div>
+            <div class="sa-q" data-sa="1">
+              <span class="num">7.</span><span class="stem">Describe one of your school activities in three sentences. Use at least two new vocabulary words from this chapter.</span>
+              <div class="sa-line long"></div>
+              <div class="sa-line long"></div>
+              <div class="sa-line long"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 4 — answer key + rubric + watermark (11-15s) -->
+      <div id="s4" class="clip" data-start="11" data-duration="4" data-track-index="1">
+        <div class="scene-content">
+          <div class="answer-card">
+            <div class="head">
+              <div class="ttl">Answer Key + Rubric</div>
+              <div class="meta">교사용 · grading sheet</div>
+            </div>
+            <div class="grid">
+              <div class="key">
+                <div class="row" data-key="0"><span class="qn">1</span><span class="ans">② goes</span><span class="check">✓</span></div>
+                <div class="row" data-key="1"><span class="qn">2</span><span class="ans">③ classroom</span><span class="check">✓</span></div>
+                <div class="row" data-key="2"><span class="qn">3</span><span class="ans">② I am reading.</span><span class="check">✓</span></div>
+                <div class="row" data-key="3"><span class="qn">4</span><span class="ans">② Do you?</span><span class="check">✓</span></div>
+                <div class="row" data-key="4"><span class="qn">5</span><span class="ans">① I walk to school every day.</span><span class="check">✓</span></div>
+              </div>
+              <div class="rubric">
+                <div class="rub-head"><span class="pen">✎</span>서술형 채점 기준 (Q6, Q7)</div>
+                <div class="lvl l3" data-rub="0"><span class="grade">A</span><span>Full sentence · vocabulary used · grammar correct</span><span class="pts">10 pt</span></div>
+                <div class="lvl l2" data-rub="1"><span class="grade">B</span><span>Full sentence · minor errors · 1 vocab word</span><span class="pts">7 pt</span></div>
+                <div class="lvl l1" data-rub="2"><span class="grade">C</span><span>Sentence fragment · attempt visible</span><span class="pts">3 pt</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="watermark">
+            <span class="green">단원평가</span> · 2026 1학기 · seongsan-ms <span class="green">·</span> printed via HTMLook Pro
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+
+      // ── Scene 1 — header (0-3s) ──
+      tl.fromTo("#s1", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0);
+      tl.from("#s1 .school", { opacity: 0, y: 12, duration: 0.5, ease: "power2.out" }, 0.15);
+      tl.from("#s1 .title", { opacity: 0, y: 30, duration: 0.7, ease: "power3.out" }, 0.4);
+      tl.from("#s1 .sub", { opacity: 0, duration: 0.5, ease: "power2.out" }, 0.95);
+      tl.from("#s1 .meta-row .field", { opacity: 0, y: 12, duration: 0.4, stagger: 0.1, ease: "power2.out" }, 1.25);
+      tl.fromTo("#s1-stamp", { opacity: 0, scale: 1.4, rotation: -20 }, { opacity: 1, scale: 1, rotation: -8, duration: 0.5, ease: "back.out(1.6)" }, 1.7);
+      tl.to("#s1", { opacity: 0, duration: 0.45, ease: "power2.in" }, 2.55);
+      tl.set("#s1", { opacity: 0 }, 3);
+
+      // ── Scene 2 — MC stagger (3-7s) ──
+      tl.set("#s2", { opacity: 1 }, 3);
+      tl.from("#s2 .mc-section-head", { opacity: 0, y: 12, duration: 0.45, ease: "power2.out" }, 3.05);
+      tl.from("#s2 .mc-q", { opacity: 0, x: -16, duration: 0.4, stagger: 0.36, ease: "power3.out" }, 3.45);
+      tl.to("#s2", { opacity: 0, duration: 0.45, ease: "power2.in" }, 6.45);
+      tl.set("#s2", { opacity: 0 }, 7);
+
+      // ── Scene 3 — SA reveal (7-11s) ──
+      tl.set("#s3", { opacity: 1 }, 7);
+      tl.from("#s3 .mc-section-head", { opacity: 0, y: 12, duration: 0.45, ease: "power2.out" }, 7.05);
+      tl.from("#s3 .sa-q", { opacity: 0, y: 14, duration: 0.55, stagger: 0.6, ease: "power3.out" }, 7.45);
+      tl.from("#s3 .sa-line", { scaleX: 0, transformOrigin: "left center", duration: 0.5, stagger: 0.12, ease: "power2.out" }, 7.95);
+      tl.to("#s3", { opacity: 0, duration: 0.45, ease: "power2.in" }, 10.45);
+      tl.set("#s3", { opacity: 0 }, 11);
+
+      // ── Scene 4 — answer key + rubric + watermark (11-15s) ──
+      tl.set("#s4", { opacity: 1 }, 11);
+      tl.from("#s4 .answer-card", { opacity: 0, y: 24, duration: 0.6, ease: "power3.out" }, 11.05);
+      tl.from("#s4 .head", { opacity: 0, duration: 0.4, ease: "power2.out" }, 11.3);
+      tl.from("#s4 .key .row", { opacity: 0, x: -10, duration: 0.3, stagger: 0.12, ease: "power2.out" }, 11.6);
+      tl.from("#s4 .rubric .rub-head", { opacity: 0, duration: 0.3, ease: "power2.out" }, 12.0);
+      tl.from("#s4 .rubric .lvl", { opacity: 0, x: 14, duration: 0.35, stagger: 0.13, ease: "power2.out" }, 12.2);
+      tl.from("#s4 .watermark", { opacity: 0, y: 10, duration: 0.55, ease: "power2.out" }, 13.4);
+    </script>
+  </body>
+</html>
