@@ -6,10 +6,3 @@ work-*/
 __pycache__/
 *.pyc
 .htmlook/cache/
-
-# sample_workspaces — generated video artifacts (rebuildable from sources)
-sample_workspaces/**/renders/
-sample_workspaces/**/narration_segments/
-sample_workspaces/**/captured-frames/
-sample_workspaces/**/*.mp4
-sample_workspaces/**/*.wav
