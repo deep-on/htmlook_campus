@@ -1,0 +1,29 @@
+{
+  "schema": "htmlook-profile/v1",
+  "id": "astro-starlight",
+  "name": "Astro Starlight",
+  "version": "0.1.0",
+  "description": "Astro 기반 모던 docs 사이트 (Starlight). MDX + 멀티페이지 문서.",
+  "author": "deep-on",
+  "license": "MIT",
+  "category": "documentation",
+  "tags": ["docs", "astro", "mdx", "site"],
+  "depends": [],
+  "settings_schema": {
+    "type": "object",
+    "properties": {
+      "content_dir": {
+        "type": "string",
+        "default": "src/content/docs"
+      },
+      "site_title": {
+        "type": "string",
+        "default": "My Docs"
+      },
+      "port": {
+        "type": "number",
+        "default": 4321
+      }
+    }
+  }
+}

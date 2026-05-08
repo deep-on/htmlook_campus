@@ -1,0 +1,32 @@
+{
+  "schema": "htmlook-profile/v1",
+  "id": "slidev",
+  "name": "Slidev",
+  "version": "0.1.0",
+  "description": "Vue + Vite 기반 markdown 슬라이드 (slidev). md ↔ live HMR pane pair.",
+  "author": "deep-on",
+  "license": "MIT",
+  "category": "presentation",
+  "tags": ["slides", "vue", "markdown", "vite"],
+  "depends": [],
+  "settings_schema": {
+    "type": "object",
+    "properties": {
+      "deck_path": {
+        "type": "string",
+        "description": "Slide deck entry. Slidev 기본은 slides.md.",
+        "default": "slides.md"
+      },
+      "theme": {
+        "type": "string",
+        "description": "Slidev theme — default / seriph / academic / shibainu 등.",
+        "default": "default"
+      },
+      "port": {
+        "type": "number",
+        "description": "Dev server port. Slidev 기본 3030.",
+        "default": 3030
+      }
+    }
+  }
+}

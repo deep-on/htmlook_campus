@@ -1,0 +1,27 @@
+{
+  "schema": "htmlook-profile/v1",
+  "id": "excalidraw",
+  "name": "Excalidraw",
+  "version": "0.1.0",
+  "description": "손그림 다이어그램 / 화이트보드 — JSON 버전관리, SVG/PNG export.",
+  "author": "deep-on",
+  "license": "MIT",
+  "category": "diagram",
+  "tags": ["diagram", "whiteboard", "sketch"],
+  "depends": [],
+  "settings_schema": {
+    "type": "object",
+    "properties": {
+      "default_dir": {
+        "type": "string",
+        "description": "다이어그램 저장 폴더.",
+        "default": "diagrams/"
+      },
+      "export_dpi": {
+        "type": "number",
+        "description": "PNG export DPI.",
+        "default": 144
+      }
+    }
+  }
+}

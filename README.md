@@ -9,6 +9,27 @@
 
 > 📚 **[`docs/LEARNING_PATH.md`](docs/LEARNING_PATH.md)** — 전체 권장 순서 + 시간 추정
 
+## Heavyweight Profiles (v1.0 카탈로그)
+
+도메인 워크스페이스 sample 외에 **본격 도구 7종** Profile 패키지 — HTMLook Pro
+의 New Workspace Wizard 에서 즉시 선택 / `File → Install Profile from URL` 로
+지원.
+
+| Profile | 카테고리 | 출력 | 도구 라이선스 |
+|---------|---------|------|-------------|
+| [Slidev](profiles/slidev/) | presentation | HTML/PDF slides | MIT |
+| [Quarto](profiles/quarto/) | publishing | PDF/HTML/PPT/book | GPL-2.0 |
+| [D2](profiles/d2/) | diagram | SVG | MPL-2.0 |
+| [Astro Starlight](profiles/astro-starlight/) | documentation | docs site | MIT |
+| [Marimo](profiles/marimo/) | notebook | reactive HTML | Apache-2.0 |
+| [Excalidraw](profiles/excalidraw/) | diagram | JSON/SVG/PNG | MIT |
+| [Manim](profiles/manim/) | educational-animation | mp4 | BSD-3-Clause |
+
+> 각 Profile = `profile.json` + `SKILL.md` + `seed/` 시드 콘텐츠. HTMLook 은 도구를
+> 번들하지 않고 사용 가이드 / Wizard 통합만 제공 (사용자가 도구는 별도 설치).
+
+전체 카탈로그: [`catalog.json`](catalog.json) (CI 자동 갱신).
+
 ### Stage 1 · BASIC (6편) — 처음 보는 사람
 
 HTMLook = 뷰어 본질. 워크스페이스 / AI 모두 없이도 가치. 30 초씩.

@@ -1,0 +1,35 @@
+# Acme 인프라 — Q3 시점
+# `d2 --watch diagram.d2 diagram.svg`
+
+direction: right
+
+internet -> ingress.alb: HTTPS
+ingress: {
+  alb: ALB
+  waf: WAF
+  alb -> waf
+  waf -> backend
+}
+
+backend.shape: hexagon
+backend -> database: read/write
+backend -> cache: read-through
+backend -> queue: events
+
+database: {
+  shape: cylinder
+  label: "PostgreSQL\nprimary"
+}
+cache: {
+  shape: cylinder
+  label: "Redis\ncluster"
+  style.fill: "#dc2626"
+}
+queue: {
+  shape: queue
+  label: "SQS"
+}
+
+queue -> worker
+worker.shape: hexagon
+worker -> database

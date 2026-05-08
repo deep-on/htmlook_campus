@@ -1,0 +1,31 @@
+{
+  "schema": "htmlook-profile/v1",
+  "id": "d2",
+  "name": "D2",
+  "version": "0.1.0",
+  "description": "Terraform-style 모던 다이어그램 (D2). .d2 ↔ SVG live pane pair.",
+  "author": "deep-on",
+  "license": "MIT",
+  "category": "diagram",
+  "tags": ["diagram", "architecture", "svg", "terraform-style"],
+  "depends": [],
+  "settings_schema": {
+    "type": "object",
+    "properties": {
+      "entry": {
+        "type": "string",
+        "default": "diagram.d2"
+      },
+      "layout": {
+        "type": "string",
+        "enum": ["dagre", "elk", "tala"],
+        "default": "elk"
+      },
+      "theme": {
+        "type": "string",
+        "default": "0",
+        "description": "D2 theme id (0=default, 1=neutral grey, ...). https://d2lang.com/tour/themes"
+      }
+    }
+  }
+}

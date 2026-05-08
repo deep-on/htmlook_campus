@@ -1,0 +1,35 @@
+name: build catalog
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'profiles/**'
+      - 'sample_workspaces/**'
+      - 'scripts/build-catalog.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Build catalog.json
+        run: node scripts/build-catalog.mjs > catalog.json
+      - name: Commit if changed
+        run: |
+          if git diff --quiet catalog.json; then
+            echo "catalog.json unchanged"
+          else
+            git config user.name 'htmlook-bot'
+            git config user.email 'bot@deep-on.com'
+            git add catalog.json
+            git commit -m "chore(catalog): rebuild from profiles + sample_workspaces"
+            git push
+          fi

@@ -1,0 +1,30 @@
+{
+  "schema": "htmlook-profile/v1",
+  "id": "marimo",
+  "name": "Marimo",
+  "version": "0.1.0",
+  "description": "Reactive Python notebook (.py-native, Jupyter alt). 셀 의존 자동 추적.",
+  "author": "deep-on",
+  "license": "MIT",
+  "category": "notebook",
+  "tags": ["python", "notebook", "data", "reactive"],
+  "depends": [],
+  "settings_schema": {
+    "type": "object",
+    "properties": {
+      "entry": {
+        "type": "string",
+        "default": "notebook.py"
+      },
+      "port": {
+        "type": "number",
+        "default": 2718
+      },
+      "mode": {
+        "type": "string",
+        "enum": ["edit", "run", "view"],
+        "default": "edit"
+      }
+    }
+  }
+}

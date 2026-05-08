@@ -1,0 +1,46 @@
+---
+title: "Acme Q3 매출 분석"
+author: "Vincent Kim"
+date: "2026-05-08"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    code-fold: true
+  pdf:
+    documentclass: article
+    geometry: margin=1in
+bibliography: references.bib
+---
+
+## Executive Summary
+
+Q3 매출은 전 분기 대비 **+21%** 증가했다 [@acme2026q3]. 주된 동력은
+모바일 onboarding 단축이며, retention 도 함께 상승했다.
+
+## 지표 상세
+
+| 지표         | Q2     | Q3     | Δ      |
+|--------------|--------|--------|--------|
+| 매출 (M USD) | 4.20   | 5.10   | +21%   |
+| 신규 가입자  | 8,400  | 11,200 | +33%   |
+| NPS          | 42     | 48     | +6     |
+
+## 가설 검증
+
+> Q3 매출 상승은 모바일 onboarding 단축에 의해 주도되었다.
+
+- onboarding 단계: 5단계 → 2단계 (2026-07-15 배포)
+- 배포 후 4주간 신규 가입자 +33%
+- 코호트 분석은 §3 참조
+
+## 다음 분기
+
+- DACH 지역 진출 — 1,500 가입자 목표
+- 엔터프라이즈 티어 — ARR $2.4M 목표
+- 모바일 retention — +15% 개선 목표
+
+## 참고문헌
+
+::: {#refs}
+:::

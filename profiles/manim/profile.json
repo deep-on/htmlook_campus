@@ -1,0 +1,36 @@
+{
+  "schema": "htmlook-profile/v1",
+  "id": "manim",
+  "name": "Manim",
+  "version": "0.1.0",
+  "description": "수학 / 과학 애니메이션 (ManimCommunity). .py → mp4 video. 3Blue1Brown 시그니처.",
+  "author": "deep-on",
+  "license": "MIT",
+  "category": "educational-animation",
+  "tags": ["animation", "math", "science", "education"],
+  "depends": [],
+  "settings_schema": {
+    "type": "object",
+    "properties": {
+      "scene_file": {
+        "type": "string",
+        "default": "scene.py"
+      },
+      "quality": {
+        "type": "string",
+        "enum": ["l", "m", "h", "k"],
+        "default": "m",
+        "description": "low / medium / high (1080p) / 4k"
+      },
+      "frame_rate": {
+        "type": "number",
+        "default": 30
+      },
+      "preview": {
+        "type": "boolean",
+        "default": true,
+        "description": "렌더 후 자동 재생 (-p)"
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "htmlook-profile/v1",
+  "id": "quarto",
+  "name": "Quarto",
+  "version": "0.1.0",
+  "description": "Posit Quarto 학술/데이터 출판 — .qmd → PDF / HTML / PPT / book.",
+  "author": "deep-on",
+  "license": "MIT",
+  "category": "publishing",
+  "tags": ["academic", "publishing", "pdf", "data"],
+  "depends": [],
+  "settings_schema": {
+    "type": "object",
+    "properties": {
+      "entry": {
+        "type": "string",
+        "description": "Quarto 진입 문서. project 모드면 _quarto.yml.",
+        "default": "index.qmd"
+      },
+      "output_format": {
+        "type": "string",
+        "enum": ["html", "pdf", "docx", "pptx", "revealjs", "book"],
+        "default": "html"
+      },
+      "engine": {
+        "type": "string",
+        "enum": ["jupyter", "knitr", "markdown"],
+        "default": "markdown"
+      }
+    }
+  }
+}
