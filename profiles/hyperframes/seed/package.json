@@ -1,0 +1,12 @@
+{
+  "name": "hyperframes-starter",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "render": "hyperframes render",
+    "lint": "hyperframes lint"
+  },
+  "dependencies": {
+    "hyperframes": "latest"
+  }
+}

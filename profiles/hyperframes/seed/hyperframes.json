@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "resolution": "1920x1080",
+  "fps": 30,
+  "output_dir": "renders",
+  "narration": {
+    "enabled": true,
+    "voice": "af_nova",
+    "speed": 1.0,
+    "boost_db": 1.4
+  },
+  "scenes": [
+    "scenes/01-hook.md",
+    "scenes/02-step.md",
+    "scenes/03-cta.md"
+  ]
+}

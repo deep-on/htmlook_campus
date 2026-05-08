@@ -52,6 +52,22 @@
     },
     {
       "type": "profile",
+      "id": "hyperframes",
+      "name": "HyperFrames",
+      "category": "motion-graphics",
+      "description": "kinetic typography 영상 합성 (HyperFrames). md/json scene → mp4 자동 렌더 + Kokoro TTS narration mux.",
+      "tags": [
+        "video",
+        "motion",
+        "narration",
+        "kinetic-typography"
+      ],
+      "size_kb": 5,
+      "path": "profiles/hyperframes/",
+      "license": "MIT"
+    },
+    {
+      "type": "profile",
       "id": "manim",
       "name": "Manim",
       "category": "educational-animation",

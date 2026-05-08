@@ -1,0 +1,37 @@
+{
+  "schema": "htmlook-profile/v1",
+  "id": "hyperframes",
+  "name": "HyperFrames",
+  "version": "0.1.0",
+  "description": "kinetic typography 영상 합성 (HyperFrames). md/json scene → mp4 자동 렌더 + Kokoro TTS narration mux.",
+  "author": "deep-on",
+  "license": "MIT",
+  "category": "motion-graphics",
+  "tags": ["video", "motion", "narration", "kinetic-typography"],
+  "depends": [],
+  "settings_schema": {
+    "type": "object",
+    "properties": {
+      "resolution": {
+        "type": "string",
+        "enum": ["1920x1080", "1280x720", "1080x1920", "3840x2160"],
+        "default": "1920x1080"
+      },
+      "fps": {
+        "type": "number",
+        "enum": [24, 25, 30, 60],
+        "default": 30
+      },
+      "output_dir": {
+        "type": "string",
+        "default": "renders",
+        "description": "렌더된 mp4 저장 위치 (workspace 상대 경로)."
+      },
+      "narration": {
+        "type": "boolean",
+        "default": true,
+        "description": "Kokoro TTS 내레이션 자동 합성."
+      }
+    }
+  }
+}
