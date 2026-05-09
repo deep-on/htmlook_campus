@@ -417,6 +417,66 @@ export default {
       return new Response('ok (unhandled)', { status: 200 });
     }
 
+    // ─────────────────────────────────────────────────────────────
+    // Paddle Customer Portal session URL.
+    //   GET /portal/<email>
+    //   1. Look up the customer_id from the user's purchase record
+    //   2. Hit Paddle's POST /customers/{id}/portal-sessions API
+    //   3. Return { url } so the desktop app can open_external it
+    //   The returned portal URL lets the customer cancel, change
+    //   payment method, view invoices, request refund — all via
+    //   Paddle's hosted UI, no per-feature build on our side.
+    // ─────────────────────────────────────────────────────────────
+    m = url.pathname.match(/^\/portal\/([^/]+)$/);
+    if (m && request.method === 'GET') {
+      const email = decodeURIComponent(m[1]).toLowerCase();
+      const publicCors = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      };
+      const raw = await env.COUNTERS.get(`purchase:${email}`);
+      if (!raw) {
+        return Response.json({ error: 'no purchase record for email' }, { status: 404, headers: publicCors });
+      }
+      const record = JSON.parse(raw);
+      const customerId = record.customer_id;
+      if (!customerId || customerId === 'manual') {
+        // Manual KV write (admin unlock) has no real Paddle customer
+        // ID. Fall back to a contact-support response so the desktop
+        // app can show "email support to manage" instead of a 500.
+        return Response.json({ error: 'no paddle customer id', fallback: 'mailto:support@htmlook.app' }, { status: 422, headers: publicCors });
+      }
+      const apiKey = env.PADDLE_API_KEY ?? '';
+      if (!apiKey) {
+        return Response.json({ error: 'paddle api key not configured' }, { status: 503, headers: publicCors });
+      }
+      try {
+        const resp = await fetch(`https://api.paddle.com/customers/${customerId}/portal-sessions`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: '{}',
+        });
+        if (!resp.ok) {
+          const errText = await resp.text();
+          return Response.json({ error: `paddle api ${resp.status}`, detail: errText.slice(0, 500) }, { status: 502, headers: publicCors });
+        }
+        const body = await resp.json();
+        const portalUrl = body?.data?.urls?.general?.overview
+                       ?? body?.data?.url
+                       ?? '';
+        if (!portalUrl) {
+          return Response.json({ error: 'no portal url in response', detail: JSON.stringify(body).slice(0, 500) }, { status: 502, headers: publicCors });
+        }
+        return Response.json({ url: portalUrl }, { headers: publicCors });
+      } catch (e) {
+        return Response.json({ error: 'fetch failed', detail: String(e).slice(0, 200) }, { status: 502, headers: publicCors });
+      }
+    }
+
     m = url.pathname.match(/^\/purchase\/([^/]+)$/);
     if (m && request.method === 'GET') {
       // Read-only license-status lookup. Used by every HTMLook desktop
