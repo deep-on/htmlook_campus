@@ -672,7 +672,7 @@ export default {
     //     - latest 20 webhook_unresolved + webhook_unknown crumbs
     //       so the operator can sanity-check what's leaking.
     // ─────────────────────────────────────────────────────────────
-    if (url.pathname === '/admin/stats' || url.pathname === '/admin/recent') {
+    if (url.pathname === '/admin/stats' || url.pathname === '/admin/recent' || url.pathname === '/admin/test-cron') {
       const adminToken = env.ADMIN_TOKEN ?? '';
       const auth = request.headers.get('Authorization') ?? '';
       const presented = auth.startsWith('Bearer ') ? auth.slice(7) : (url.searchParams.get('token') ?? '');
