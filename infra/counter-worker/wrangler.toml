@@ -9,8 +9,8 @@ compatibility_date = "2026-05-08"
 # Then paste the id below.
 [[kv_namespaces]]
 binding = "COUNTERS"
-id = "REPLACE_ME"  # ← npx wrangler kv:namespace create COUNTERS 결과
-preview_id = "REPLACE_ME_PREVIEW"
+id = "7126f824c62340d88bd57e7ad7d88f77"
+preview_id = "4f1894ee11724bf4a9078e2c6e23ab52"
 
 # CORS-safe — htmlook.app + localhost.
 [vars]
