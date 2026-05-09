@@ -246,13 +246,23 @@ export default {
 
     m = url.pathname.match(/^\/purchase\/([^/]+)$/);
     if (m && request.method === 'GET') {
+      // Read-only license-status lookup. Used by every HTMLook desktop
+      // / mobile build to verify a purchase after browser checkout.
+      // Explicitly allow ALL origins (including `tauri://localhost`
+      // and future iOS/Android webviews) — the response carries no
+      // secret data beyond the email already in the request URL.
       const email = decodeURIComponent(m[1]).toLowerCase();
       const raw = await env.COUNTERS.get(`purchase:${email}`);
+      const publicCors = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+      };
       if (!raw) {
-        return Response.json({ email, status: 'none' }, { headers: cors });
+        return Response.json({ email, status: 'none' }, { headers: publicCors });
       }
       const record = JSON.parse(raw);
-      return Response.json(record, { headers: { ...cors, 'Cache-Control': 'private, max-age=30' } });
+      return Response.json(record, { headers: { ...publicCors, 'Cache-Control': 'private, max-age=30' } });
     }
 
     return new Response('not found', { status: 404, headers: cors });
