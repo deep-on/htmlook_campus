@@ -113,6 +113,99 @@ export default {
       }, { headers: { ...cors, 'Cache-Control': 'private, max-age=3600' } });
     }
 
+    // ─────────────────────────────────────────────────────────────
+    // Paddle webhook → KV purchase record.
+    //   POST /paddle/webhook
+    //     Body: Paddle Notification payload (JSON)
+    //     Header: Paddle-Signature: ts=...;h1=...
+    //   Verifies HMAC signature using PADDLE_WEBHOOK_SECRET env, then
+    //   for `transaction.completed` writes:
+    //     KV `purchase:<email>` → { priceId, ts, status: 'active',
+    //                                customer_id, transaction_id }
+    //
+    //   Privacy: stores email + Paddle IDs only, no card data
+    //   (Paddle never forwards PCI data to webhooks).
+    //
+    //   GET /purchase/<email>
+    //     Returns the stored purchase record so the desktop app can
+    //     poll after the user completes browser checkout. Email is
+    //     URL-encoded.
+    // ─────────────────────────────────────────────────────────────
+    if (url.pathname === '/paddle/webhook' && request.method === 'POST') {
+      const sig = request.headers.get('Paddle-Signature') ?? '';
+      const secret = env.PADDLE_WEBHOOK_SECRET ?? '';
+      const raw = await request.text();
+      if (!secret) {
+        return new Response('webhook secret not configured', { status: 500 });
+      }
+      // Paddle signature: "ts=<unix>;h1=<hex>". h1 = HMAC_SHA256(secret, ts + ":" + body).
+      const tsMatch = sig.match(/ts=(\d+)/);
+      const h1Match = sig.match(/h1=([a-f0-9]+)/);
+      if (!tsMatch || !h1Match) {
+        return new Response('bad signature header', { status: 400 });
+      }
+      const ts = tsMatch[1];
+      const h1 = h1Match[1];
+      const enc = new TextEncoder();
+      const key = await crypto.subtle.importKey(
+        'raw', enc.encode(secret),
+        { name: 'HMAC', hash: 'SHA-256' },
+        false, ['sign'],
+      );
+      const mac = await crypto.subtle.sign('HMAC', key, enc.encode(`${ts}:${raw}`));
+      const macHex = Array.from(new Uint8Array(mac)).map(b => b.toString(16).padStart(2, '0')).join('');
+      if (macHex !== h1) {
+        return new Response('signature mismatch', { status: 401 });
+      }
+      // Verified. Parse + record.
+      let evt;
+      try { evt = JSON.parse(raw); } catch { return new Response('bad json', { status: 400 }); }
+      const eventType = evt?.event_type ?? '';
+      if (eventType === 'transaction.completed' || eventType === 'subscription.created' || eventType === 'subscription.activated') {
+        const email = evt?.data?.customer?.email
+                  ?? evt?.data?.billing_details?.email
+                  ?? '';
+        const priceId = evt?.data?.items?.[0]?.price?.id
+                    ?? evt?.data?.items?.[0]?.price_id
+                    ?? '';
+        if (email) {
+          const record = {
+            email,
+            priceId,
+            ts: Math.floor(Date.now() / 1000),
+            status: 'active',
+            customer_id: evt?.data?.customer_id ?? '',
+            transaction_id: evt?.data?.id ?? '',
+            event_type: eventType,
+          };
+          await env.COUNTERS.put(`purchase:${email.toLowerCase()}`, JSON.stringify(record));
+        }
+      } else if (eventType === 'subscription.canceled' || eventType === 'subscription.cancelled' || eventType === 'transaction.payment_failed') {
+        const email = evt?.data?.customer?.email ?? '';
+        if (email) {
+          const cur = await env.COUNTERS.get(`purchase:${email.toLowerCase()}`);
+          if (cur) {
+            const r = JSON.parse(cur);
+            r.status = 'canceled';
+            r.ts = Math.floor(Date.now() / 1000);
+            await env.COUNTERS.put(`purchase:${email.toLowerCase()}`, JSON.stringify(r));
+          }
+        }
+      }
+      return new Response('ok', { status: 200 });
+    }
+
+    m = url.pathname.match(/^\/purchase\/([^/]+)$/);
+    if (m && request.method === 'GET') {
+      const email = decodeURIComponent(m[1]).toLowerCase();
+      const raw = await env.COUNTERS.get(`purchase:${email}`);
+      if (!raw) {
+        return Response.json({ email, status: 'none' }, { headers: cors });
+      }
+      const record = JSON.parse(raw);
+      return Response.json(record, { headers: { ...cors, 'Cache-Control': 'private, max-age=30' } });
+    }
+
     return new Response('not found', { status: 404, headers: cors });
   },
 };
