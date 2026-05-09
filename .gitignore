@@ -6,3 +6,4 @@ work-*/
 __pycache__/
 *.pyc
 .htmlook/cache/
+docs/seed-proposals.html
