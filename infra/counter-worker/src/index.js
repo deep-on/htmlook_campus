@@ -136,7 +136,9 @@ export default {
       const secret = env.PADDLE_WEBHOOK_SECRET ?? '';
       const raw = await request.text();
       if (!secret) {
-        return new Response('webhook secret not configured', { status: 500 });
+        // Worker mis-configured — return 5xx so Paddle keeps retrying
+        // until secret is set (don't silently lose events).
+        return new Response('webhook secret not configured', { status: 503 });
       }
       // Paddle signature: "ts=<unix>;h1=<hex>". h1 = HMAC_SHA256(secret, ts + ":" + body).
       const tsMatch = sig.match(/ts=(\d+)/);
@@ -146,6 +148,14 @@ export default {
       }
       const ts = tsMatch[1];
       const h1 = h1Match[1];
+      // Replay protection: reject events with timestamps > 5min off
+      // from now. Paddle delivers within seconds; anything older is
+      // either a captured-and-replayed payload or a clock-drift bug.
+      const tsNum = parseInt(ts, 10);
+      const nowSec = Math.floor(Date.now() / 1000);
+      if (Number.isFinite(tsNum) && Math.abs(nowSec - tsNum) > 300) {
+        return new Response('signature timestamp too old/new', { status: 401 });
+      }
       const enc = new TextEncoder();
       const key = await crypto.subtle.importKey(
         'raw', enc.encode(secret),
@@ -161,6 +171,15 @@ export default {
       let evt;
       try { evt = JSON.parse(raw); } catch { return new Response('bad json', { status: 400 }); }
       const eventType = evt?.event_type ?? '';
+
+      // Source-of-truth event time from Paddle. Used for KV ordering
+      // (out-of-order webhook protection) instead of Worker's wall
+      // clock. ISO-8601 string → unix seconds.
+      const eventOccurredAt = (() => {
+        const iso = evt?.occurred_at ?? evt?.data?.occurred_at ?? '';
+        const t = iso ? Math.floor(Date.parse(iso) / 1000) : nowSec;
+        return Number.isFinite(t) ? t : nowSec;
+      })();
 
       // Paddle Billing v2 webhooks reference customer by `customer_id`
       // only — email is NOT in the payload. Look it up via the Paddle
@@ -195,6 +214,22 @@ export default {
         } catch { return ''; }
       }
 
+      // Out-of-order webhook protection — only apply incoming events
+      // whose Paddle-side `occurred_at` is newer than the last record's
+      // `occurred_at`. Returns the existing record if older event
+      // received, otherwise null + caller proceeds with new write.
+      async function shouldSkipForOrder(emailKey, incomingOccurred) {
+        const cur = await env.COUNTERS.get(emailKey);
+        if (!cur) return null;
+        try {
+          const r = JSON.parse(cur);
+          if (typeof r.occurred_at === 'number' && r.occurred_at > incomingOccurred) {
+            return r; // skip — KV has newer
+          }
+        } catch { /* fallthrough */ }
+        return null;
+      }
+
       if (eventType === 'customer.created' || eventType === 'customer.updated') {
         const email = evt?.data?.email ?? '';
         const customerId = evt?.data?.id ?? '';
@@ -204,65 +239,217 @@ export default {
         return new Response('ok', { status: 200 });
       }
 
+      // ── ACTIVATE events ──────────────────────────────────────────
       if (eventType === 'transaction.completed' || eventType === 'subscription.created' || eventType === 'subscription.activated') {
         const email = await resolveEmail(evt?.data ?? {});
         const priceId = evt?.data?.items?.[0]?.price?.id
                     ?? evt?.data?.items?.[0]?.price_id
                     ?? '';
-        if (email) {
-          const record = {
-            email,
-            priceId,
-            ts: Math.floor(Date.now() / 1000),
-            status: 'active',
-            customer_id: evt?.data?.customer_id ?? '',
-            transaction_id: evt?.data?.id ?? '',
-            event_type: eventType,
-          };
-          await env.COUNTERS.put(`purchase:${email.toLowerCase()}`, JSON.stringify(record));
-        } else {
-          // Diagnostic crumb so we can audit why an event landed
-          // without resolvable email. Short TTL so it doesn't fill KV.
+        if (!email) {
+          // Tell Paddle to retry; also leave diagnostic crumb so we
+          // can audit unresolved events without enabling tail.
           await env.COUNTERS.put(
             `webhook_unresolved:${Date.now()}`,
             JSON.stringify({ eventType, customer_id: evt?.data?.customer_id, raw_excerpt: raw.slice(0, 1000) }),
             { expirationTtl: 7 * 86400 },
           );
+          return new Response('email unresolved (retry)', { status: 503 });
         }
-      } else if (eventType === 'subscription.canceled' || eventType === 'subscription.cancelled' || eventType === 'transaction.payment_failed') {
-        const email = await resolveEmail(evt?.data ?? {});
-        if (email) {
-          const cur = await env.COUNTERS.get(`purchase:${email.toLowerCase()}`);
-          if (cur) {
-            const r = JSON.parse(cur);
-            r.status = 'canceled';
-            r.ts = Math.floor(Date.now() / 1000);
-            await env.COUNTERS.put(`purchase:${email.toLowerCase()}`, JSON.stringify(r));
-          }
-        }
+        const emailKey = `purchase:${email.toLowerCase()}`;
+        const skip = await shouldSkipForOrder(emailKey, eventOccurredAt);
+        if (skip) return new Response('older event ignored', { status: 200 });
+        // Period end: from subscription event. transaction.completed
+        // doesn't carry period info but should still mark active.
+        const currentPeriodEnd = (() => {
+          const iso = evt?.data?.current_billing_period?.ends_at ?? '';
+          const t = iso ? Math.floor(Date.parse(iso) / 1000) : 0;
+          return Number.isFinite(t) ? t : 0;
+        })();
+        const record = {
+          email,
+          priceId,
+          ts: nowSec,
+          occurred_at: eventOccurredAt,
+          status: 'active',
+          current_period_end: currentPeriodEnd,
+          customer_id: evt?.data?.customer_id ?? '',
+          transaction_id: evt?.data?.id ?? '',
+          event_type: eventType,
+        };
+        await env.COUNTERS.put(emailKey, JSON.stringify(record));
+        return new Response('ok', { status: 200 });
       }
-      return new Response('ok', { status: 200 });
+
+      // ── CANCEL-AT-PERIOD-END events (still active until effective_at) ──
+      // Paddle's standard "cancel" event when user clicks Cancel in the
+      // customer portal: scheduled_change.action='cancel' with
+      // scheduled_change.effective_at in the future.
+      if (eventType === 'subscription.canceled' || eventType === 'subscription.cancelled') {
+        const email = await resolveEmail(evt?.data ?? {});
+        if (!email) {
+          return new Response('email unresolved (retry)', { status: 503 });
+        }
+        const emailKey = `purchase:${email.toLowerCase()}`;
+        const skip = await shouldSkipForOrder(emailKey, eventOccurredAt);
+        if (skip) return new Response('older event ignored', { status: 200 });
+        const cur = await env.COUNTERS.get(emailKey);
+        const r = cur ? JSON.parse(cur) : { email };
+        // Two flavors of cancel:
+        //   - cancel-at-period-end: subscription.status === 'active'
+        //     and scheduled_change.effective_at points to next billing.
+        //     User keeps Pro until that moment.
+        //   - immediate cancel: subscription.status === 'canceled' and
+        //     no scheduled_change (or effective_at = now). User loses
+        //     Pro immediately (refund / chargeback / dunning end).
+        const subStatus = evt?.data?.status ?? '';
+        const scheduledChange = evt?.data?.scheduled_change ?? null;
+        const effectiveIso = scheduledChange?.effective_at
+                          ?? evt?.data?.canceled_at
+                          ?? '';
+        const effectiveAt = effectiveIso ? Math.floor(Date.parse(effectiveIso) / 1000) : nowSec;
+        if (subStatus === 'active' && scheduledChange?.action === 'cancel' && effectiveAt > nowSec) {
+          r.status = 'ending';
+          r.effective_at = effectiveAt;
+          r.canceled_at = nowSec;
+          r.ended_reason = 'user_canceled';
+        } else {
+          r.status = 'canceled';
+          r.effective_at = effectiveAt;
+          r.canceled_at = nowSec;
+          r.ended_reason = r.ended_reason ?? 'user_canceled';
+        }
+        r.ts = nowSec;
+        r.occurred_at = eventOccurredAt;
+        r.event_type = eventType;
+        await env.COUNTERS.put(emailKey, JSON.stringify(r));
+        return new Response('ok', { status: 200 });
+      }
+
+      // ── PAUSE / RESUME ───────────────────────────────────────────
+      if (eventType === 'subscription.paused') {
+        const email = await resolveEmail(evt?.data ?? {});
+        if (!email) return new Response('email unresolved (retry)', { status: 503 });
+        const emailKey = `purchase:${email.toLowerCase()}`;
+        const skip = await shouldSkipForOrder(emailKey, eventOccurredAt);
+        if (skip) return new Response('older event ignored', { status: 200 });
+        const cur = await env.COUNTERS.get(emailKey);
+        const r = cur ? JSON.parse(cur) : { email };
+        r.status = 'canceled'; // paused = no Pro privilege
+        r.ts = nowSec;
+        r.occurred_at = eventOccurredAt;
+        r.ended_reason = 'paused';
+        r.event_type = eventType;
+        await env.COUNTERS.put(emailKey, JSON.stringify(r));
+        return new Response('ok', { status: 200 });
+      }
+      if (eventType === 'subscription.resumed') {
+        const email = await resolveEmail(evt?.data ?? {});
+        if (!email) return new Response('email unresolved (retry)', { status: 503 });
+        const emailKey = `purchase:${email.toLowerCase()}`;
+        const skip = await shouldSkipForOrder(emailKey, eventOccurredAt);
+        if (skip) return new Response('older event ignored', { status: 200 });
+        const cur = await env.COUNTERS.get(emailKey);
+        const r = cur ? JSON.parse(cur) : { email };
+        r.status = 'active';
+        r.ts = nowSec;
+        r.occurred_at = eventOccurredAt;
+        r.ended_reason = null;
+        r.event_type = eventType;
+        await env.COUNTERS.put(emailKey, JSON.stringify(r));
+        return new Response('ok', { status: 200 });
+      }
+
+      // ── DUNNING — payment failed but not yet given up ────────────
+      // Don't change status; Paddle's dunning will retry. If dunning
+      // ultimately fails, subscription.canceled will follow.
+      if (eventType === 'transaction.payment_failed' || eventType === 'subscription.past_due') {
+        const email = await resolveEmail(evt?.data ?? {});
+        if (!email) return new Response('email unresolved (retry)', { status: 503 });
+        const emailKey = `purchase:${email.toLowerCase()}`;
+        const cur = await env.COUNTERS.get(emailKey);
+        if (cur) {
+          const r = JSON.parse(cur);
+          r.dunning = true;
+          r.dunning_started_at = r.dunning_started_at ?? nowSec;
+          r.event_type = eventType;
+          // Don't bump ts/occurred_at — keep ordering for activate/cancel
+          await env.COUNTERS.put(emailKey, JSON.stringify(r));
+        }
+        return new Response('ok', { status: 200 });
+      }
+
+      // ── REFUND / CHARGEBACK — immediate cancel ───────────────────
+      // Paddle Billing v2 emits adjustment.created with action='refund'
+      // or transaction.refunded; chargebacks similarly. Both flip the
+      // user to canceled immediately regardless of period.
+      if (eventType === 'transaction.refunded' || eventType === 'adjustment.created' || eventType === 'transaction.chargeback') {
+        // adjustment.created has multiple actions (refund, credit, ...).
+        // Only refund + chargeback flip status.
+        const action = evt?.data?.action ?? '';
+        if (eventType === 'adjustment.created' && action !== 'refund' && action !== 'chargeback') {
+          return new Response('ok (non-refund adjustment)', { status: 200 });
+        }
+        const email = await resolveEmail(evt?.data ?? {});
+        if (!email) return new Response('email unresolved (retry)', { status: 503 });
+        const emailKey = `purchase:${email.toLowerCase()}`;
+        const skip = await shouldSkipForOrder(emailKey, eventOccurredAt);
+        if (skip) return new Response('older event ignored', { status: 200 });
+        const cur = await env.COUNTERS.get(emailKey);
+        const r = cur ? JSON.parse(cur) : { email };
+        r.status = 'canceled';
+        r.effective_at = nowSec;
+        r.canceled_at = nowSec;
+        r.ended_reason = (eventType === 'transaction.chargeback' || action === 'chargeback') ? 'chargeback' : 'refunded';
+        r.ts = nowSec;
+        r.occurred_at = eventOccurredAt;
+        r.event_type = eventType;
+        await env.COUNTERS.put(emailKey, JSON.stringify(r));
+        return new Response('ok', { status: 200 });
+      }
+
+      // Unknown event — still 200 so Paddle doesn't retry, but log
+      // for future event-name auditing.
+      await env.COUNTERS.put(
+        `webhook_unknown:${Date.now()}`,
+        JSON.stringify({ eventType, raw_excerpt: raw.slice(0, 500) }),
+        { expirationTtl: 30 * 86400 },
+      );
+      return new Response('ok (unhandled)', { status: 200 });
     }
 
     m = url.pathname.match(/^\/purchase\/([^/]+)$/);
     if (m && request.method === 'GET') {
       // Read-only license-status lookup. Used by every HTMLook desktop
       // / mobile build to verify a purchase after browser checkout.
-      // Explicitly allow ALL origins (including `tauri://localhost`
-      // and future iOS/Android webviews) — the response carries no
-      // secret data beyond the email already in the request URL.
       const email = decodeURIComponent(m[1]).toLowerCase();
       const raw = await env.COUNTERS.get(`purchase:${email}`);
       const publicCors = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
       };
       if (!raw) {
         return Response.json({ email, status: 'none' }, { headers: publicCors });
       }
       const record = JSON.parse(raw);
-      return Response.json(record, { headers: { ...publicCors, 'Cache-Control': 'private, max-age=30' } });
+      // Privacy-minimised public response — only the fields the desktop
+      // client actually needs to gate features. customer_id and
+      // transaction_id are kept server-side so an attacker who probes
+      // arbitrary emails can't enumerate Paddle internal IDs. Edge
+      // cache lowered from 30 s to 5 s so a freshly-paid user clicking
+      // Verify within 30 s of payment isn't served stale 'none'.
+      const minimal = {
+        email: record.email,
+        status: record.status,
+        priceId: record.priceId,
+        ts: record.ts,
+        occurred_at: record.occurred_at,
+        effective_at: record.effective_at,
+        canceled_at: record.canceled_at,
+        ended_reason: record.ended_reason,
+        event_type: record.event_type,
+      };
+      return Response.json(minimal, { headers: { ...publicCors, 'Cache-Control': 'private, max-age=5' } });
     }
 
     return new Response('not found', { status: 404, headers: cors });
