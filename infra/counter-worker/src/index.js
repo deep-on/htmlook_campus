@@ -21,6 +21,123 @@ async function increment(env, key) {
   return next;
 }
 
+async function listAll(env, prefix) {
+  const out = [];
+  let cursor;
+  do {
+    const r = await env.COUNTERS.list({ prefix, cursor });
+    for (const k of r.keys) out.push(k.name);
+    cursor = r.list_complete ? null : r.cursor;
+  } while (cursor);
+  return out;
+}
+
+/**
+ * Compute the monitoring digest + send via Resend. Shared between
+ * the wrangler.toml cron trigger and the /admin/test-cron endpoint.
+ * Returns { sent, status, attention } so the test endpoint can echo
+ * the result.
+ */
+async function runDailyDigest(env) {
+  if (!env.RESEND_API_KEY || !env.ALERT_EMAIL) {
+    return { sent: false, reason: 'RESEND_API_KEY or ALERT_EMAIL not set' };
+  }
+  const purchaseKeys = await listAll(env, 'purchase:');
+  const stats = { active: 0, ending: 0, canceled: 0, dunning: 0, refunded: 0, paused: 0, manual: 0 };
+  for (const k of purchaseKeys) {
+    const raw = await env.COUNTERS.get(k);
+    if (!raw) continue;
+    try {
+      const r = JSON.parse(raw);
+      if (r.status === 'active') stats.active += 1;
+      else if (r.status === 'ending') stats.ending += 1;
+      else if (r.status === 'canceled') stats.canceled += 1;
+      if (r.dunning) stats.dunning += 1;
+      if (r.ended_reason === 'refunded') stats.refunded += 1;
+      if (r.ended_reason === 'paused') stats.paused += 1;
+      if (r.customer_id === 'manual' || r.event_type === 'manual.write') stats.manual += 1;
+    } catch { /* ignore */ }
+  }
+  const trials = (await listAll(env, 'trial:')).length;
+  const customers = (await listAll(env, 'cust:')).length;
+  const unresolvedKeys = await listAll(env, 'webhook_unresolved:');
+  const unknownKeys = await listAll(env, 'webhook_unknown:');
+  const unresolved = unresolvedKeys.length;
+  const unknown = unknownKeys.length;
+
+  async function tail(keys, n) {
+    const slice = keys.slice(-n);
+    const out = [];
+    for (const k of slice) {
+      const raw = await env.COUNTERS.get(k);
+      try { out.push({ key: k, value: JSON.parse(raw) }); }
+      catch { out.push({ key: k, value: raw }); }
+    }
+    return out;
+  }
+  const unresolvedSamples = unresolved ? await tail(unresolvedKeys, 5) : [];
+  const unknownSamples = unknown ? await tail(unknownKeys, 5) : [];
+
+  const attention = unresolved > 0 || unknown > 0 || stats.dunning > 0;
+  const today = new Date().toISOString().slice(0, 10);
+  const subject = `${attention ? '[ATTENTION] ' : ''}HTMLook daily stats — ${today}`;
+
+  const lines = [
+    `HTMLook daily monitoring digest — ${today}`,
+    ``,
+    `Purchases (total ${purchaseKeys.length})`,
+    `  active     : ${stats.active}`,
+    `  ending     : ${stats.ending}    ← cancel-at-period-end`,
+    `  canceled   : ${stats.canceled}`,
+    `  dunning    : ${stats.dunning}    ← failed-payment retry window`,
+    `  refunded   : ${stats.refunded}`,
+    `  paused     : ${stats.paused}`,
+    `  manual     : ${stats.manual}    ← admin/wrangler-written`,
+    ``,
+    `Trials in flight   : ${trials}`,
+    `Customer email cache: ${customers}`,
+    ``,
+    `Webhook health`,
+    `  unresolved (7d) : ${unresolved}    ${unresolved === 0 ? '✓' : '⚠ check Paddle API key'}`,
+    `  unknown    (30d): ${unknown}    ${unknown === 0 ? '✓' : '⚠ new Paddle event type appeared'}`,
+  ];
+  if (unresolvedSamples.length) {
+    lines.push(``, `Recent unresolved samples:`);
+    for (const s of unresolvedSamples) {
+      lines.push(`  ${s.key}`);
+      lines.push(`    ${JSON.stringify(s.value).slice(0, 240)}`);
+    }
+  }
+  if (unknownSamples.length) {
+    lines.push(``, `Recent unknown samples:`);
+    for (const s of unknownSamples) {
+      lines.push(`  ${s.key}`);
+      lines.push(`    ${JSON.stringify(s.value).slice(0, 240)}`);
+    }
+  }
+  lines.push(``, `Generated: ${new Date().toISOString()}`);
+  const text = lines.join('\n');
+
+  const fromAddr = env.ALERT_FROM ?? 'HTMLook Monitor <monitor@htmlook.app>';
+  const resp = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: fromAddr,
+      to: env.ALERT_EMAIL,
+      subject,
+      text,
+    }),
+  });
+  const ok = resp.ok;
+  let errBody = '';
+  if (!ok) errBody = await resp.text();
+  return { sent: ok, status: resp.status, attention, subject, error: ok ? null : errBody.slice(0, 500) };
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -610,6 +727,13 @@ export default {
           headers: { 'Cache-Control': 'no-store' },
         });
       }
+      if (url.pathname === '/admin/test-cron') {
+        // Manually trigger the daily digest email — useful right after
+        // setting RESEND_API_KEY to verify the pipe end-to-end without
+        // waiting until 09:30 KST.
+        const result = await runDailyDigest(env);
+        return Response.json(result, { headers: { 'Cache-Control': 'no-store' } });
+      }
       if (url.pathname === '/admin/recent') {
         async function listRecent(prefix, n) {
           const r = await env.COUNTERS.list({ prefix, limit: 100 });
@@ -630,5 +754,19 @@ export default {
     }
 
     return new Response('not found', { status: 404, headers: cors });
+  },
+
+  /**
+   * Daily monitoring digest. Triggered by the wrangler.toml cron
+   * (30 0 * * * = 00:30 UTC ≈ 09:30 KST). Same logic as
+   * /admin/test-cron — see runDailyDigest() above.
+   */
+  async scheduled(_event, env, _ctx) {
+    const result = await runDailyDigest(env);
+    if (result.sent) {
+      console.log('[cron] sent:', result.subject);
+    } else {
+      console.error('[cron] failed:', result.reason ?? result.error);
+    }
   },
 };

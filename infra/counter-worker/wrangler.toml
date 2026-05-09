@@ -15,3 +15,10 @@ preview_id = "4f1894ee11724bf4a9078e2c6e23ab52"
 # CORS-safe — htmlook.app + localhost.
 [vars]
 ALLOWED_ORIGINS = "https://htmlook.app,http://localhost:1420,http://localhost:1421"
+
+# Daily monitoring digest. 00:30 UTC ≈ 09:30 KST.
+# Sends a summary email via Resend when RESEND_API_KEY + ALERT_EMAIL
+# secrets are configured. Subject is prefixed [ATTENTION] when any
+# unresolved/unknown webhook crumbs exist.
+[triggers]
+crons = ["30 0 * * *"]
