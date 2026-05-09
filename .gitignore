@@ -7,3 +7,6 @@ __pycache__/
 *.pyc
 .htmlook/cache/
 docs/seed-proposals.html
+
+# Cloudflare Wrangler local cache (account info, build artifacts)
+.wrangler/
