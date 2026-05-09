@@ -161,10 +161,51 @@ export default {
       let evt;
       try { evt = JSON.parse(raw); } catch { return new Response('bad json', { status: 400 }); }
       const eventType = evt?.event_type ?? '';
+
+      // Paddle Billing v2 webhooks reference customer by `customer_id`
+      // only — email is NOT in the payload. Look it up via the Paddle
+      // API. Two fallbacks: `customer.created` events sometimes embed
+      // email; we also keep a `cust:<id>` KV cache so transaction
+      // events for known customers don't pay another API round trip.
+      async function resolveEmail(data) {
+        let email = data?.customer?.email
+                ?? data?.billing_details?.email
+                ?? '';
+        if (email) return email;
+        const customerId = data?.customer_id ?? '';
+        if (!customerId) return '';
+        // KV cache hit?
+        const cached = await env.COUNTERS.get(`cust:${customerId}`);
+        if (cached) return cached;
+        // API lookup
+        const apiKey = env.PADDLE_API_KEY ?? '';
+        if (!apiKey) return '';
+        try {
+          const resp = await fetch(`https://api.paddle.com/customers/${customerId}`, {
+            headers: { Authorization: `Bearer ${apiKey}` },
+          });
+          if (!resp.ok) return '';
+          const body = await resp.json();
+          email = body?.data?.email ?? '';
+          if (email) {
+            // 30-day cache so future events for this customer hit KV.
+            await env.COUNTERS.put(`cust:${customerId}`, email, { expirationTtl: 30 * 86400 });
+          }
+          return email;
+        } catch { return ''; }
+      }
+
+      if (eventType === 'customer.created' || eventType === 'customer.updated') {
+        const email = evt?.data?.email ?? '';
+        const customerId = evt?.data?.id ?? '';
+        if (email && customerId) {
+          await env.COUNTERS.put(`cust:${customerId}`, email, { expirationTtl: 30 * 86400 });
+        }
+        return new Response('ok', { status: 200 });
+      }
+
       if (eventType === 'transaction.completed' || eventType === 'subscription.created' || eventType === 'subscription.activated') {
-        const email = evt?.data?.customer?.email
-                  ?? evt?.data?.billing_details?.email
-                  ?? '';
+        const email = await resolveEmail(evt?.data ?? {});
         const priceId = evt?.data?.items?.[0]?.price?.id
                     ?? evt?.data?.items?.[0]?.price_id
                     ?? '';
@@ -179,9 +220,17 @@ export default {
             event_type: eventType,
           };
           await env.COUNTERS.put(`purchase:${email.toLowerCase()}`, JSON.stringify(record));
+        } else {
+          // Diagnostic crumb so we can audit why an event landed
+          // without resolvable email. Short TTL so it doesn't fill KV.
+          await env.COUNTERS.put(
+            `webhook_unresolved:${Date.now()}`,
+            JSON.stringify({ eventType, customer_id: evt?.data?.customer_id, raw_excerpt: raw.slice(0, 1000) }),
+            { expirationTtl: 7 * 86400 },
+          );
         }
       } else if (eventType === 'subscription.canceled' || eventType === 'subscription.cancelled' || eventType === 'transaction.payment_failed') {
-        const email = evt?.data?.customer?.email ?? '';
+        const email = await resolveEmail(evt?.data ?? {});
         if (email) {
           const cur = await env.COUNTERS.get(`purchase:${email.toLowerCase()}`);
           if (cur) {
