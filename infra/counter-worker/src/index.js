@@ -265,12 +265,28 @@ export default {
           const t = iso ? Math.floor(Date.parse(iso) / 1000) : 0;
           return Number.isFinite(t) ? t : 0;
         })();
+        // Preserve first_paid_at across the entire customer lifecycle.
+        // Once set on the very first activation, never overwrite —
+        // even after a refund + re-subscribe cycle. This locks the
+        // 14-day refund window to the FIRST payment per email,
+        // closing the "refund + re-subscribe + refund" abuse loop.
+        const existingRaw = await env.COUNTERS.get(emailKey);
+        let firstPaidAt = nowSec;
+        if (existingRaw) {
+          try {
+            const existing = JSON.parse(existingRaw);
+            if (typeof existing.first_paid_at === 'number' && existing.first_paid_at > 0) {
+              firstPaidAt = existing.first_paid_at;
+            }
+          } catch { /* ignore */ }
+        }
         const record = {
           email,
           priceId,
           ts: nowSec,
           occurred_at: eventOccurredAt,
           status: 'active',
+          first_paid_at: firstPaidAt,
           current_period_end: currentPeriodEnd,
           customer_id: evt?.data?.customer_id ?? '',
           transaction_id: evt?.data?.id ?? '',
@@ -294,6 +310,8 @@ export default {
         if (skip) return new Response('older event ignored', { status: 200 });
         const cur = await env.COUNTERS.get(emailKey);
         const r = cur ? JSON.parse(cur) : { email };
+        // first_paid_at is set once on activation and preserved across
+        // all subsequent state transitions — never overwrite here.
         // Two flavors of cancel:
         //   - cancel-at-period-end: subscription.status === 'active'
         //     and scheduled_change.effective_at points to next billing.
@@ -334,6 +352,8 @@ export default {
         if (skip) return new Response('older event ignored', { status: 200 });
         const cur = await env.COUNTERS.get(emailKey);
         const r = cur ? JSON.parse(cur) : { email };
+        // first_paid_at is set once on activation and preserved across
+        // all subsequent state transitions — never overwrite here.
         r.status = 'canceled'; // paused = no Pro privilege
         r.ts = nowSec;
         r.occurred_at = eventOccurredAt;
@@ -350,6 +370,8 @@ export default {
         if (skip) return new Response('older event ignored', { status: 200 });
         const cur = await env.COUNTERS.get(emailKey);
         const r = cur ? JSON.parse(cur) : { email };
+        // first_paid_at is set once on activation and preserved across
+        // all subsequent state transitions — never overwrite here.
         r.status = 'active';
         r.ts = nowSec;
         r.occurred_at = eventOccurredAt;
@@ -396,6 +418,8 @@ export default {
         if (skip) return new Response('older event ignored', { status: 200 });
         const cur = await env.COUNTERS.get(emailKey);
         const r = cur ? JSON.parse(cur) : { email };
+        // first_paid_at is set once on activation and preserved across
+        // all subsequent state transitions — never overwrite here.
         r.status = 'canceled';
         r.effective_at = nowSec;
         r.canceled_at = nowSec;
@@ -504,6 +528,7 @@ export default {
         priceId: record.priceId,
         ts: record.ts,
         occurred_at: record.occurred_at,
+        first_paid_at: record.first_paid_at,
         effective_at: record.effective_at,
         canceled_at: record.canceled_at,
         ended_reason: record.ended_reason,
