@@ -537,6 +537,98 @@ export default {
       return Response.json(minimal, { headers: { ...publicCors, 'Cache-Control': 'private, max-age=5' } });
     }
 
+    // ─────────────────────────────────────────────────────────────
+    // Admin monitoring endpoints. Auth: Bearer token via env
+    // ADMIN_TOKEN. Returns aggregate counts and recent diagnostic
+    // crumbs so the operator can see at a glance whether webhooks
+    // are healthy without opening Paddle dashboard.
+    //
+    //   GET /admin/stats
+    //     - purchases by status (active/ending/canceled)
+    //     - trial signup count
+    //     - webhook_unresolved count (last 7d, surfaces missing
+    //       PADDLE_API_KEY or unrecognised payload shapes)
+    //     - webhook_unknown count (last 30d, captures Paddle event
+    //       types we haven't coded yet)
+    //
+    //   GET /admin/recent
+    //     - latest 20 webhook_unresolved + webhook_unknown crumbs
+    //       so the operator can sanity-check what's leaking.
+    // ─────────────────────────────────────────────────────────────
+    if (url.pathname === '/admin/stats' || url.pathname === '/admin/recent') {
+      const adminToken = env.ADMIN_TOKEN ?? '';
+      const auth = request.headers.get('Authorization') ?? '';
+      const presented = auth.startsWith('Bearer ') ? auth.slice(7) : (url.searchParams.get('token') ?? '');
+      if (!adminToken || presented !== adminToken) {
+        return new Response('unauthorized', { status: 401 });
+      }
+      if (url.pathname === '/admin/stats') {
+        // Stream the prefix listings — KV `list` is paginated. For v1
+        // scale (single-digit thousand keys) one pass per prefix is
+        // fine; revisit if usage grows.
+        async function listAll(prefix) {
+          const out = [];
+          let cursor;
+          do {
+            const r = await env.COUNTERS.list({ prefix, cursor });
+            for (const k of r.keys) out.push(k.name);
+            cursor = r.list_complete ? null : r.cursor;
+          } while (cursor);
+          return out;
+        }
+        const purchaseKeys = await listAll('purchase:');
+        const stats = { active: 0, ending: 0, canceled: 0, dunning: 0, refunded: 0, paused: 0, manual: 0 };
+        for (const k of purchaseKeys) {
+          const raw = await env.COUNTERS.get(k);
+          if (!raw) continue;
+          try {
+            const r = JSON.parse(raw);
+            if (r.status === 'active') stats.active += 1;
+            else if (r.status === 'ending') stats.ending += 1;
+            else if (r.status === 'canceled') stats.canceled += 1;
+            if (r.dunning) stats.dunning += 1;
+            if (r.ended_reason === 'refunded') stats.refunded += 1;
+            if (r.ended_reason === 'paused') stats.paused += 1;
+            if (r.customer_id === 'manual' || r.event_type === 'manual.write') stats.manual += 1;
+          } catch { /* ignore corrupt records */ }
+        }
+        const trials = (await listAll('trial:')).length;
+        const customers = (await listAll('cust:')).length;
+        const unresolved = (await listAll('webhook_unresolved:')).length;
+        const unknown = (await listAll('webhook_unknown:')).length;
+        return Response.json({
+          purchases: {
+            total: purchaseKeys.length,
+            ...stats,
+          },
+          trials,
+          customers_cached: customers,
+          webhook_unresolved_7d: unresolved,
+          webhook_unknown_30d: unknown,
+          generated_at: new Date().toISOString(),
+        }, {
+          headers: { 'Cache-Control': 'no-store' },
+        });
+      }
+      if (url.pathname === '/admin/recent') {
+        async function listRecent(prefix, n) {
+          const r = await env.COUNTERS.list({ prefix, limit: 100 });
+          const items = [];
+          for (const k of r.keys.slice(-n)) {
+            const raw = await env.COUNTERS.get(k.name);
+            try { items.push({ key: k.name, value: JSON.parse(raw) }); }
+            catch { items.push({ key: k.name, value: raw }); }
+          }
+          return items;
+        }
+        return Response.json({
+          unresolved: await listRecent('webhook_unresolved:', 10),
+          unknown: await listRecent('webhook_unknown:', 10),
+          generated_at: new Date().toISOString(),
+        }, { headers: { 'Cache-Control': 'no-store' } });
+      }
+    }
+
     return new Response('not found', { status: 404, headers: cors });
   },
 };
