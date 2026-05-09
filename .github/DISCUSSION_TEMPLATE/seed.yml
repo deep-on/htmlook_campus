@@ -1,0 +1,14 @@
+title: "[seed] <seed_id>"
+labels: [seed]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Seed feedback thread
+
+        - 👍 도움 됨
+        - 🚀 인상적
+        - 🐛 버그 / 문제
+        - 💡 개선 아이디어
+
+        Reactions 가 카탈로그 popularity score 에 반영됩니다.

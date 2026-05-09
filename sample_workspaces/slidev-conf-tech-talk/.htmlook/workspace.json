@@ -1,0 +1,1 @@
+{ "schema_version": 1, "name": "Vue Reactivity Talk", "profiles": { "slidev": { "active": true, "settings": { "deck_path": "slides.md" } } }, "ai_threads": [], "tabs": [] }

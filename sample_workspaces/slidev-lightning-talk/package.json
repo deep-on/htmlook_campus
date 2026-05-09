@@ -1,0 +1,1 @@
+{ "name": "8x-vitest-talk", "version": "0.0.1", "private": true, "scripts": { "dev": "slidev --open" }, "dependencies": { "@slidev/cli": "^52.0.0", "@slidev/theme-default": "latest" } }

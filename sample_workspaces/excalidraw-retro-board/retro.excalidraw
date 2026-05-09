@@ -1,0 +1,3 @@
+{ "type": "excalidraw", "version": 2, "source": "https://excalidraw.com",
+  "elements": [{ "type": "text", "id": "t1", "x": 100, "y": 80, "text": "Sprint 42 Retrospective", "fontSize": 28, "isDeleted": false, "fontFamily": 1, "strokeColor": "#1e1e1e", "backgroundColor": "transparent", "fillStyle": "solid", "strokeWidth": 2, "strokeStyle": "solid", "roughness": 1, "opacity": 100, "angle": 0, "width": 320, "height": 32, "seed": 1, "groupIds": [], "frameId": null, "boundElements": [], "updated": 1, "link": null, "locked": false, "textAlign": "left", "verticalAlign": "top", "containerId": null, "originalText": "Sprint 42 Retrospective", "lineHeight": 1.25, "baseline": 28, "version": 1, "versionNonce": 1 }],
+  "appState": { "viewBackgroundColor": "#ffffff" }, "files": {} }

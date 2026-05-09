@@ -1,0 +1,1 @@
+{ "schema_version": 1, "name": "AWS 3-tier", "profiles": { "d2": { "active": true, "settings": { "entry": "architecture.d2" } } }, "ai_threads": [], "tabs": [] }

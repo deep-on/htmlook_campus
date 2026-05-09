@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "name": "DCF Valuation",
+  "profiles": { "quarto": { "active": true, "settings": { "entry": "index.qmd", "output_format": "html" } } },
+  "ai_threads": [],
+  "tabs": []
+}

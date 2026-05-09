@@ -1,0 +1,6 @@
+{ "type": "excalidraw", "version": 2, "source": "https://excalidraw.com",
+  "elements": [
+    { "type": "text", "id": "t1", "x": 100, "y": 30, "text": "URL Shortener · interview sketch", "fontSize": 24, "isDeleted": false, "fontFamily": 1, "strokeColor": "#1e1e1e", "backgroundColor": "transparent", "fillStyle": "solid", "strokeWidth": 2, "strokeStyle": "solid", "roughness": 1, "opacity": 100, "angle": 0, "width": 320, "height": 28, "seed": 1, "groupIds": [], "frameId": null, "boundElements": [], "updated": 1, "link": null, "locked": false, "textAlign": "left", "verticalAlign": "top", "containerId": null, "originalText": "URL Shortener · interview sketch", "lineHeight": 1.25, "baseline": 24, "version": 1, "versionNonce": 1 }
+  ],
+  "appState": { "viewBackgroundColor": "#ffffff" },
+  "files": {} }

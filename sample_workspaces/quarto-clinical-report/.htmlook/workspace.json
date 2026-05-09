@@ -1,0 +1,1 @@
+{ "schema_version": 1, "name": "EFFECT-3 Clinical Report", "profiles": { "quarto": { "active": true, "settings": { "entry": "index.qmd", "output_format": "html" } } }, "ai_threads": [], "tabs": [] }

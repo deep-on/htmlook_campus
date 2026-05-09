@@ -1,0 +1,1 @@
+{ "schema_version": 1, "name": "Acme API Docs", "profiles": { "astro-starlight": { "active": true, "settings": {} } }, "ai_threads": [], "tabs": [] }

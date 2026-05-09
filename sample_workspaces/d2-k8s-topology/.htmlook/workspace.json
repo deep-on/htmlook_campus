@@ -1,0 +1,1 @@
+{ "schema_version": 1, "name": "Kubernetes Topology", "profiles": { "d2": { "active": true, "settings": {} } }, "ai_threads": [], "tabs": [] }

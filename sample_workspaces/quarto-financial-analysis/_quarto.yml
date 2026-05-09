@@ -1,0 +1,9 @@
+project:
+  type: default
+  output-dir: _output
+format:
+  html:
+    theme: cosmo
+  pdf: default
+execute:
+  freeze: auto

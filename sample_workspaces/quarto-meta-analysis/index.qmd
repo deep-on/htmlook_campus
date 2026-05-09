@@ -1,0 +1,71 @@
+---
+title: "Statin Therapy and All-Cause Mortality: A Systematic Review and Meta-Analysis of 22 Randomized Trials"
+author: "Acme Cochrane Working Group"
+date: "2026-05-08"
+format: html
+bibliography: references.bib
+---
+
+## Abstract
+
+**Background.** Statin efficacy on cardiovascular endpoints is established; effect on all-cause mortality remains debated.
+
+**Methods.** Systematic search of MEDLINE, Embase, Cochrane CENTRAL (2000–2024). 22 RCT (n=148,392) included. Random-effects meta-analysis (DerSimonian-Laird).
+
+**Results.** Pooled RR for all-cause mortality 0.91 (95% CI 0.86–0.96), I² = 42%. Funnel plot symmetric (Egger p=0.34).
+
+**Conclusion.** Statin therapy reduces all-cause mortality by ~9% with moderate heterogeneity, no evidence of publication bias.
+
+## Methods
+
+### Search strategy
+PROSPERO registered (CRD42024-EXAMPLE). Inclusion: RCT, ≥6mo follow-up, all-cause mortality reported.
+
+### PRISMA flow
+
+```{mermaid}
+flowchart TD
+  A[Records identified · 1,847] --> B[Duplicates removed · 1,512]
+  B --> C[Screened · titles/abstracts]
+  C --> D[Excluded · 1,378]
+  C --> E[Full-text assessed · 134]
+  E --> F[Excluded · 112]
+  E --> G[Included · 22]
+```
+
+### Risk of bias
+RoB 2.0 tool, 18/22 low risk, 4 some concerns.
+
+## Results
+
+### Forest Plot (representative subset)
+
+| Study | n | RR | 95% CI | Weight |
+|-------|---|----|----|--------|
+| Smith 2018 | 4,200 | 0.89 | 0.78–1.01 | 7.2% |
+| Lee 2019 | 8,100 | 0.83 | 0.71–0.97 | 8.9% |
+| Chen 2020 | 12,400 | 0.92 | 0.85–1.00 | 12.1% |
+| Park 2021 | 6,800 | 0.88 | 0.74–1.05 | 6.5% |
+| Sharma 2022 | 22,000 | 0.93 | 0.88–0.99 | 14.8% |
+| Kim 2023 | 7,500 | 0.86 | 0.74–1.00 | 7.4% |
+| ... (16 more) | | | | |
+| **Pooled (22)** | 148,392 | **0.91** | **0.86–0.96** | 100% |
+
+I² = 42% (moderate heterogeneity). Tau² = 0.012.
+
+### Subgroup analysis
+- Primary prevention (n=12 RCT): RR 0.94 (0.88–1.01)
+- Secondary prevention (n=10): RR 0.86 (0.79–0.93), p-interaction = 0.04
+
+### Publication bias
+Funnel plot symmetric. Egger test p=0.34 (no significant asymmetry).
+
+## Discussion
+
+9% relative reduction in all-cause mortality, primarily driven by secondary-prevention RCTs. Heterogeneity moderate, attributable to dose intensity and follow-up duration.
+
+Strengths: 22 high-quality RCT, n>148k. Limitations: predominantly Western cohorts, limited Asian representation.
+
+## Conclusions
+
+Statin therapy reduces all-cause mortality with consistent direction across pre-specified subgroups. Magnitude (NNT 56 over 5 years for high-risk patients) supports continued use as standard of care.

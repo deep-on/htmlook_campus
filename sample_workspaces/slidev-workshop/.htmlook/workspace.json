@@ -1,0 +1,1 @@
+{ "schema_version": 1, "name": "MCP Workshop", "profiles": { "slidev": { "active": true, "settings": {} } }, "ai_threads": [], "tabs": [] }

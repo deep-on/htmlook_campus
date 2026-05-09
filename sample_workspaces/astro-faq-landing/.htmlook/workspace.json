@@ -1,0 +1,1 @@
+{ "schema_version": 1, "name": "FAQ Landing Page", "profiles": { "astro-starlight": { "active": true, "settings": {} } }, "ai_threads": [], "tabs": [] }

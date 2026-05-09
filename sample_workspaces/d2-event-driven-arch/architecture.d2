@@ -1,0 +1,54 @@
+direction: right
+
+# Producers
+order_svc: {
+  label: "Order service\n+ outbox table"
+  shape: hexagon
+}
+orders_db: {
+  label: "orders DB"
+  shape: cylinder
+}
+order_svc -> orders_db: write
+orders_db.outbox -> cdc: CDC
+
+cdc: { label: "Debezium CDC" }
+cdc -> kafka.order_created: publish
+
+# Topics
+kafka: {
+  label: "Kafka cluster"
+  order_created: { label: "order.created" }
+  payment_processed: { label: "payment.processed" }
+  shipping_dispatched: { label: "shipping.dispatched" }
+  payment_failed: { label: "payment.failed" }
+}
+
+# Consumers (SAGA orchestration)
+saga: {
+  label: "SAGA orchestrator"
+  shape: hexagon
+}
+kafka.order_created -> saga
+saga -> payment_svc: charge
+payment_svc -> kafka.payment_processed
+kafka.payment_processed -> saga
+saga -> shipping_svc: dispatch
+shipping_svc -> kafka.shipping_dispatched
+
+# Failure path
+payment_svc -> kafka.payment_failed: on_error
+kafka.payment_failed -> saga: compensate
+saga -> order_svc: cancel order
+
+# Side consumers
+kafka.order_created -> analytics_svc
+kafka.payment_processed -> notification_svc
+
+# DLQ
+dlq: {
+  label: "Dead-letter queue\n+ retry topology"
+  style.fill: "#fee2e2"
+}
+payment_svc -> dlq: 3 retries
+shipping_svc -> dlq: 3 retries

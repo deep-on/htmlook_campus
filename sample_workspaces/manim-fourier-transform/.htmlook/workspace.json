@@ -1,0 +1,1 @@
+{ "schema_version": 1, "name": "Fourier Transform", "profiles": { "manim": { "active": true, "settings": { "scene_file": "scene.py", "quality": "m" } } }, "ai_threads": [], "tabs": [] }

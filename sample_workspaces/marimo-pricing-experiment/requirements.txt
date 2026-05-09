@@ -1,0 +1,4 @@
+marimo>=0.10.0
+polars>=1.0.0
+pymc>=5.10.0
+arviz>=0.17.0

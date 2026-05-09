@@ -1,0 +1,52 @@
+sales: {
+  label: "Sales domain"
+  style.fill: "#dbeafe"
+  raw: { label: "Salesforce · HubSpot" }
+  product: { label: "data product\norders / pipeline"; shape: hexagon }
+  raw -> product
+}
+
+product_dom: {
+  label: "Product domain"
+  style.fill: "#fef3c7"
+  raw: { label: "events / sessions" }
+  product: { label: "data product\nfunnel / cohort"; shape: hexagon }
+  raw -> product
+}
+
+finance: {
+  label: "Finance domain"
+  style.fill: "#dcfce7"
+  raw: { label: "GL · NetSuite" }
+  product: { label: "data product\nrev / cogs"; shape: hexagon }
+  raw -> product
+}
+
+ops: {
+  label: "Ops domain"
+  style.fill: "#e9d5ff"
+  raw: { label: "Datadog · Sentry" }
+  product: { label: "data product\nuptime / errors"; shape: hexagon }
+  raw -> product
+}
+
+platform: {
+  label: "Self-serve data platform"
+  catalog: { label: "Catalog" }
+  iam: { label: "IAM · access" }
+  sla: { label: "SLA monitor" }
+}
+
+sales.product <-> platform
+product_dom.product <-> platform
+finance.product <-> platform
+ops.product <-> platform
+
+# Cross-domain analytics
+analytics: { label: "Cross-domain analytics\n(via platform)"; shape: hexagon }
+platform -> analytics
+
+note: |md
+  Federated computational governance — each domain owns its product +
+  conforms to org-wide standards (SLA, lineage, schema).
+|

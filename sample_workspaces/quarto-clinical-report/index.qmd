@@ -1,0 +1,96 @@
+---
+title: "EFFECT-3 · Phase 3 Efficacy and Safety Report"
+subtitle: "A Randomized, Double-Blind, Placebo-Controlled Trial in Advanced Solid Tumors"
+author: "EFFECT-3 Study Group"
+date: "2026-05-08"
+format:
+  html: { toc: true, toc-depth: 2 }
+  pdf: { documentclass: article, geometry: margin=1in }
+---
+
+## Abstract
+
+**Background.** Standard-of-care therapy for stage IIIB/IV refractory solid tumors yields median overall survival (mOS) of 8.4 months. EFFECT, a small-molecule inhibitor, demonstrated mOS 12.6 mo in Phase 2.
+
+**Methods.** Multicenter, double-blind, 1:1 randomization (active vs placebo), n=250, primary endpoint OS at 12 mo.
+
+**Results.** 12-mo OS rate: 62% (active) vs 38% (placebo); HR 0.62 (95% CI 0.48–0.81), p<0.001. Grade ≥3 AE: 24% active vs 19% placebo.
+
+**Conclusion.** EFFECT extends overall survival with manageable toxicity in this advanced-tumor population.
+
+## CONSORT Flow Diagram
+
+```{mermaid}
+flowchart TD
+  A[Assessed for eligibility · n=412] --> B{Excluded · n=162}
+  B --> C[Did not meet criteria · 98]
+  B --> D[Declined · 41]
+  B --> E[Other · 23]
+  A --> F[Randomized · n=250]
+  F --> G[Active arm · n=125]
+  F --> H[Placebo · n=125]
+  G --> I[Analyzed · n=123]
+  H --> J[Analyzed · n=121]
+```
+
+## Methods
+
+### 2.1 Study population
+- Adults ≥18 with biopsy-confirmed stage IIIB/IV solid tumor refractory to first-line.
+- ECOG 0-1, adequate organ function.
+
+### 2.2 Endpoints
+- **Primary**: 12-mo OS rate.
+- **Secondary**: PFS, ORR (RECIST 1.1), QoL (EORTC QLQ-C30).
+- **Safety**: CTCAE v5.0.
+
+### 2.3 Statistical analysis plan
+Stratified log-rank test, two-sided α=0.05, power 80% to detect HR 0.65. ITT analysis.
+
+## Results
+
+### 3.1 Baseline characteristics (Table 1)
+
+| Characteristic | Active (n=125) | Placebo (n=125) |
+|----------------|---------------|-----------------|
+| Age, median (range) | 62 (38–78) | 64 (40–81) |
+| Female, n (%) | 58 (46%) | 61 (49%) |
+| ECOG 0, n (%) | 71 (57%) | 68 (54%) |
+| Tumor types: NSCLC | 38% | 41% |
+| ··  CRC | 24% | 22% |
+| ··  Other | 38% | 37% |
+
+### 3.2 Efficacy
+
+**Primary endpoint**: 12-mo OS active 62% vs placebo 38%, HR **0.62** (95% CI 0.48–0.81), p<0.001 (stratified log-rank).
+
+PFS: median 8.1 vs 4.2 mo, HR 0.51 (0.39–0.66), p<0.001.
+
+ORR: 34% vs 12% (p<0.001 by chi-square).
+
+### 3.3 Safety
+
+| AE Grade ≥3 | Active | Placebo |
+|-------------|--------|---------|
+| Any | 30 (24%) | 24 (19%) |
+| Neutropenia | 12 | 6 |
+| Fatigue | 8 | 4 |
+| Diarrhea | 5 | 3 |
+| ALT elevation | 4 | 2 |
+| Discontinuation due to AE | 9% | 5% |
+
+No treatment-related deaths.
+
+## Discussion
+
+EFFECT meets the primary endpoint with clinically meaningful 24-percentage-point improvement in 12-mo OS. Toxicity profile manageable; neutropenia is dose-dependent and reversible.
+
+Limitations: 12-mo follow-up; longer-term survival under analysis. Subgroup analyses (Section 4) suggest benefit consistent across tumor types except subtype X (HR 0.91, n=18, underpowered).
+
+## Conclusions
+
+EFFECT demonstrates statistically and clinically significant survival benefit. Submission to FDA planned Q4 2026.
+
+## Appendix
+
+Detailed Kaplan-Meier curves, AE listings, and statistical analysis plan provided in supplementary appendix.

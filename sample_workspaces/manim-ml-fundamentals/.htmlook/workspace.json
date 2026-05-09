@@ -1,0 +1,1 @@
+{ "schema_version": 1, "name": "ML Fundamentals", "profiles": { "manim": { "active": true, "settings": {} } }, "ai_threads": [], "tabs": [] }

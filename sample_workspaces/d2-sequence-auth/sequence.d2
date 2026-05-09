@@ -1,0 +1,12 @@
+shape: sequence_diagram
+
+user -> client: open app
+client -> client: generate code_verifier + code_challenge
+client -> auth_server: /authorize?challenge=...
+auth_server -> user: login + consent
+user -> auth_server: credentials
+auth_server -> client: code (via redirect)
+client -> auth_server: /token + code + verifier
+auth_server -> client: access_token + refresh_token
+client -> resource_server: GET /me + Bearer
+resource_server -> client: 200 user json

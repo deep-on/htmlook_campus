@@ -1,0 +1,49 @@
+# Three isolation patterns side-by-side
+
+pool: {
+  label: "POOL · shared everything\n(cost ↓, blast risk ⚠)"
+  app: { label: "shared app cluster" }
+  db: {
+    label: "shared DB\nrow-level security on tenant_id"
+    shape: cylinder
+  }
+  app -> db
+}
+
+hybrid: {
+  label: "HYBRID · siloed app, shared DB\n(balanced)"
+  app_a: { label: "app · tier A" }
+  app_b: { label: "app · tier B" }
+  db: { label: "DB-per-tier"; shape: cylinder }
+  app_a -> db
+  app_b -> db
+}
+
+silo: {
+  label: "SILO · everything per tenant\n(isolation ↑, cost ↑)"
+  tenant_a: {
+    label: "Tenant A"
+    app: { label: "app A" }
+    db: { label: "DB A"; shape: cylinder }
+    app -> db
+  }
+  tenant_b: {
+    label: "Tenant B"
+    app: { label: "app B" }
+    db: { label: "DB B"; shape: cylinder }
+    app -> db
+  }
+}
+
+tradeoff: |md
+  ## Tradeoffs
+
+  | dim          | pool | hybrid | silo |
+  |--------------|------|--------|------|
+  | $ cost       | $    | $$     | $$$  |
+  | blast radius | wide | medium | per-tenant |
+  | compliance   | hard | medium | easy |
+  | per-tenant scaling | hard | medium | trivial |
+
+  Recommendation: start with pool, migrate enterprise tenants to silo.
+|

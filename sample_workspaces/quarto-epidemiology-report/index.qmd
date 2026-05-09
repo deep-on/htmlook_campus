@@ -1,0 +1,64 @@
+---
+title: "Weekly Respiratory Infection Surveillance · Wk 18, 2026"
+author: "Acme National Health Surveillance Unit"
+date: "2026-05-08"
+format: html
+---
+
+## Executive Summary
+
+Week 18 (2026-04-27 to 2026-05-03): cases per 100,000 = **142**, exceeding epidemic threshold (50). Reproduction number R(t) = **1.42** (95% CI 1.28–1.58). Geographic concentration: SK Metropolitan (38% of national).
+
+## Trend (Past 18 weeks)
+
+```{python}
+#| echo: false
+import pandas as pd
+df = pd.read_csv("data/weekly_cases.csv")
+df.tail(8)
+```
+
+Cases sustained above threshold for 4 consecutive weeks. Doubling time ~9 days.
+
+## Age Stratification
+
+| Age Group | Cases per 100k | YoY |
+|-----------|---------------|-----|
+| 0–4       | 198           | +24% |
+| 5–17      | 156           | +18% |
+| 18–64     | 132           | +14% |
+| 65+       | 122           | +9%  |
+
+Children aged 0–4 disproportionately affected.
+
+## Geographic Distribution
+
+| Region        | Cases/100k | Threshold |
+|---------------|-----------|-----------|
+| SK Metro      | 198       | exceeded ⚠ |
+| GG            | 168       | exceeded ⚠ |
+| BS            | 134       | exceeded ⚠ |
+| DG            | 102       | exceeded ⚠ |
+| Other         | 88        | approaching |
+
+## Etiology
+
+Influenza A (H1N1) accounts for **63%** of laboratory-confirmed cases this week, RSV 22%, SARS-CoV-2 9%, other 6%.
+
+## R(t) Estimation
+
+R(t) = 1.42 (1.28–1.58) using EpiEstim sliding 7-day window. Trend: stable from Wk 16. Containment threshold (R<1) not yet achieved.
+
+## Recommendations
+
+1. **Vaccination push**: 65+ uptake currently 47%, target 70% by Wk 20.
+2. **School advisory**: enhanced hygiene + symptomatic isolation in SK Metro / GG.
+3. **Hospital surge**: ICU bed reserve 12% nationally; trigger surge plan if Wk 19 cases > 160.
+
+## Methods
+
+Passive surveillance (501 sentinel sites) + laboratory confirmation. ICD-10 J09–J18. Population denominators from KOSIS 2025.
+
+## Next Update
+
+Wk 19 (2026-05-15).

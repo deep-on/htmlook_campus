@@ -1,0 +1,50 @@
+direction: right
+
+primary: {
+  label: "us-east-1 · ACTIVE"
+  style.fill: "#dcfce7"
+  alb: { label: "ALB" }
+  asg: { label: "ASG (4-8)" }
+  rds_p: { label: "RDS · primary"; shape: cylinder }
+  alb -> asg
+  asg -> rds_p
+  ops: |md
+    **RTO 0 · RPO 0**
+    cost: $$$ active fleet
+    state: hot standby
+  |
+}
+
+standby: {
+  label: "us-west-2 · STANDBY"
+  style.fill: "#fef3c7"
+  style.stroke-dash: 4
+  alb: { label: "ALB (idle)"; style.opacity: 0.6 }
+  asg: { label: "ASG (0-2)"; style.opacity: 0.6 }
+  rds_r: { label: "RDS · replica"; shape: cylinder }
+  alb -> asg
+  asg -> rds_r
+  ops: |md
+    **RTO 5min · RPO <30s**
+    cost: $ DB only
+    state: warm standby
+    DNS failover ready
+  |
+}
+
+primary.rds_p -> standby.rds_r: CDC replication\nlag <30s
+
+route53: { label: "Route 53\nfailover routing"; shape: cloud }
+internet -> route53
+route53 -> primary.alb: primary
+route53 -> standby.alb: failover
+
+playbook: |md
+  ## Failover playbook (5 min)
+  1. PagerDuty alerts on RDS primary down
+  2. SRE acks + verifies (1 min)
+  3. Promote replica `aws rds promote-read-replica` (90 s)
+  4. ASG scale 0→4 in standby (2 min)
+  5. Route 53 health check fails primary → routes to standby (30 s)
+  6. Smoke test + post-mortem
+|

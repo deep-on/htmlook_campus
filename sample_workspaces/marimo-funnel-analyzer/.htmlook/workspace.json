@@ -1,0 +1,1 @@
+{ "schema_version": 1, "name": "Funnel Analyzer", "profiles": { "marimo": { "active": true, "settings": {} } }, "ai_threads": [], "tabs": [] }

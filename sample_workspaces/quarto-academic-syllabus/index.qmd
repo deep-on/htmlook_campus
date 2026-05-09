@@ -1,0 +1,23 @@
+---
+title: "CS 4720 · Distributed Systems · Fall 2026"
+author: "Prof. Kim"
+date: "2026-09-01"
+format: html
+---
+
+## 강의 개요
+분산 시스템의 핵심 패턴 — consistency, fault tolerance, distributed transactions.
+
+## Schedule
+| Wk | Topic | Reading | Lab |
+|----|-------|---------|-----|
+| 1 | CAP theorem | Brewer 2000 | – |
+| 2 | RPC | Birrell & Nelson | gRPC ping |
+| 3 | Consensus · Paxos | Lamport 1998 | Paxos in Go |
+| 4 | Raft | Ongaro 2014 | Raft impl |
+| ... | | | |
+
+## Grading
+- 4 labs (10% each) = 40%
+- midterm = 25%
+- final project = 35%

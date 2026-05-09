@@ -1,0 +1,78 @@
+# Acme · us-east-1 · prod · 99.95% SLA
+# cost ≈ $1,840/mo @ 100M req · ~70 RPS sustained
+
+direction: right
+
+internet -> ingress.cf: HTTPS
+ingress: {
+  label: "Edge"
+  cf: { label: "CloudFront"; shape: cloud }
+  waf: { label: "AWS WAF" }
+  cf -> waf
+  waf -> alb
+  alb: { label: "ALB"; shape: hexagon }
+}
+
+ingress.alb -> web.az_a
+ingress.alb -> web.az_b
+
+web: {
+  label: "Web tier · ASG (2-6)"
+  az_a: { label: "AZ-a · web"; shape: rectangle }
+  az_b: { label: "AZ-b · web"; shape: rectangle }
+}
+
+web.az_a -> app.az_a
+web.az_b -> app.az_b
+
+app: {
+  label: "App tier · ECS"
+  az_a: { label: "AZ-a · app" }
+  az_b: { label: "AZ-b · app" }
+}
+
+app.az_a -> data.rds_primary: read/write
+app.az_b -> data.rds_primary: read/write
+app.az_a -> data.cache: read-through
+app.az_b -> data.cache: read-through
+
+data: {
+  label: "Data tier"
+  rds_primary: {
+    label: "RDS PostgreSQL\nprimary"
+    shape: cylinder
+  }
+  rds_replica: {
+    label: "RDS\nread-replica"
+    shape: cylinder
+  }
+  cache: {
+    label: "ElastiCache\nRedis"
+    shape: cylinder
+    style.fill: "#dc2626"
+  }
+}
+
+data.rds_primary -> data.rds_replica: streaming repl
+
+# Observability
+ops: {
+  label: "Observability"
+  cw: { label: "CloudWatch" }
+  xray: { label: "X-Ray" }
+}
+app.az_a -> ops.cw
+app.az_b -> ops.cw
+
+# Cost annotations as a styled note
+cost_note: |md
+  ## Cost (mo)
+  - ALB:     $25
+  - EC2 web (4 t3.medium): $250
+  - ECS app (4 fargate task): $480
+  - RDS db.r6g.large × 2: $620
+  - ElastiCache cache.r6g.large: $180
+  - Data transfer (100M req): $145
+  - CloudFront/WAF: $140
+  - **Total ≈ $1,840 / mo**
+|

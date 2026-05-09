@@ -1,0 +1,19 @@
+---
+title: "Why we switched from Kafka to SQS"
+author: "Acme Engineering"
+date: "2026-05-08"
+format: html
+---
+
+## TL;DR
+SQS saved $1.5k/mo + 30% engineer time with negligible throughput cost.
+
+## Background
+Our order pipeline ran on self-hosted Kafka...
+
+## Migration
+6 weeks · zero downtime. See [ADR-042](../slidev-architecture-review/) for the decision.
+
+## Lessons
+- managed > self-hosted unless you genuinely need 100k msg/s
+- DLQ ergonomics matter as much as throughput

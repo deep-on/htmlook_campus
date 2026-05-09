@@ -1,0 +1,7 @@
+cluster: {
+  label: "EKS prod"
+  namespace_app: { label: "ns/app"; pod_a: "deploy/app · 6 pods"; pod_b: "deploy/worker · 3 pods" }
+  namespace_data: { label: "ns/data"; pod_c: "sts/postgres · 3 replicas" }
+}
+ingress -> cluster.namespace_app.pod_a: HTTPS
+cluster.namespace_app.pod_a -> cluster.namespace_data.pod_c: pgsql

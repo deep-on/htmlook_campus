@@ -1,0 +1,1 @@
+{ "schema_version": 1, "name": "NLP Text Exploration", "profiles": { "marimo": { "active": true, "settings": {} } }, "ai_threads": [], "tabs": [] }

@@ -1,0 +1,17 @@
+# Cloudflare Worker · htmlook_campus seed install + like counter
+# Deploy: cd infra/counter-worker && npx wrangler deploy
+name = "htmlook-campus-counter"
+main = "src/index.js"
+compatibility_date = "2026-05-08"
+
+# KV namespace for counter storage. Create via:
+#   npx wrangler kv:namespace create COUNTERS
+# Then paste the id below.
+[[kv_namespaces]]
+binding = "COUNTERS"
+id = "REPLACE_ME"  # ← npx wrangler kv:namespace create COUNTERS 결과
+preview_id = "REPLACE_ME_PREVIEW"
+
+# CORS-safe — htmlook.app + localhost.
+[vars]
+ALLOWED_ORIGINS = "https://htmlook.app,http://localhost:1420,http://localhost:1421"

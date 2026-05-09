@@ -1,7 +1,7 @@
 {
   "version": 1,
   "schema": "htmlook-catalog/v1",
-  "updated_at": "2026-05-08",
+  "updated_at": "2026-05-09",
   "entries": [
     {
       "type": "profile",
@@ -132,6 +132,125 @@
     },
     {
       "type": "workspace_seed",
+      "id": "astro-cli-tool-docs",
+      "name": "astro cli tool docs",
+      "category": "sample",
+      "uses_profiles": [
+        "astro-starlight"
+      ],
+      "description": "astro-cli-tool-docs sample workspace",
+      "tags": [
+        "astro-cli-tool-docs",
+        "astro-starlight"
+      ],
+      "size_kb": 3,
+      "path": "sample_workspaces/astro-cli-tool-docs/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "astro-design-system-docs",
+      "name": "astro design system docs",
+      "category": "sample",
+      "uses_profiles": [
+        "astro-starlight"
+      ],
+      "description": "astro-design-system-docs sample workspace",
+      "tags": [
+        "astro-design-system-docs",
+        "astro-starlight"
+      ],
+      "size_kb": 2,
+      "path": "sample_workspaces/astro-design-system-docs/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "astro-developer-portal",
+      "name": "astro developer portal",
+      "category": "sample",
+      "uses_profiles": [
+        "astro-starlight"
+      ],
+      "description": "astro-developer-portal sample workspace",
+      "tags": [
+        "astro-developer-portal",
+        "astro-starlight"
+      ],
+      "size_kb": 2,
+      "path": "sample_workspaces/astro-developer-portal/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "astro-faq-landing",
+      "name": "astro faq landing",
+      "category": "sample",
+      "uses_profiles": [
+        "astro-starlight"
+      ],
+      "description": "astro-faq-landing sample workspace",
+      "tags": [
+        "astro-faq-landing",
+        "astro-starlight"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/astro-faq-landing/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "astro-product-changelog",
+      "name": "astro product changelog",
+      "category": "sample",
+      "uses_profiles": [
+        "astro-starlight"
+      ],
+      "description": "astro-product-changelog sample workspace",
+      "tags": [
+        "astro-product-changelog",
+        "astro-starlight"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/astro-product-changelog/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "astro-rfc-docs",
+      "name": "astro rfc docs",
+      "category": "sample",
+      "uses_profiles": [
+        "astro-starlight"
+      ],
+      "description": "astro-rfc-docs sample workspace",
+      "tags": [
+        "astro-rfc-docs",
+        "astro-starlight"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/astro-rfc-docs/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "astro-stripe-style-api-docs",
+      "name": "astro stripe style api docs",
+      "category": "sample",
+      "uses_profiles": [
+        "astro-starlight"
+      ],
+      "description": "astro-stripe-style-api-docs sample workspace",
+      "tags": [
+        "astro-stripe-style-api-docs",
+        "astro-starlight"
+      ],
+      "size_kb": 5,
+      "path": "sample_workspaces/astro-stripe-style-api-docs/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
       "id": "corp-deck",
       "name": "corp deck",
       "category": "sample",
@@ -162,6 +281,125 @@
       ],
       "size_kb": 4,
       "path": "sample_workspaces/creator-podcast/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "d2-aws-3-tier",
+      "name": "d2 aws 3 tier",
+      "category": "sample",
+      "uses_profiles": [
+        "d2"
+      ],
+      "description": "d2-aws-3-tier sample workspace",
+      "tags": [
+        "d2-aws-3-tier",
+        "d2"
+      ],
+      "size_kb": 3,
+      "path": "sample_workspaces/d2-aws-3-tier/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "d2-data-mesh",
+      "name": "d2 data mesh",
+      "category": "sample",
+      "uses_profiles": [
+        "d2"
+      ],
+      "description": "d2-data-mesh sample workspace",
+      "tags": [
+        "d2-data-mesh",
+        "d2"
+      ],
+      "size_kb": 2,
+      "path": "sample_workspaces/d2-data-mesh/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "d2-disaster-recovery",
+      "name": "d2 disaster recovery",
+      "category": "sample",
+      "uses_profiles": [
+        "d2"
+      ],
+      "description": "d2-disaster-recovery sample workspace",
+      "tags": [
+        "d2-disaster-recovery",
+        "d2"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/d2-disaster-recovery/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "d2-event-driven-arch",
+      "name": "d2 event driven arch",
+      "category": "sample",
+      "uses_profiles": [
+        "d2"
+      ],
+      "description": "d2-event-driven-arch sample workspace",
+      "tags": [
+        "d2-event-driven-arch",
+        "d2"
+      ],
+      "size_kb": 2,
+      "path": "sample_workspaces/d2-event-driven-arch/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "d2-k8s-topology",
+      "name": "d2 k8s topology",
+      "category": "sample",
+      "uses_profiles": [
+        "d2"
+      ],
+      "description": "d2-k8s-topology sample workspace",
+      "tags": [
+        "d2-k8s-topology",
+        "d2"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/d2-k8s-topology/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "d2-saas-tenant-isolation",
+      "name": "d2 saas tenant isolation",
+      "category": "sample",
+      "uses_profiles": [
+        "d2"
+      ],
+      "description": "d2-saas-tenant-isolation sample workspace",
+      "tags": [
+        "d2-saas-tenant-isolation",
+        "d2"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/d2-saas-tenant-isolation/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "d2-sequence-auth",
+      "name": "d2 sequence auth",
+      "category": "sample",
+      "uses_profiles": [
+        "d2"
+      ],
+      "description": "d2-sequence-auth sample workspace",
+      "tags": [
+        "d2-sequence-auth",
+        "d2"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/d2-sequence-auth/",
       "license": "CC0"
     },
     {
@@ -230,6 +468,125 @@
       ],
       "size_kb": 4,
       "path": "sample_workspaces/economy-analyst/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "excalidraw-debugging-memo",
+      "name": "excalidraw debugging memo",
+      "category": "sample",
+      "uses_profiles": [
+        "excalidraw"
+      ],
+      "description": "excalidraw-debugging-memo sample workspace",
+      "tags": [
+        "excalidraw-debugging-memo",
+        "excalidraw"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/excalidraw-debugging-memo/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "excalidraw-mind-map",
+      "name": "excalidraw mind map",
+      "category": "sample",
+      "uses_profiles": [
+        "excalidraw"
+      ],
+      "description": "excalidraw-mind-map sample workspace",
+      "tags": [
+        "excalidraw-mind-map",
+        "excalidraw"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/excalidraw-mind-map/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "excalidraw-pre-mortem",
+      "name": "excalidraw pre mortem",
+      "category": "sample",
+      "uses_profiles": [
+        "excalidraw"
+      ],
+      "description": "excalidraw-pre-mortem sample workspace",
+      "tags": [
+        "excalidraw-pre-mortem",
+        "excalidraw"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/excalidraw-pre-mortem/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "excalidraw-refactor-plan",
+      "name": "excalidraw refactor plan",
+      "category": "sample",
+      "uses_profiles": [
+        "excalidraw"
+      ],
+      "description": "excalidraw-refactor-plan sample workspace",
+      "tags": [
+        "excalidraw-refactor-plan",
+        "excalidraw"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/excalidraw-refactor-plan/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "excalidraw-retro-board",
+      "name": "excalidraw retro board",
+      "category": "sample",
+      "uses_profiles": [
+        "excalidraw"
+      ],
+      "description": "excalidraw-retro-board sample workspace",
+      "tags": [
+        "excalidraw-retro-board",
+        "excalidraw"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/excalidraw-retro-board/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "excalidraw-system-arch-sketch",
+      "name": "excalidraw system arch sketch",
+      "category": "sample",
+      "uses_profiles": [
+        "excalidraw"
+      ],
+      "description": "excalidraw-system-arch-sketch sample workspace",
+      "tags": [
+        "excalidraw-system-arch-sketch",
+        "excalidraw"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/excalidraw-system-arch-sketch/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "excalidraw-system-design-interview",
+      "name": "excalidraw system design interview",
+      "category": "sample",
+      "uses_profiles": [
+        "excalidraw"
+      ],
+      "description": "excalidraw-system-design-interview sample workspace",
+      "tags": [
+        "excalidraw-system-design-interview",
+        "excalidraw"
+      ],
+      "size_kb": 3,
+      "path": "sample_workspaces/excalidraw-system-design-interview/",
       "license": "CC0"
     },
     {
@@ -370,6 +727,244 @@
     },
     {
       "type": "workspace_seed",
+      "id": "manim-calculus-intro",
+      "name": "manim calculus intro",
+      "category": "sample",
+      "uses_profiles": [
+        "manim"
+      ],
+      "description": "manim-calculus-intro sample workspace",
+      "tags": [
+        "manim-calculus-intro",
+        "manim"
+      ],
+      "size_kb": 2,
+      "path": "sample_workspaces/manim-calculus-intro/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "manim-eigenvalues",
+      "name": "manim eigenvalues",
+      "category": "sample",
+      "uses_profiles": [
+        "manim"
+      ],
+      "description": "manim-eigenvalues sample workspace",
+      "tags": [
+        "manim-eigenvalues",
+        "manim"
+      ],
+      "size_kb": 0,
+      "path": "sample_workspaces/manim-eigenvalues/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "manim-fourier-transform",
+      "name": "manim fourier transform",
+      "category": "sample",
+      "uses_profiles": [
+        "manim"
+      ],
+      "description": "manim-fourier-transform sample workspace",
+      "tags": [
+        "manim-fourier-transform",
+        "manim"
+      ],
+      "size_kb": 3,
+      "path": "sample_workspaces/manim-fourier-transform/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "manim-graph-traversal",
+      "name": "manim graph traversal",
+      "category": "sample",
+      "uses_profiles": [
+        "manim"
+      ],
+      "description": "manim-graph-traversal sample workspace",
+      "tags": [
+        "manim-graph-traversal",
+        "manim"
+      ],
+      "size_kb": 2,
+      "path": "sample_workspaces/manim-graph-traversal/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "manim-matrix-mult",
+      "name": "manim matrix mult",
+      "category": "sample",
+      "uses_profiles": [
+        "manim"
+      ],
+      "description": "manim-matrix-mult sample workspace",
+      "tags": [
+        "manim-matrix-mult",
+        "manim"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/manim-matrix-mult/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "manim-ml-fundamentals",
+      "name": "manim ml fundamentals",
+      "category": "sample",
+      "uses_profiles": [
+        "manim"
+      ],
+      "description": "manim-ml-fundamentals sample workspace",
+      "tags": [
+        "manim-ml-fundamentals",
+        "manim"
+      ],
+      "size_kb": 2,
+      "path": "sample_workspaces/manim-ml-fundamentals/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "manim-sorting-algos",
+      "name": "manim sorting algos",
+      "category": "sample",
+      "uses_profiles": [
+        "manim"
+      ],
+      "description": "manim-sorting-algos sample workspace",
+      "tags": [
+        "manim-sorting-algos",
+        "manim"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/manim-sorting-algos/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "marimo-customer-cohort",
+      "name": "marimo customer cohort",
+      "category": "sample",
+      "uses_profiles": [
+        "marimo"
+      ],
+      "description": "marimo-customer-cohort sample workspace",
+      "tags": [
+        "marimo-customer-cohort",
+        "marimo"
+      ],
+      "size_kb": 3,
+      "path": "sample_workspaces/marimo-customer-cohort/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "marimo-funnel-analyzer",
+      "name": "marimo funnel analyzer",
+      "category": "sample",
+      "uses_profiles": [
+        "marimo"
+      ],
+      "description": "marimo-funnel-analyzer sample workspace",
+      "tags": [
+        "marimo-funnel-analyzer",
+        "marimo"
+      ],
+      "size_kb": 2,
+      "path": "sample_workspaces/marimo-funnel-analyzer/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "marimo-ml-feature-drift",
+      "name": "marimo ml feature drift",
+      "category": "sample",
+      "uses_profiles": [
+        "marimo"
+      ],
+      "description": "marimo-ml-feature-drift sample workspace",
+      "tags": [
+        "marimo-ml-feature-drift",
+        "marimo"
+      ],
+      "size_kb": 2,
+      "path": "sample_workspaces/marimo-ml-feature-drift/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "marimo-nlp-exploration",
+      "name": "marimo nlp exploration",
+      "category": "sample",
+      "uses_profiles": [
+        "marimo"
+      ],
+      "description": "marimo-nlp-exploration sample workspace",
+      "tags": [
+        "marimo-nlp-exploration",
+        "marimo"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/marimo-nlp-exploration/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "marimo-pricing-experiment",
+      "name": "marimo pricing experiment",
+      "category": "sample",
+      "uses_profiles": [
+        "marimo"
+      ],
+      "description": "marimo-pricing-experiment sample workspace",
+      "tags": [
+        "marimo-pricing-experiment",
+        "marimo"
+      ],
+      "size_kb": 3,
+      "path": "sample_workspaces/marimo-pricing-experiment/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "marimo-retail-forecasting",
+      "name": "marimo retail forecasting",
+      "category": "sample",
+      "uses_profiles": [
+        "marimo"
+      ],
+      "description": "marimo-retail-forecasting sample workspace",
+      "tags": [
+        "marimo-retail-forecasting",
+        "marimo"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/marimo-retail-forecasting/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "marimo-timeseries-anomaly",
+      "name": "marimo timeseries anomaly",
+      "category": "sample",
+      "uses_profiles": [
+        "marimo"
+      ],
+      "description": "marimo-timeseries-anomaly sample workspace",
+      "tags": [
+        "marimo-timeseries-anomaly",
+        "marimo"
+      ],
+      "size_kb": 3,
+      "path": "sample_workspaces/marimo-timeseries-anomaly/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
       "id": "mobile-news",
       "name": "mobile news",
       "category": "sample",
@@ -438,6 +1033,125 @@
     },
     {
       "type": "workspace_seed",
+      "id": "quarto-academic-syllabus",
+      "name": "quarto academic syllabus",
+      "category": "sample",
+      "uses_profiles": [
+        "quarto"
+      ],
+      "description": "quarto-academic-syllabus sample workspace",
+      "tags": [
+        "quarto-academic-syllabus",
+        "quarto"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/quarto-academic-syllabus/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "quarto-blog-post",
+      "name": "quarto blog post",
+      "category": "sample",
+      "uses_profiles": [
+        "quarto"
+      ],
+      "description": "quarto-blog-post sample workspace",
+      "tags": [
+        "quarto-blog-post",
+        "quarto"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/quarto-blog-post/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "quarto-clinical-report",
+      "name": "quarto clinical report",
+      "category": "sample",
+      "uses_profiles": [
+        "quarto"
+      ],
+      "description": "quarto-clinical-report sample workspace",
+      "tags": [
+        "quarto-clinical-report",
+        "quarto"
+      ],
+      "size_kb": 4,
+      "path": "sample_workspaces/quarto-clinical-report/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "quarto-epidemiology-report",
+      "name": "quarto epidemiology report",
+      "category": "sample",
+      "uses_profiles": [
+        "quarto"
+      ],
+      "description": "quarto-epidemiology-report sample workspace",
+      "tags": [
+        "quarto-epidemiology-report",
+        "quarto"
+      ],
+      "size_kb": 3,
+      "path": "sample_workspaces/quarto-epidemiology-report/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "quarto-financial-analysis",
+      "name": "quarto financial analysis",
+      "category": "sample",
+      "uses_profiles": [
+        "quarto"
+      ],
+      "description": "quarto-financial-analysis sample workspace",
+      "tags": [
+        "quarto-financial-analysis",
+        "quarto"
+      ],
+      "size_kb": 6,
+      "path": "sample_workspaces/quarto-financial-analysis/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "quarto-meta-analysis",
+      "name": "quarto meta analysis",
+      "category": "sample",
+      "uses_profiles": [
+        "quarto"
+      ],
+      "description": "quarto-meta-analysis sample workspace",
+      "tags": [
+        "quarto-meta-analysis",
+        "quarto"
+      ],
+      "size_kb": 3,
+      "path": "sample_workspaces/quarto-meta-analysis/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "quarto-policy-brief",
+      "name": "quarto policy brief",
+      "category": "sample",
+      "uses_profiles": [
+        "quarto"
+      ],
+      "description": "quarto-policy-brief sample workspace",
+      "tags": [
+        "quarto-policy-brief",
+        "quarto"
+      ],
+      "size_kb": 3,
+      "path": "sample_workspaces/quarto-policy-brief/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
       "id": "recipe-card",
       "name": "recipe card",
       "category": "sample",
@@ -468,6 +1182,125 @@
       ],
       "size_kb": 4,
       "path": "sample_workspaces/research-notes/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "slidev-architecture-review",
+      "name": "slidev architecture review",
+      "category": "sample",
+      "uses_profiles": [
+        "slidev"
+      ],
+      "description": "slidev-architecture-review sample workspace",
+      "tags": [
+        "slidev-architecture-review",
+        "slidev"
+      ],
+      "size_kb": 2,
+      "path": "sample_workspaces/slidev-architecture-review/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "slidev-code-review",
+      "name": "slidev code review",
+      "category": "sample",
+      "uses_profiles": [
+        "slidev"
+      ],
+      "description": "slidev-code-review sample workspace",
+      "tags": [
+        "slidev-code-review",
+        "slidev"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/slidev-code-review/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "slidev-conf-tech-talk",
+      "name": "slidev conf tech talk",
+      "category": "sample",
+      "uses_profiles": [
+        "slidev"
+      ],
+      "description": "slidev-conf-tech-talk sample workspace",
+      "tags": [
+        "slidev-conf-tech-talk",
+        "slidev"
+      ],
+      "size_kb": 3,
+      "path": "sample_workspaces/slidev-conf-tech-talk/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "slidev-demo-day",
+      "name": "slidev demo day",
+      "category": "sample",
+      "uses_profiles": [
+        "slidev"
+      ],
+      "description": "slidev-demo-day sample workspace",
+      "tags": [
+        "slidev-demo-day",
+        "slidev"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/slidev-demo-day/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "slidev-lightning-talk",
+      "name": "slidev lightning talk",
+      "category": "sample",
+      "uses_profiles": [
+        "slidev"
+      ],
+      "description": "slidev-lightning-talk sample workspace",
+      "tags": [
+        "slidev-lightning-talk",
+        "slidev"
+      ],
+      "size_kb": 1,
+      "path": "sample_workspaces/slidev-lightning-talk/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "slidev-postmortem",
+      "name": "slidev postmortem",
+      "category": "sample",
+      "uses_profiles": [
+        "slidev"
+      ],
+      "description": "slidev-postmortem sample workspace",
+      "tags": [
+        "slidev-postmortem",
+        "slidev"
+      ],
+      "size_kb": 2,
+      "path": "sample_workspaces/slidev-postmortem/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "slidev-workshop",
+      "name": "slidev workshop",
+      "category": "sample",
+      "uses_profiles": [
+        "slidev"
+      ],
+      "description": "slidev-workshop sample workspace",
+      "tags": [
+        "slidev-workshop",
+        "slidev"
+      ],
+      "size_kb": 3,
+      "path": "sample_workspaces/slidev-workshop/",
       "license": "CC0"
     },
     {

@@ -1,0 +1,61 @@
+---
+title: "AI Regulation: A Comparative Policy Brief"
+subtitle: "EU AI Act · NIST AI RMF · Korea AI Act"
+author: "Acme Policy Practice"
+date: "2026-05-08"
+format:
+  html: { toc: true }
+  pdf: { documentclass: article, geometry: margin=1in, fontsize: 11pt }
+---
+
+## Executive Summary {.unnumbered}
+
+> **Recommendation.** Korean tech companies exporting AI-enabled products to the EU should adopt EU AI Act risk-classification by Q3 2026 to reduce certification friction. NIST AI RMF (US) is voluntary but rapidly becoming a procurement default for federal contracts.
+
+| Jurisdiction | Risk Tiers | Penalties | Effective | Mandatory |
+|--------------|-----------|-----------|-----------|-----------|
+| EU AI Act    | 4 (unacceptable / high / limited / minimal) | up to €35M or 7% global turnover | Aug 2026 | Yes |
+| US NIST RMF  | n/a (function-based)  | n/a (voluntary) | Active   | Procurement de-facto |
+| KR AI Act    | 3 (high / limited / general)  | up to ₩300M | Jul 2026 | Yes |
+
+## Comparative Analysis
+
+### Risk Classification Approaches
+
+The EU's 4-tier system is the most prescriptive, banning "unacceptable risk" applications outright (e.g., social scoring, real-time biometric ID in public spaces with narrow exceptions). Korea's 3-tier system aligns broadly but uses different category names. The US RMF is principles-based and does not classify by risk tier.
+
+### Compliance Cost (Indicative)
+
+For a mid-sized AI vendor (~$10M ARR):
+- EU AI Act high-risk: $400K–$1.2M one-time + $200K/yr ongoing
+- KR AI Act high-risk: ₩200M–₩600M one-time
+- NIST RMF: ~$100K consultancy if seeking federal contracts
+
+### Enforcement Maturity
+
+EU has appointed national AI authorities; first enforcement actions expected Q4 2026. Korea's MSIT has issued draft guidance; full enforcement Q1 2027. NIST RMF remains advisory at federal level; states (CO, CA) have begun mandating elements.
+
+## Recommendation Matrix
+
+| If your product is... | Then prioritize |
+|------------------------|-----------------|
+| EU-bound, high-risk    | EU AI Act conformity assessment (Q3 deadline) |
+| US federal-bound       | NIST RMF mapping + contract clauses |
+| KR domestic only       | KR AI Act tier-2 documentation |
+| Multi-jurisdiction     | EU AI Act baseline (most prescriptive) |
+
+## Appendix A — EU AI Act Tier Definitions
+
+(Detailed regulatory text mapped to product categories.)
+
+## Appendix B — Korean AI Act Translation
+
+(Original Korean text + working English translation, side-by-side.)
+
+## Appendix C — NIST RMF Function Crosswalk
+
+GOVERN, MAP, MEASURE, MANAGE functions mapped to ISO 42001 controls.
+
+## Appendix D — Compliance Cost Methodology
+
+Based on 12 vendor interviews + EU Commission impact assessment.

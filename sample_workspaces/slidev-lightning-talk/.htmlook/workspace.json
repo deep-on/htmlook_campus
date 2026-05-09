@@ -1,0 +1,1 @@
+{ "schema_version": 1, "name": "Lightning Talk", "profiles": { "slidev": { "active": true, "settings": {} } }, "ai_threads": [], "tabs": [] }
