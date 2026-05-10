@@ -1,0 +1,29 @@
+Acme Cloud — fictional SaaS for the hf-claude scenario.
+
+Tagline:        Ship faster · cloud-native · today
+URL:            acmecloud.dev
+One-liner:      Cloud-native by default. Ship the rest.
+
+Palette
+  --bg          #050511   near-black, very faint cool tint
+  --cyan        #06b6d4   primary brand
+  --cyan-soft   #67e8f9   highlight tint
+  --pink        #ec4899   secondary brand
+  --pink-soft   #f9a8d4   highlight tint
+  --soft        rgba(220, 232, 248, 0.6)   muted text on dark
+  --ink         #ffffff   pure text
+
+Typography
+  Display       Inter / Pretendard, 700-800 weight, tight tracking
+  Mono (URL)    SF Mono / Menlo / ui-monospace, 4px tracking
+
+Motion language
+  Stagger by letter, motion blur on entry, gentle scale pulse
+  to hold attention. Background gradient slowly drifts the full
+  15 s. Outro logo glyph "A" lands first (back.out), wordmark
+  fades in second (power2.out), URL pops last with a tiny y-rise.
+
+Copy guardrails
+  Three keywords:      "ship faster" · "cloud-native" · "today"
+  Outro mark:          monogram "A" + "Acme Cloud" wordmark
+  No exclamation marks. No marketing fluff. Quiet confidence.

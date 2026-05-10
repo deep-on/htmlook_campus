@@ -1,0 +1,68 @@
+Claude prompts for the hf-claude scenario — Korean + English, 5 each.
+Drop any of these into `claude` (Claude Code CLI) or Claude Desktop
+with the HTMLook MCP attached.
+
+Copy the prompt verbatim. Claude handles long context well, so the
+[1] prompt can land the full composition in one round-trip.
+
+────────────────────────────────────────────────────────────────────
+한국어 (Korean) ×5
+────────────────────────────────────────────────────────────────────
+
+[1] 단순 의뢰 (메인)
+Acme Cloud 의 15초 제품 런칭 티저를 만들어줘. near-black 캔버스 위에
+cyan(#06b6d4) → pink(#ec4899) 그라디언트, 키네틱 타이포로 "ship
+faster", "cloud-native", "today" 세 키 카피, 마지막 3초는 "A"
+모노그램 + Acme Cloud 워드마크 + acmecloud.dev URL outro. 4 씬
+구조 (0-3 / 3-8 / 8-12 / 12-15). lint 통과 후 렌더.
+
+[2] Refinement — 한 카피 무겁게
+"ship faster" 가 너무 가벼워. 글자 stagger 를 0.045 → 0.09 로 늘리고,
+scale pulse 도 1.04 → 1.08 로 강조. 동일한 5초 window 안에서 더
+묵직하게.
+
+[3] Outro 강조
+outro "A" 모노그램이 너무 일찍 자리잡아. back.out easing 으로
+12.0 초에 떨어지듯 들어오고, 워드마크는 12.4 초 (power2.out), URL
+은 마지막 12.95 초에 y-rise 14px 로 pop. 단계마다 무게가 더해지도록.
+
+[4] 다른 도메인 변주
+같은 컨셉으로 fintech SaaS 버전. "Ledger Cloud", URL 은
+ledgercloud.io, 카피 "settle faster", "audit-ready", "today".
+색상은 cyan → emerald (#10b981), pink → amber (#f59e0b) 로.
+
+[5] 9:16 portrait 변주
+지금 composition 을 1080×1920 portrait 로 다시 작성. 글자 크기
+80% 로 맞추고, kinetic 타이포는 줄을 위아래로 쌓아. outro 는 동일.
+
+────────────────────────────────────────────────────────────────────
+English ×5
+────────────────────────────────────────────────────────────────────
+
+[1] Simple request (main)
+Build a 15-second product launch teaser for Acme Cloud. Near-black
+canvas with a cyan(#06b6d4)→pink(#ec4899) gradient, kinetic
+typography on three keywords ("ship faster", "cloud-native",
+"today"), and an "A" monogram + Acme Cloud wordmark +
+acmecloud.dev URL outro in the last 3 seconds. Four scenes
+(0-3 / 3-8 / 8-12 / 12-15). Lint clean, then render.
+
+[2] Refinement — make one keyword heavier
+"ship faster" reads too quick. Increase letter stagger 0.045 → 0.09
+and scale pulse 1.04 → 1.08 within the same 5-second window. Heavier
+emphasis without changing duration.
+
+[3] Outro punch
+The outro mark settles too early. Drop the "A" monogram at 12.0 s
+with a back.out, fade the wordmark at 12.4 s (power2.out), and pop
+the URL last at 12.95 s with a 14 px y-rise. Each step heavier than
+the previous.
+
+[4] Domain variant
+Same concept, fintech-SaaS variant. "Ledger Cloud", URL
+ledgercloud.io, copy "settle faster", "audit-ready", "today".
+Recolor cyan → emerald (#10b981), pink → amber (#f59e0b).
+
+[5] 9:16 portrait variant
+Re-author this composition for 1080×1920 portrait. Scale type to 80%
+and stack the kinetic words vertically. Outro mark stays the same.
