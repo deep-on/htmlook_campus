@@ -1,13 +1,19 @@
 # HTMLook Sample Workspace
 
 > 26 페르소나 영상에 등장한 모든 워크플로우를 직접 따라할 수 있는 샘플 워크스페이스.
+> HTMLook Pro v1.0 release-candidate 기준.
 
 ## 시작하기
 
-1. **HTMLook Pro 설치** — [htmlook.deep-on.com](https://htmlook.deep-on.com) 또는 자체 빌드
-2. 이 폴더 (`sample_workspace/`) 를 HTMLook 에서 *Open Folder* 로 열기
+1. **HTMLook Pro 설치** — [htmlook.app](https://htmlook.app) 에서 .dmg 다운로드
+   (14 일 무료 체험 · BYOM 토큰 마진 0)
+2. 이 폴더 (`samples/`) 를 HTMLook 에서 *Open Folder* 로 열기
 3. 좌측 사이드바에 26 개 페르소나 폴더가 보임 (`01-hf-claude/` ~ `26-mobile-news/`)
 4. 각 폴더의 `WALKTHROUGH.md` 가 그 페르소나의 follow-along 가이드
+
+> 폭넓은 도구 시드를 원하면 상위 [`sample_workspaces/`](../sample_workspaces/)
+> (75 폴더 · marimo / d2 / manim / quarto / slidev / astro / excalidraw /
+> hyperframes 도메인) 또는 앱 내 **Add wizard** 의 카탈로그 카드를 참고.
 
 ## 디렉토리 구조
 
@@ -43,10 +49,15 @@ sample_workspace/
 
 **필수**: HTMLook Pro 만 있으면 모든 워크스페이스 탐색·뷰·분할뷰·영역선택·라이브 에디팅 가능.
 
-**선택 (AI cite + apply_edit)**: MCP 호환 LLM 클라이언트
-- Claude Code (CLI) — `~/.config/claude-code/mcp.json` 에 `.htmlook/mcp-config.example.json` 참고
-- Cursor / Windsurf / Zed — 같은 패턴
-- Ollama + 호환 클라이언트 — 로컬 LLM (Llama 3.2 등)
+**선택 (AI cite + apply_edit)** — 셋 중 어느 것이든:
+- **HTMLook Pro 내장 BYOM 채팅** — Settings → Models 에서 키 등록만 하면
+  Claude / GPT / Gemini / DeepSeek / Mistral / Together / Groq / Cerebras /
+  Ollama 채팅 패널 활성화 (토큰 마진 0).
+- **HTMLook Pro 내장 Terminal + CLI 어댑터** — ⌘J PTY 터미널에서
+  `claude` / `codex` / `gemini` CLI 가 워크스페이스 컨텍스트 자동 주입
+  (UserPromptSubmit hook).
+- **외부 MCP 클라이언트** — Claude Code / Cursor / Windsurf / Zed 의
+  `mcp.json` 에 `.htmlook/mcp-config.example.json` 병합.
 
 각 페르소나 WALKTHROUGH.md 의 `[AI]` 표시된 단계는 LLM 필요. `[VIEW]` 단계는 HTMLook 단독으로 가능.
 

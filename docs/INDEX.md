@@ -1,6 +1,8 @@
 # Persona Catalog
 
 26편 페르소나의 영상 + sample workspace + walkthrough cross-reference.
+HTMLook Pro v1.0 release-candidate 기준. AI 단계는 내장 BYOM 채팅 / 내장
+Terminal CLI / 외부 MCP 클라이언트 어느 것이나 사용 가능.
 
 | # | 페르소나 | 영상 | 샘플 폴더 | Walkthrough | 한 줄 요약 |
 |---|---|---|---|---|---|

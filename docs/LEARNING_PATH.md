@@ -1,7 +1,8 @@
 # Learning Path
 
 > HTMLook 을 처음 접하는 사용자가 따라야 할 권장 순서. **BASIC → ADVANCED →
-> Sample Workspaces**. 각 단계는 앞 단계의 개념 위에 쌓입니다.
+> Sample Workspaces** (선택: → Profile 카탈로그). 각 단계는 앞 단계의 개념 위에
+> 쌓입니다. v1.0 release-candidate 기준.
 
 ## Stage 1 · BASIC (6편) — *처음 보는 사람*
 
@@ -119,11 +120,33 @@ walkthrough mp4 + 따라하기 sample workspace + step-by-step `WALKTHROUGH.md`.
 - `after/` — edit 후 상태 (LLM 없는 사용자도 결과 확인)
 - 도메인 콘텐츠 파일들 (md / html / pdf / xlsx / svg / py / mp3 등)
 
+## Stage 4 · Heavyweight Profiles (선택) — *본격 도구 8종*
+
+26 페르소나로 HTMLook 활용 패턴을 익혔으면, 깊은 도구로 넘어가기. v1.0 부터
+8 Profile 이 앱에 동봉되어 New Workspace Wizard / Add wizard 의 카드로 한
+클릭 설치:
+
+| Profile | 시작 시드 폴더 |
+|---------|-------------|
+| HyperFrames (motion-graphics) | [`profiles/hyperframes/`](../profiles/hyperframes/) |
+| Slidev (presentation) | [`profiles/slidev/`](../profiles/slidev/) |
+| Quarto (publishing) | [`profiles/quarto/`](../profiles/quarto/) |
+| D2 (diagram) | [`profiles/d2/`](../profiles/d2/) |
+| Astro Starlight (docs site) | [`profiles/astro-starlight/`](../profiles/astro-starlight/) |
+| Marimo (notebook) | [`profiles/marimo/`](../profiles/marimo/) |
+| Excalidraw (whiteboard) | [`profiles/excalidraw/`](../profiles/excalidraw/) |
+| Manim (animation) | [`profiles/manim/`](../profiles/manim/) |
+
+각 Profile 카테고리에 추가 시드 49 종이 [`sample_workspaces/`](../sample_workspaces/)
+에 있음 (Wave A 11 high-quality + Wave B 24 mid + Wave C 14 light).
+
 ## 학습 시간 추정
 
 - **Stage 1 (BASIC)**: 30 s × 6 = 3 min 시청 + 인터랙티브 가이드 30 s × 6 = 3 min · **합계 ~6 min**
 - **Stage 2 (ADVANCED)**: 30 s × 11 = 5.5 min 시청 + 인터랙티브 30 s × 11 = 5.5 min · **합계 ~11 min**
 - **Stage 3 (Sample Workspaces)**: 직군 1편 평균 60 s 영상 + 5–10 min 따라하기. 자기 직군 1편만 해도 충분 · **~10 min**
+- **Stage 4 (Heavyweight Profile · 선택)**: 도구 1종 시드 5–15 min · 본격
+  사용은 도구 자체 학습 시간 별도.
 
 처음 onboarding **30 분 이내** 에 HTMLook 의 모든 핵심 기능 + 자기 도메인
 워크플로우까지 학습 완료.
@@ -135,3 +158,7 @@ walkthrough mp4 + 따라하기 sample workspace + step-by-step `WALKTHROUGH.md`.
 - [`docs/PRODUCTION.md`](PRODUCTION.md) — 영상이 어떻게 만들어졌는지 (역검증 원칙 포함)
 - [`docs/FEATURES.md`](FEATURES.md) — 17 feature 영상 카탈로그 (hooks + accent)
 - [`docs/INDEX.md`](INDEX.md) — 26 페르소나 카탈로그
+- [`catalog.json`](../catalog.json) — Profile + workspace seed 카탈로그 (앱
+  Wizard 가 fresh-fetch)
+- Deep-dive 데모: [htmlook.app/demos/lv1.html](https://htmlook.app/demos/lv1.html) ·
+  [lv2](https://htmlook.app/demos/lv2.html) · [lv3](https://htmlook.app/demos/lv3.html)

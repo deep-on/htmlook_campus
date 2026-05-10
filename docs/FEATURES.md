@@ -1,8 +1,8 @@
 # Feature Spotlight Videos
 
-17편 feature spotlight 영상 — 각 30초, 단일 magic moment 강조. BASIC 6편(뷰어 기본)부터 ADVANCED 11편(MCP cite/apply_edit) 까지.
+17편 feature spotlight 영상 — 각 30초, 단일 magic moment 강조. BASIC 6편(뷰어 기본)부터 ADVANCED 11편(MCP cite/apply_edit) 까지. HTMLook Pro v1.0 release-candidate 기준.
 
-**모든 영상은 실제 HTMLook 기능에 대해 역검증을 거쳤습니다.** 광고하는 모든 동작이 `src/lib/` 또는 `src-tauri/src/pro_features/mcp_server/` 에서 확인됩니다.
+**모든 영상은 실제 HTMLook 기능에 대해 역검증을 거쳤습니다.** 광고하는 모든 동작이 `src/lib/`, `src-tauri/src/pro_features/mcp_server/` 또는 `src/apps/AppPro.svelte` 에서 확인됩니다 (BYOM 채팅 / 내장 PTY 터미널 / paint canvas / save-as-skill / Add wizard 등 v1.0 기능 포함).
 
 | # | 영상 | 카테고리 | accent | Hook (en) | Hook (ko) |
 |---|---|---|---|---|---|
