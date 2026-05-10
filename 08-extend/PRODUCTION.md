@@ -104,7 +104,7 @@ mux 하고 두 변형 (.en+ko / .en+ko.en-default) 출력 + sidecar VTT 복사.
 
 ## Sample Workspace 표준
 
-`samples/` 의 각 페르소나 폴더 구조:
+`05-command/personas/` 의 각 페르소나 폴더 구조:
 
 ```
 NN-<persona>/
@@ -145,8 +145,8 @@ HTMLook Pro 에 설정 다이얼로그 → **Tutorials** 탭이 있음. 17 편 f
 8. mix: `/tmp/feature_pipeline.sh <id> 30 D1..D7`
 9. ko 자막 작성 + mux: VTT 직접 작성 후 `/tmp/feature_vtt_mux.py <id> D1..D7`
 10. 역검증: claim 모두 실제 HTMLook 기능에 부합?
-11. 캠퍼스 repo: `videos/features/` 에 mp4 복사, `docs/FEATURES.md` 업데이트
-12. (선택) `samples/` 에 follow-along 추가
+11. 캠퍼스 repo: `videos/features/` 에 mp4 복사, `08-extend/FEATURES.md` 업데이트
+12. (선택) `05-command/personas/` 에 follow-along 추가
 13. (선택) `walkthrough-steps.ts` 에 인터랙티브 spec 추가
 
 ## 파일 명명 규칙
