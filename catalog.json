@@ -1,7 +1,7 @@
 {
   "version": 1,
   "schema": "htmlook-catalog/v1",
-  "updated_at": "2026-05-09",
+  "updated_at": "2026-05-10",
   "entries": [
     {
       "type": "profile",
@@ -251,6 +251,40 @@
     },
     {
       "type": "workspace_seed",
+      "id": "corp-deck",
+      "name": "corp deck",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "corp-deck sample workspace",
+      "tags": [
+        "corp-deck",
+        "hyperframes"
+      ],
+      "size_kb": 35,
+      "path": "sample_workspaces/corp-deck/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "creator-podcast",
+      "name": "creator podcast",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "creator-podcast sample workspace",
+      "tags": [
+        "creator-podcast",
+        "hyperframes"
+      ],
+      "size_kb": 22,
+      "path": "sample_workspaces/creator-podcast/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
       "id": "d2-aws-3-tier",
       "name": "d2 aws 3 tier",
       "category": "sample",
@@ -370,6 +404,74 @@
     },
     {
       "type": "workspace_seed",
+      "id": "data-analyst",
+      "name": "data analyst",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "data-analyst sample workspace",
+      "tags": [
+        "data-analyst",
+        "hyperframes"
+      ],
+      "size_kb": 29,
+      "path": "sample_workspaces/data-analyst/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "dev-pr-docs",
+      "name": "dev pr docs",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "dev-pr-docs sample workspace",
+      "tags": [
+        "dev-pr-docs",
+        "hyperframes"
+      ],
+      "size_kb": 23,
+      "path": "sample_workspaces/dev-pr-docs/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "domain-battery",
+      "name": "domain battery",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "domain-battery sample workspace",
+      "tags": [
+        "domain-battery",
+        "hyperframes"
+      ],
+      "size_kb": 28,
+      "path": "sample_workspaces/domain-battery/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "economy-analyst",
+      "name": "economy analyst",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "economy-analyst sample workspace",
+      "tags": [
+        "economy-analyst",
+        "hyperframes"
+      ],
+      "size_kb": 28,
+      "path": "sample_workspaces/economy-analyst/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
       "id": "excalidraw-debugging-memo",
       "name": "excalidraw debugging memo",
       "category": "sample",
@@ -485,6 +587,142 @@
       ],
       "size_kb": 3,
       "path": "sample_workspaces/excalidraw-system-design-interview/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "finance-report",
+      "name": "finance report",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "finance-report sample workspace",
+      "tags": [
+        "finance-report",
+        "hyperframes"
+      ],
+      "size_kb": 33,
+      "path": "sample_workspaces/finance-report/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "hf-claude",
+      "name": "hf claude",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "hf-claude sample workspace",
+      "tags": [
+        "hf-claude",
+        "hyperframes"
+      ],
+      "size_kb": 12,
+      "path": "sample_workspaces/hf-claude/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "hf-llama",
+      "name": "hf llama",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "hf-llama sample workspace",
+      "tags": [
+        "hf-llama",
+        "hyperframes"
+      ],
+      "size_kb": 22,
+      "path": "sample_workspaces/hf-llama/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "hobby-fiction",
+      "name": "hobby fiction",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "hobby-fiction sample workspace",
+      "tags": [
+        "hobby-fiction",
+        "hyperframes"
+      ],
+      "size_kb": 25,
+      "path": "sample_workspaces/hobby-fiction/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "homework-helper",
+      "name": "homework helper",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "homework-helper sample workspace",
+      "tags": [
+        "homework-helper",
+        "hyperframes"
+      ],
+      "size_kb": 28,
+      "path": "sample_workspaces/homework-helper/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "kid-coding",
+      "name": "kid coding",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "kid-coding sample workspace",
+      "tags": [
+        "kid-coding",
+        "hyperframes"
+      ],
+      "size_kb": 25,
+      "path": "sample_workspaces/kid-coding/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "kids-science-mag",
+      "name": "kids science mag",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "kids-science-mag sample workspace",
+      "tags": [
+        "kids-science-mag",
+        "hyperframes"
+      ],
+      "size_kb": 35,
+      "path": "sample_workspaces/kids-science-mag/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "legal-redline",
+      "name": "legal redline",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "legal-redline sample workspace",
+      "tags": [
+        "legal-redline",
+        "hyperframes"
+      ],
+      "size_kb": 32,
+      "path": "sample_workspaces/legal-redline/",
       "license": "CC0"
     },
     {
@@ -727,6 +965,74 @@
     },
     {
       "type": "workspace_seed",
+      "id": "mobile-news",
+      "name": "mobile news",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "mobile-news sample workspace",
+      "tags": [
+        "mobile-news",
+        "hyperframes"
+      ],
+      "size_kb": 22,
+      "path": "sample_workspaces/mobile-news/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "picture-book",
+      "name": "picture book",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "picture-book sample workspace",
+      "tags": [
+        "picture-book",
+        "hyperframes"
+      ],
+      "size_kb": 27,
+      "path": "sample_workspaces/picture-book/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "press-editor",
+      "name": "press editor",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "press-editor sample workspace",
+      "tags": [
+        "press-editor",
+        "hyperframes"
+      ],
+      "size_kb": 26,
+      "path": "sample_workspaces/press-editor/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "product-prd",
+      "name": "product prd",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "product-prd sample workspace",
+      "tags": [
+        "product-prd",
+        "hyperframes"
+      ],
+      "size_kb": 33,
+      "path": "sample_workspaces/product-prd/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
       "id": "quarto-academic-syllabus",
       "name": "quarto academic syllabus",
       "category": "sample",
@@ -846,6 +1152,40 @@
     },
     {
       "type": "workspace_seed",
+      "id": "recipe-card",
+      "name": "recipe card",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "recipe-card sample workspace",
+      "tags": [
+        "recipe-card",
+        "hyperframes"
+      ],
+      "size_kb": 21,
+      "path": "sample_workspaces/recipe-card/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "research-notes",
+      "name": "research notes",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "research-notes sample workspace",
+      "tags": [
+        "research-notes",
+        "hyperframes"
+      ],
+      "size_kb": 30,
+      "path": "sample_workspaces/research-notes/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
       "id": "slidev-architecture-review",
       "name": "slidev architecture review",
       "category": "sample",
@@ -961,6 +1301,108 @@
       ],
       "size_kb": 3,
       "path": "sample_workspaces/slidev-workshop/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "student-flashcard",
+      "name": "student flashcard",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "student-flashcard sample workspace",
+      "tags": [
+        "student-flashcard",
+        "hyperframes"
+      ],
+      "size_kb": 27,
+      "path": "sample_workspaces/student-flashcard/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "student-notes",
+      "name": "student notes",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "student-notes sample workspace",
+      "tags": [
+        "student-notes",
+        "hyperframes"
+      ],
+      "size_kb": 29,
+      "path": "sample_workspaces/student-notes/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "teacher-newsletter",
+      "name": "teacher newsletter",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "teacher-newsletter sample workspace",
+      "tags": [
+        "teacher-newsletter",
+        "hyperframes"
+      ],
+      "size_kb": 24,
+      "path": "sample_workspaces/teacher-newsletter/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "teacher-quiz",
+      "name": "teacher quiz",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "teacher-quiz sample workspace",
+      "tags": [
+        "teacher-quiz",
+        "hyperframes"
+      ],
+      "size_kb": 28,
+      "path": "sample_workspaces/teacher-quiz/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "teacher-record",
+      "name": "teacher record",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "teacher-record sample workspace",
+      "tags": [
+        "teacher-record",
+        "hyperframes"
+      ],
+      "size_kb": 28,
+      "path": "sample_workspaces/teacher-record/",
+      "license": "CC0"
+    },
+    {
+      "type": "workspace_seed",
+      "id": "translator-book",
+      "name": "translator book",
+      "category": "sample",
+      "uses_profiles": [
+        "hyperframes"
+      ],
+      "description": "translator-book sample workspace",
+      "tags": [
+        "translator-book",
+        "hyperframes"
+      ],
+      "size_kb": 28,
+      "path": "sample_workspaces/translator-book/",
       "license": "CC0"
     }
   ]
