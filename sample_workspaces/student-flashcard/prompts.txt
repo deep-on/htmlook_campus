@@ -1,0 +1,44 @@
+LLM prompts for the student-flashcard scenario — English ×5.
+Drop any of these into Claude / local Llama / Codex with the
+HTMLook MCP attached.
+
+The artifact is a portrait 9:16 (1080×1920) flashcard deck — header,
+card stack with Q→A flip, swipe motion, footer wordmark. Cobalt +
+formula-yellow highlights. 10 cards, biology / nervous system.
+
+────────────────────────────────────────────────────────────────────
+English ×5
+────────────────────────────────────────────────────────────────────
+
+[1] Simple request (main)
+Read notes.md. Generate a flashcard deck — 10 Q/A pairs covering
+the core topics (neuron parts, action potential, synapses,
+sympathetic vs parasympathetic, central vs peripheral, reflex arc).
+Render as a 1080×1920 portrait 9:16 deck. Top card facing forward,
+others stacked behind tilted 2-3°. Cobalt #2563eb on white #fafafa,
+formula-yellow #fbbf24 highlights for the key term in each answer.
+Lint clean, render.
+
+[2] Refinement — make a card harder
+Card 4 ("What are the three parts of a neuron?") is too easy for
+my exam. Cite that card and rewrite it as: "Trace the path of an
+action potential from dendrite to axon terminal." Keep the format,
+keep the highlight on key terms, keep it under 14 words.
+
+[3] Refinement — fix the swipe motion
+The card stack barely moves on swipe. Increase the swipe-out
+to translateX(120%) + rotateZ(8°), 0.4s ease-out. The next card
+should slide forward + scale from 0.95 to 1.0 in the same beat.
+Don't touch the Q→A flip.
+
+[4] Domain variant
+Same template, switch from biology / nervous system to
+chemistry / acid-base equilibria. 10 cards covering pH, pKa,
+Henderson-Hasselbalch, buffer ranges, common acids. Header reads
+"FlashCards · 산-염기 평형". Same cobalt + formula-yellow palette.
+
+[5] 16:9 landscape variant
+Re-author this composition for 1920×1080 landscape — left half
+is the question, right half is the answer with a thick cobalt
+divider down the middle. Q→A flip becomes a left/right slide.
+Keep the deck of 10, keep the wordmark in the bottom-right corner.

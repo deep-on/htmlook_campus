@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Atlas — 15s Q3 2026 CFO Brief teaser</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #0a1929;
+        color: #f5e6c8;
+        font-family: "Charter", "Source Serif Pro", Georgia, serif;
+      }
+      :root {
+        --navy: #0a1929;
+        --navy-2: #112a45;
+        --gold: #fbbf24;
+        --alert: #ea580c;
+        --ok: #10b981;
+        --cream: #f5e6c8;
+        --cream-soft: rgba(245, 230, 200, 0.62);
+        --rule: rgba(245, 230, 200, 0.18);
+        --ink-strong: #ffffff;
+      }
+
+      .clip {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        will-change: opacity, transform;
+      }
+      .scene-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 80px 140px;
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      /* Static paneling — Bloomberg-tearsheet vibe, no animation */
+      .panel-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(180deg, rgba(251, 191, 36, 0.05) 0%, transparent 14%, transparent 86%, rgba(251, 191, 36, 0.05) 100%),
+          radial-gradient(ellipse at 50% 30%, rgba(17, 42, 69, 0.9) 0%, var(--navy) 70%),
+          var(--navy);
+      }
+      .panel-bg::before {
+        content: "";
+        position: absolute;
+        top: 60px; left: 80px; right: 80px;
+        height: 1px;
+        background: var(--rule);
+      }
+      .panel-bg::after {
+        content: "";
+        position: absolute;
+        bottom: 60px; left: 80px; right: 80px;
+        height: 1px;
+        background: var(--rule);
+      }
+
+      /* ── Scene 1 — Brief title (0-3.5s) ─────────────────────── */
+      .title-card {
+        text-align: left;
+        max-width: 1620px;
+        width: 100%;
+      }
+      .title-card .ticker {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin-bottom: 30px;
+        font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+        font-size: 22px;
+        letter-spacing: 4px;
+        color: var(--cream-soft);
+        text-transform: uppercase;
+      }
+      .title-card .ticker .tag {
+        background: var(--gold);
+        color: var(--navy);
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 4px;
+        letter-spacing: 2px;
+      }
+      .title-card .ticker .quarter {
+        color: var(--gold);
+        letter-spacing: 6px;
+      }
+      .title-card h1 {
+        font-family: "Tiempos Headline", "Source Serif Pro", Georgia, serif;
+        font-size: 100px;
+        font-weight: 700;
+        letter-spacing: -1.5px;
+        line-height: 1.05;
+        color: var(--ink-strong);
+        margin-bottom: 28px;
+      }
+      .title-card h1 .accent {
+        color: var(--gold);
+      }
+      .title-card .sub {
+        font-family: "Charter", "Source Serif Pro", Georgia, serif;
+        font-size: 32px;
+        font-style: italic;
+        color: var(--cream-soft);
+      }
+      .title-card .meta {
+        margin-top: 28px;
+        display: flex;
+        gap: 32px;
+        font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+        font-size: 20px;
+        color: var(--cream-soft);
+        letter-spacing: 2px;
+      }
+      .title-card .meta .key {
+        color: var(--gold);
+        margin-right: 8px;
+      }
+
+      /* ── Scene 2 — Variance table (3.5-10s) ─────────────────── */
+      .variance {
+        text-align: left;
+        max-width: 1640px;
+        width: 100%;
+      }
+      .variance .head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 18px;
+        margin-bottom: 28px;
+      }
+      .variance .head .h-title {
+        font-family: "Tiempos Headline", "Source Serif Pro", Georgia, serif;
+        font-size: 38px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: var(--ink-strong);
+      }
+      .variance .head .h-title .sub {
+        font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+        font-size: 18px;
+        color: var(--cream-soft);
+        font-weight: 400;
+        margin-left: 14px;
+        letter-spacing: 2px;
+      }
+      .variance .head .legend {
+        font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+        font-size: 16px;
+        color: var(--cream-soft);
+        letter-spacing: 2px;
+      }
+      .variance .head .legend .ok { color: var(--ok); }
+      .variance .head .legend .alert { color: var(--alert); }
+
+      .v-row {
+        display: grid;
+        grid-template-columns: 320px 220px 220px 80px 1fr;
+        gap: 24px;
+        align-items: center;
+        padding: 22px 26px;
+        margin-bottom: 16px;
+        background: rgba(17, 42, 69, 0.55);
+        border-left: 4px solid var(--rule);
+        border-radius: 6px;
+      }
+      .v-row.alert { border-left-color: var(--alert); }
+      .v-row.ok { border-left-color: var(--ok); }
+      .v-row .label {
+        font-family: "Charter", "Source Serif Pro", Georgia, serif;
+        font-size: 26px;
+        color: var(--cream);
+        font-weight: 500;
+      }
+      .v-row .label .cell {
+        display: block;
+        margin-top: 2px;
+        font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+        font-size: 14px;
+        color: var(--cream-soft);
+        letter-spacing: 1px;
+      }
+      .v-row .actual,
+      .v-row .plan {
+        font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+        font-size: 26px;
+        font-weight: 600;
+        color: var(--cream);
+        text-align: right;
+      }
+      .v-row .actual .cap,
+      .v-row .plan .cap {
+        display: block;
+        font-size: 12px;
+        font-weight: 400;
+        color: var(--cream-soft);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+      .v-row .arrow {
+        font-size: 38px;
+        text-align: center;
+        font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+      }
+      .v-row.alert .arrow { color: var(--alert); }
+      .v-row.ok .arrow { color: var(--ok); }
+      .v-row .narrative {
+        font-family: "Charter", "Source Serif Pro", Georgia, serif;
+        font-size: 19px;
+        line-height: 1.45;
+        color: var(--cream);
+      }
+      .v-row .narrative .delta {
+        font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+        font-weight: 700;
+      }
+      .v-row.alert .narrative .delta { color: var(--alert); }
+      .v-row.ok .narrative .delta { color: var(--ok); }
+      .v-row .narrative code {
+        font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+        background: rgba(251, 191, 36, 0.10);
+        color: var(--gold);
+        padding: 1px 6px;
+        border-radius: 3px;
+        font-size: 16px;
+      }
+
+      /* ── Scene 3 — Footer sign-off (10-13s) ─────────────────── */
+      .signoff {
+        text-align: left;
+        max-width: 1500px;
+        width: 100%;
+      }
+      .signoff .closing {
+        font-family: "Tiempos Headline", "Source Serif Pro", Georgia, serif;
+        font-size: 48px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: var(--ink-strong);
+        margin-bottom: 18px;
+      }
+      .signoff .closing .accent { color: var(--gold); }
+      .signoff .summary {
+        font-family: "Charter", "Source Serif Pro", Georgia, serif;
+        font-size: 24px;
+        line-height: 1.55;
+        color: var(--cream);
+        max-width: 1300px;
+        margin-bottom: 50px;
+      }
+      .signoff .summary .delta {
+        font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+        color: var(--gold);
+        font-weight: 600;
+      }
+
+      .signature-block {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        padding-top: 32px;
+        border-top: 2px solid var(--gold);
+      }
+      .sig-row {
+        font-family: "Charter", "Source Serif Pro", Georgia, serif;
+      }
+      .sig-row .name {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--ink-strong);
+        margin-bottom: 4px;
+        letter-spacing: -0.5px;
+      }
+      .sig-row .title {
+        font-size: 22px;
+        font-style: italic;
+        color: var(--cream-soft);
+        margin-bottom: 10px;
+      }
+      .sig-row .date {
+        font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+        font-size: 18px;
+        color: var(--gold);
+        letter-spacing: 3px;
+      }
+
+      /* ── Scene 4 — CFO Brief wordmark (13-15s) ──────────────── */
+      .wordmark {
+        text-align: center;
+      }
+      .wordmark .mark {
+        font-family: "Tiempos Headline", "Source Serif Pro", Georgia, serif;
+        font-size: 140px;
+        font-weight: 700;
+        letter-spacing: -3px;
+        line-height: 1;
+        color: var(--ink-strong);
+      }
+      .wordmark .mark .atlas {
+        color: var(--gold);
+      }
+      .wordmark .mark .dot {
+        color: var(--cream-soft);
+        margin: 0 24px;
+        font-weight: 400;
+      }
+      .wordmark .tagline {
+        margin-top: 30px;
+        font-family: "Charter", "Source Serif Pro", Georgia, serif;
+        font-size: 30px;
+        font-style: italic;
+        color: var(--cream-soft);
+      }
+      .wordmark .url {
+        margin-top: 32px;
+        font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+        font-size: 26px;
+        color: var(--cream);
+        letter-spacing: 5px;
+      }
+      .wordmark .url .at { color: var(--gold); }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="15"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- Static navy panel — sits below every scene -->
+      <div class="panel-bg" id="panel-bg" aria-hidden="true"></div>
+
+      <!-- Scene 1 — Brief title pulse (0-3.5s) -->
+      <div id="s1" class="clip" data-start="0" data-duration="3.5" data-track-index="1">
+        <div class="scene-content">
+          <div class="title-card">
+            <div class="ticker">
+              <span class="tag">ATLAS · NYSE</span>
+              <span class="quarter">Q3 · 2026</span>
+              <span>Confidential · board distribution</span>
+            </div>
+            <h1>
+              Q3 2026 <span class="accent">CFO Brief</span>
+            </h1>
+            <div class="sub">Atlas Manufacturing — three variances, three actions.</div>
+            <div class="meta">
+              <span><span class="key">SOURCE:</span>q3_model.xlsx</span>
+              <span><span class="key">DRAFT:</span>report.html · v3</span>
+              <span><span class="key">CITED CELLS:</span>3 of 3 audited</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 2 — Variance table (3.5-10s) -->
+      <div id="s2" class="clip" data-start="3.5" data-duration="6.5" data-track-index="1">
+        <div class="scene-content">
+          <div class="variance">
+            <div class="head">
+              <div class="h-title">Variance vs plan<span class="sub">// q3_model.xlsx → report.html</span></div>
+              <div class="legend">
+                <span class="ok">▲ ahead of plan</span> &nbsp;·&nbsp;
+                <span class="alert">▼ behind plan</span>
+              </div>
+            </div>
+
+            <div class="v-row ok" data-vrow="0">
+              <div class="label">
+                Revenue
+                <span class="cell">Revenue!B12 ↔ Revenue!C12</span>
+              </div>
+              <div class="actual"><span class="cap">Actual</span>$148.2M</div>
+              <div class="plan"><span class="cap">Plan</span>$144.5M</div>
+              <div class="arrow">▲</div>
+              <div class="narrative">
+                Q3 revenue beat plan by <span class="delta">+$3.7M</span>, carried by Castings demand from <code>Revenue!B7</code>; offset by softer Aftermarket spares.
+              </div>
+            </div>
+
+            <div class="v-row alert" data-vrow="1">
+              <div class="label">
+                EBITDA
+                <span class="cell">EBITDA!B14 ↔ EBITDA!C14</span>
+              </div>
+              <div class="actual"><span class="cap">Actual</span>$22.4M</div>
+              <div class="plan"><span class="cap">Plan</span>$24.5M</div>
+              <div class="arrow">▼</div>
+              <div class="narrative">
+                Q3 EBITDA missed plan by <span class="delta">-$2.1M</span>, driven by elevated input costs in Castings (<code>COGS!D9</code>); margin pressure absorbed in the quarter.
+              </div>
+            </div>
+
+            <div class="v-row alert" data-vrow="2">
+              <div class="label">
+                Working capital
+                <span class="cell">WC!B8 ↔ WC!C8</span>
+              </div>
+              <div class="actual"><span class="cap">Actual</span>$71.8M</div>
+              <div class="plan"><span class="cap">Plan</span>$66.0M</div>
+              <div class="arrow">▼</div>
+              <div class="narrative">
+                Working capital ran <span class="delta">+$5.8M</span> over plan, attributable to inventory build at the Toledo plant (<code>WC!B11</code>); will reverse in Q4.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3 — Footer sign-off (10-13s) -->
+      <div id="s3" class="clip" data-start="10" data-duration="3" data-track-index="1">
+        <div class="scene-content">
+          <div class="signoff">
+            <div class="closing">
+              <span class="accent">Looking ahead.</span> Three Q4 actions filed.
+            </div>
+            <div class="summary">
+              EBITDA recovery hinges on the Castings contract renegotiation (close <span class="delta">30 Sep</span>); inventory unwind is on track for <span class="delta">15% Q4 reversal</span>; revenue mix remains constructive into the seasonal quarter.
+            </div>
+            <div class="signature-block">
+              <div class="sig-row" data-sig="0">
+                <div class="name">J. Whitford</div>
+                <div class="title">Chief Financial Officer</div>
+                <div class="date">29 APR 2026</div>
+              </div>
+              <div class="sig-row" data-sig="1">
+                <div class="name">A. Reyes</div>
+                <div class="title">Director, FP&amp;A · author of record</div>
+                <div class="date">29 APR 2026</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 4 — Atlas · CFO Brief wordmark (13-15s) -->
+      <div id="s4" class="clip" data-start="13" data-duration="2" data-track-index="1">
+        <div class="scene-content">
+          <div class="wordmark">
+            <div class="mark"><span class="atlas">Atlas</span><span class="dot">·</span>CFO Brief</div>
+            <div class="tagline">cells become narratives</div>
+            <div class="url"><span class="at">atlas.</span>mfg/cfo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+
+      // ── Scene 1 — Title pulse (0-3.5s) ──
+      tl.fromTo("#s1", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0);
+      tl.from("#s1 .ticker", { opacity: 0, y: 8, duration: 0.45, ease: "power2.out" }, 0.2);
+      tl.from("#s1 h1", { opacity: 0, y: 28, duration: 0.7, ease: "power3.out" }, 0.45);
+      // Subtle gold pulse on the accent word
+      tl.fromTo("#s1 h1 .accent",
+        { textShadow: "0 0 0 rgba(251, 191, 36, 0)" },
+        { textShadow: "0 0 24px rgba(251, 191, 36, 0.45)", duration: 0.8, yoyo: true, repeat: 1, ease: "sine.inOut" },
+        1.0);
+      tl.from("#s1 .sub", { opacity: 0, y: 8, duration: 0.5, ease: "power2.out" }, 1.2);
+      tl.from("#s1 .meta span", { opacity: 0, y: 8, duration: 0.4, stagger: 0.12, ease: "power2.out" }, 1.7);
+      tl.to("#s1", { opacity: 0, duration: 0.45, ease: "power2.in" }, 3.0);
+      tl.set("#s1", { opacity: 0 }, 3.5);
+
+      // ── Scene 2 — Variance rows reveal one by one (3.5-10s) ──
+      tl.set("#s2", { opacity: 1 }, 3.5);
+      tl.from("#s2 .head", { opacity: 0, y: 12, duration: 0.5, ease: "power3.out" }, 3.55);
+      // Each row: row fades in, then arrow pops, then narrative drops.
+      // [0] Revenue — ok (3.95s)
+      tl.from("#s2 [data-vrow='0']", { opacity: 0, x: -16, duration: 0.5, ease: "power3.out" }, 3.95);
+      tl.from("#s2 [data-vrow='0'] .actual", { opacity: 0, duration: 0.35, ease: "power2.out" }, 4.25);
+      tl.from("#s2 [data-vrow='0'] .plan", { opacity: 0, duration: 0.35, ease: "power2.out" }, 4.4);
+      tl.from("#s2 [data-vrow='0'] .arrow", { opacity: 0, scale: 0.3, duration: 0.45, ease: "back.out(2)", transformOrigin: "50% 50%" }, 4.6);
+      tl.from("#s2 [data-vrow='0'] .narrative", { opacity: 0, y: 8, duration: 0.4, ease: "power2.out" }, 4.85);
+
+      // [1] EBITDA — alert (5.6s)
+      tl.from("#s2 [data-vrow='1']", { opacity: 0, x: -16, duration: 0.5, ease: "power3.out" }, 5.6);
+      tl.from("#s2 [data-vrow='1'] .actual", { opacity: 0, duration: 0.35, ease: "power2.out" }, 5.9);
+      tl.from("#s2 [data-vrow='1'] .plan", { opacity: 0, duration: 0.35, ease: "power2.out" }, 6.05);
+      tl.from("#s2 [data-vrow='1'] .arrow", { opacity: 0, scale: 0.3, duration: 0.45, ease: "back.out(2)", transformOrigin: "50% 50%" }, 6.25);
+      tl.from("#s2 [data-vrow='1'] .narrative", { opacity: 0, y: 8, duration: 0.4, ease: "power2.out" }, 6.5);
+
+      // [2] WC — alert (7.25s)
+      tl.from("#s2 [data-vrow='2']", { opacity: 0, x: -16, duration: 0.5, ease: "power3.out" }, 7.25);
+      tl.from("#s2 [data-vrow='2'] .actual", { opacity: 0, duration: 0.35, ease: "power2.out" }, 7.55);
+      tl.from("#s2 [data-vrow='2'] .plan", { opacity: 0, duration: 0.35, ease: "power2.out" }, 7.7);
+      tl.from("#s2 [data-vrow='2'] .arrow", { opacity: 0, scale: 0.3, duration: 0.45, ease: "back.out(2)", transformOrigin: "50% 50%" }, 7.9);
+      tl.from("#s2 [data-vrow='2'] .narrative", { opacity: 0, y: 8, duration: 0.4, ease: "power2.out" }, 8.15);
+
+      tl.to("#s2", { opacity: 0, duration: 0.45, ease: "power2.in" }, 9.5);
+      tl.set("#s2", { opacity: 0 }, 10);
+
+      // ── Scene 3 — Footer sign-off (10-13s) ──
+      tl.set("#s3", { opacity: 1 }, 10);
+      tl.from("#s3 .closing", { opacity: 0, y: 14, duration: 0.55, ease: "power3.out" }, 10.05);
+      tl.from("#s3 .summary", { opacity: 0, y: 10, duration: 0.55, ease: "power2.out" }, 10.45);
+      tl.from("#s3 [data-sig='0']", { opacity: 0, y: 12, duration: 0.5, ease: "power3.out" }, 11.0);
+      tl.from("#s3 [data-sig='1']", { opacity: 0, y: 12, duration: 0.5, ease: "power3.out" }, 11.3);
+      tl.to("#s3", { opacity: 0, duration: 0.45, ease: "power2.in" }, 12.5);
+      tl.set("#s3", { opacity: 0 }, 13);
+
+      // ── Scene 4 — Wordmark + URL (13-15s) ──
+      tl.set("#s4", { opacity: 1 }, 13);
+      tl.from("#s4 .mark", { opacity: 0, y: 24, duration: 0.7, ease: "power3.out" }, 13.05);
+      tl.from("#s4 .tagline", { opacity: 0, y: 8, duration: 0.5, ease: "power2.out" }, 13.55);
+      tl.from("#s4 .url", { opacity: 0, duration: 0.5, ease: "power2.out" }, 14.0);
+    </script>
+  </body>
+</html>

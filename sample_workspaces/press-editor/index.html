@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Workflow Magazine — 15s polished tear-sheet</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #f4ecd8;
+        color: #1a1208;
+        font-family: "Iowan Old Style", "Charter", "Georgia", "Times New Roman", serif;
+      }
+      :root {
+        --paper:    #f4ecd8;
+        --ink:      #1a1208;
+        --ink-soft: rgba(26, 18, 8, 0.55);
+        --rule:     rgba(26, 18, 8, 0.25);
+        --burgundy: #8b1a1a;
+        --olive:    #3f5d3f;
+      }
+
+      .clip {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        will-change: opacity, transform;
+      }
+      .scene-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 72px 140px;
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      /* Faint paper grain — static texture only */
+      .paper-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(ellipse at 30% 20%, rgba(139, 26, 26, 0.04) 0%, transparent 55%),
+          radial-gradient(ellipse at 70% 80%, rgba(63, 93, 63, 0.05) 0%, transparent 60%),
+          var(--paper);
+      }
+
+      /* ── Scene 1 — Publication header (0-3s) ────────────────────── */
+      .header {
+        text-align: center;
+        max-width: 1400px;
+      }
+      .header .masthead {
+        font-family: "Didot", "Bodoni 72", "Playfair Display", "Times New Roman", serif;
+        font-size: 110px;
+        font-weight: 700;
+        letter-spacing: -2px;
+        color: var(--ink);
+        line-height: 1;
+      }
+      .header .masthead em {
+        font-style: italic;
+        color: var(--burgundy);
+      }
+      .header .rule {
+        margin: 28px auto 22px;
+        width: 540px;
+        height: 2px;
+        background: var(--ink);
+        transform-origin: center;
+      }
+      .header .meta {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 22px;
+        letter-spacing: 6px;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+      }
+      .header .meta span { margin: 0 14px; }
+      .header .meta .accent { color: var(--burgundy); }
+
+      /* ── Scene 2 — Headline + byline (3-7s) ──────────────────────── */
+      .head-block {
+        text-align: center;
+        max-width: 1500px;
+      }
+      .head-block .kicker {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 22px;
+        letter-spacing: 8px;
+        text-transform: uppercase;
+        color: var(--burgundy);
+        margin-bottom: 30px;
+      }
+      .head-block h1 {
+        font-family: "Didot", "Bodoni 72", "Playfair Display", "Times New Roman", serif;
+        font-size: 132px;
+        font-weight: 700;
+        line-height: 1.02;
+        letter-spacing: -3px;
+        color: var(--ink);
+        margin-bottom: 36px;
+      }
+      .head-block h1 em {
+        font-style: italic;
+        color: var(--burgundy);
+      }
+      .head-block .subhead {
+        font-family: "Iowan Old Style", "Charter", "Georgia", serif;
+        font-style: italic;
+        font-size: 36px;
+        color: var(--ink-soft);
+        line-height: 1.4;
+        margin-bottom: 36px;
+      }
+      .head-block .byline {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 20px;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        color: var(--ink);
+      }
+      .head-block .byline .by { color: var(--ink-soft); }
+      .head-block .byline .dateline { color: var(--ink-soft); margin-left: 22px; }
+
+      /* ── Scene 3 — Pull-quote (7-12s) ────────────────────────────── */
+      .pull {
+        max-width: 1500px;
+        text-align: center;
+        position: relative;
+      }
+      .pull .open-mark {
+        font-family: "Didot", "Bodoni 72", "Playfair Display", serif;
+        font-size: 220px;
+        line-height: 0.6;
+        color: var(--olive);
+        opacity: 0.55;
+        margin-bottom: 8px;
+        font-weight: 700;
+      }
+      .pull blockquote {
+        font-family: "Iowan Old Style", "Charter", "Georgia", "Times New Roman", serif;
+        font-style: italic;
+        font-size: 78px;
+        line-height: 1.2;
+        color: var(--olive);
+        letter-spacing: -1px;
+        margin: 0 0 42px;
+      }
+      .pull blockquote .word {
+        display: inline-block;
+      }
+      .pull cite {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-style: normal;
+        font-size: 22px;
+        letter-spacing: 6px;
+        text-transform: uppercase;
+        color: var(--ink);
+      }
+      .pull cite .role { color: var(--ink-soft); }
+      .pull cite .ts {
+        margin-left: 14px;
+        color: var(--burgundy);
+        background: rgba(139, 26, 26, 0.08);
+        padding: 3px 10px;
+        border: 1px solid rgba(139, 26, 26, 0.3);
+        border-radius: 2px;
+      }
+
+      /* ── Scene 4 — Footer / colophon (12-15s) ────────────────────── */
+      .colo {
+        text-align: center;
+        max-width: 1300px;
+      }
+      .colo .stamp {
+        font-family: "Didot", "Bodoni 72", "Playfair Display", serif;
+        font-size: 92px;
+        font-weight: 700;
+        letter-spacing: -1px;
+        color: var(--ink);
+        margin-bottom: 22px;
+      }
+      .colo .stamp em {
+        font-style: italic;
+        color: var(--burgundy);
+      }
+      .colo .rule-pair {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+        margin-bottom: 28px;
+      }
+      .colo .rule-pair .seg {
+        width: 220px;
+        height: 1px;
+        background: var(--rule);
+      }
+      .colo .rule-pair .seg.thick {
+        height: 2px;
+        background: var(--ink);
+        width: 80px;
+      }
+      .colo .issue {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 24px;
+        letter-spacing: 8px;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+      }
+      .colo .issue .num { color: var(--burgundy); margin-right: 18px; }
+      .colo .issue .ws { color: var(--olive); margin-left: 18px; }
+      .colo .url {
+        margin-top: 36px;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 18px;
+        letter-spacing: 4px;
+        color: var(--ink-soft);
+      }
+      .colo .url .at { color: var(--burgundy); }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="15"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div class="paper-bg" id="paper-bg" aria-hidden="true"></div>
+
+      <!-- Scene 1 — Publication header (0-3s) -->
+      <div id="s1" class="clip" data-start="0" data-duration="3" data-track-index="1">
+        <div class="scene-content">
+          <div class="header">
+            <div class="masthead">Workflow <em>Magazine</em></div>
+            <div class="rule" id="s1-rule"></div>
+            <div class="meta">
+              <span>Issue 47</span>
+              <span class="accent">·</span>
+              <span>2026 Week 17</span>
+              <span class="accent">·</span>
+              <span>Editorial</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 2 — Headline + byline (3-7s) -->
+      <div id="s2" class="clip" data-start="3" data-duration="4" data-track-index="1">
+        <div class="scene-content">
+          <div class="head-block">
+            <div class="kicker" data-line="kicker">— Cover Story —</div>
+            <h1>
+              <span class="word">The</span>
+              <span class="word">AI</span>
+              <span class="word">Moat</span>
+              <span class="word">Isn't</span>
+              <span class="word">the</span>
+              <span class="word"><em>Model</em></span>
+            </h1>
+            <div class="subhead" data-line="sub">A working interview on what actually defends a software product when every team can call the same frontier model.</div>
+            <div class="byline" data-line="by">
+              <span class="by">By</span> Margaret Voss
+              <span class="dateline">Brooklyn · April 29, 2026</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3 — Pull-quote (7-12s) -->
+      <div id="s3" class="clip" data-start="7" data-duration="5" data-track-index="1">
+        <div class="scene-content">
+          <div class="pull">
+            <div class="open-mark" id="s3-mark">&ldquo;</div>
+            <blockquote>
+              <span class="word">The</span>
+              <span class="word">model</span>
+              <span class="word">is</span>
+              <span class="word">a</span>
+              <span class="word">commodity.</span>
+              <span class="word">The</span>
+              <span class="word"><em>workflow</em></span>
+              <span class="word">around</span>
+              <span class="word">it</span>
+              <span class="word">is</span>
+              <span class="word">the</span>
+              <span class="word">product.</span>
+            </blockquote>
+            <cite>
+              <span>Iris Marlow</span>
+              <span class="role">— Chief Product Officer, Lattice OS</span>
+              <span class="ts">14:14&ndash;14:34</span>
+            </cite>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 4 — Footer / colophon (12-15s) -->
+      <div id="s4" class="clip" data-start="12" data-duration="3" data-track-index="1">
+        <div class="scene-content">
+          <div class="colo">
+            <div class="stamp">Filed to <em>print</em></div>
+            <div class="rule-pair">
+              <span class="seg" id="s4-seg-l"></span>
+              <span class="seg thick" id="s4-seg-c"></span>
+              <span class="seg" id="s4-seg-r"></span>
+            </div>
+            <div class="issue">
+              <span class="num">No. 47</span>
+              <span>2026 Week 17</span>
+              <span class="ws">Workflow Magazine</span>
+            </div>
+            <div class="url"><span class="at">workflowmag.press/</span>issue-47</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+
+      // ── Scene 1 — Publication header (0-3s) ──
+      tl.fromTo("#s1", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0);
+      tl.from("#s1 .masthead", { opacity: 0, y: 16, duration: 0.7, ease: "power3.out" }, 0.15);
+      tl.from("#s1 .rule", { scaleX: 0, duration: 0.85, ease: "power3.out" }, 0.6);
+      tl.from("#s1 .meta", { opacity: 0, y: 8, duration: 0.55, ease: "power2.out" }, 1.0);
+      tl.to("#s1", { opacity: 0, duration: 0.4, ease: "power2.in" }, 2.55);
+      tl.set("#s1", { opacity: 0 }, 3);
+
+      // ── Scene 2 — Headline + byline (3-7s) ──
+      tl.set("#s2", { opacity: 1 }, 3);
+      tl.from("#s2 [data-line='kicker']", { opacity: 0, y: 10, duration: 0.45, ease: "power2.out" }, 3.05);
+      tl.from("#s2 h1 .word", {
+        opacity: 0,
+        y: 28,
+        duration: 0.55,
+        ease: "power3.out",
+        stagger: 0.1,
+      }, 3.45);
+      tl.from("#s2 [data-line='sub']", { opacity: 0, y: 14, duration: 0.6, ease: "power2.out" }, 5.0);
+      tl.from("#s2 [data-line='by']", { opacity: 0, y: 10, duration: 0.5, ease: "power2.out" }, 5.6);
+      tl.to("#s2", { opacity: 0, duration: 0.4, ease: "power2.in" }, 6.55);
+      tl.set("#s2", { opacity: 0 }, 7);
+
+      // ── Scene 3 — Pull-quote (7-12s) ──
+      tl.set("#s3", { opacity: 1 }, 7);
+      tl.from("#s3 .open-mark", { opacity: 0, scale: 0.6, duration: 0.7, ease: "back.out(1.5)", transformOrigin: "50% 100%" }, 7.05);
+      tl.from("#s3 blockquote .word", {
+        opacity: 0,
+        y: 18,
+        duration: 0.55,
+        ease: "power3.out",
+        stagger: 0.13,
+      }, 7.55);
+      tl.from("#s3 cite", { opacity: 0, y: 10, duration: 0.55, ease: "power2.out" }, 10.4);
+      // gentle hold on the quote
+      tl.to("#s3 blockquote", { letterSpacing: "0px", duration: 1.0, ease: "sine.inOut" }, 10.6);
+      tl.to("#s3", { opacity: 0, duration: 0.45, ease: "power2.in" }, 11.5);
+      tl.set("#s3", { opacity: 0 }, 12);
+
+      // ── Scene 4 — Colophon (12-15s) ──
+      tl.set("#s4", { opacity: 1 }, 12);
+      tl.from("#s4 .stamp", { opacity: 0, y: 18, duration: 0.6, ease: "power3.out" }, 12.05);
+      tl.from("#s4-seg-l", { scaleX: 0, transformOrigin: "right center", duration: 0.55, ease: "power3.out" }, 12.5);
+      tl.from("#s4-seg-r", { scaleX: 0, transformOrigin: "left center", duration: 0.55, ease: "power3.out" }, 12.5);
+      tl.from("#s4-seg-c", { opacity: 0, scale: 0, duration: 0.45, ease: "back.out(1.6)", transformOrigin: "50% 50%" }, 12.85);
+      tl.from("#s4 .issue", { opacity: 0, y: 10, duration: 0.5, ease: "power2.out" }, 13.05);
+      tl.from("#s4 .url", { opacity: 0, y: 8, duration: 0.5, ease: "power2.out" }, 13.55);
+      tl.to("#s4 .url", { opacity: 0.85, duration: 0.5 }, 14.4);
+    </script>
+  </body>
+</html>

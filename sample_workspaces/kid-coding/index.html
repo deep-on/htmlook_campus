@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>kid-coding — 15s My First Code teaser</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #fef3c7;
+        font-family: "M PLUS Rounded 1c", "Comic Neue", "Pretendard",
+          system-ui, -apple-system, sans-serif;
+        color: #1e293b;
+      }
+      :root {
+        --bg: #fef3c7;
+        --paper: #ffffff;
+        --cyan: #22d3ee;
+        --magenta: #ec4899;
+        --yellow: #fbbf24;
+        --ink: #1e293b;
+        --soft: #64748b;
+        --line: #fde68a;
+      }
+
+      .clip {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        will-change: opacity, transform;
+      }
+      .scene-content {
+        width: 100%; height: 100%;
+        display: flex; align-items: center; justify-content: center;
+        padding: 60px 100px; box-sizing: border-box; position: relative;
+      }
+
+      /* paper-like vignette behind every scene */
+      .paper-bg {
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.55) 0%, transparent 65%),
+          repeating-linear-gradient(0deg, transparent 0 36px, rgba(253, 230, 138, 0.55) 36px 37px),
+          var(--bg);
+      }
+
+      /* ── Scene 1 — header (0-4s) ──────────────────────────── */
+      .header {
+        text-align: center;
+      }
+      .header .kicker {
+        font-size: 30px;
+        color: var(--soft);
+        letter-spacing: 6px;
+        text-transform: uppercase;
+        font-weight: 600;
+        margin-bottom: 18px;
+      }
+      .header h1 {
+        font-size: 200px;
+        font-weight: 800;
+        letter-spacing: -3px;
+        line-height: 1;
+        color: var(--ink);
+      }
+      .header h1 .accent-cyan { color: var(--cyan); }
+      .header h1 .accent-mag { color: var(--magenta); }
+      .header .by {
+        margin-top: 32px;
+        font-size: 36px;
+        color: var(--soft);
+        font-weight: 500;
+      }
+      .header .by .name { color: var(--magenta); font-weight: 700; }
+      .header .stars-row {
+        margin-top: 30px;
+        display: flex; justify-content: center; gap: 26px;
+      }
+      .header .stars-row .mini-star {
+        font-size: 64px;
+      }
+
+      /* ── Scene 2 — drawing the star (4-9s) ────────────────── */
+      .draw-wrap {
+        text-align: center;
+      }
+      .draw-wrap .label {
+        font-size: 30px; color: var(--soft);
+        letter-spacing: 4px; text-transform: uppercase;
+        margin-bottom: 28px;
+        font-weight: 600;
+      }
+      .draw-wrap svg {
+        width: 720px; height: 720px;
+        background: var(--paper);
+        border-radius: 24px;
+        border: 4px solid var(--line);
+        padding: 60px;
+      }
+      .draw-wrap .for-label {
+        margin-top: 30px;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 36px;
+        color: var(--magenta);
+        font-weight: 700;
+      }
+
+      /* ── Scene 3 — four-color stagger (9-13s) ─────────────── */
+      .stars-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 60px;
+        align-items: center;
+      }
+      .stars-grid .col {
+        text-align: center;
+      }
+      .stars-grid svg {
+        width: 280px; height: 280px;
+      }
+      .stars-grid .name {
+        margin-top: 14px;
+        font-size: 28px;
+        font-weight: 700;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      }
+      .stars-grid .col-cyan .name { color: var(--cyan); }
+      .stars-grid .col-mag .name { color: var(--magenta); }
+      .stars-grid .col-yel .name { color: #d97706; }
+      .stars-grid .col-pur .name { color: #8b5cf6; }
+
+      /* ── Scene 4 — outro wordmark (13-15s) ────────────────── */
+      .outro {
+        text-align: center;
+      }
+      .outro .next {
+        font-size: 36px;
+        color: var(--soft);
+        letter-spacing: 4px;
+        font-weight: 600;
+        margin-bottom: 24px;
+      }
+      .outro .wordmark {
+        font-size: 156px;
+        font-weight: 800;
+        letter-spacing: -2px;
+        color: var(--ink);
+      }
+      .outro .wordmark .rainbow {
+        background: linear-gradient(
+          90deg,
+          #ef4444 0%,
+          #f97316 18%,
+          #fbbf24 36%,
+          #22c55e 54%,
+          #22d3ee 72%,
+          #6366f1 86%,
+          #ec4899 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .outro .repo {
+        margin-top: 38px;
+        font-size: 36px;
+        color: var(--soft);
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        letter-spacing: 2px;
+      }
+      .outro .repo .at { color: var(--magenta); font-weight: 700; }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="15"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- Paper texture sits below every scene -->
+      <div class="paper-bg" id="paper-bg" aria-hidden="true"></div>
+
+      <!-- Scene 1 — header (0-4s) -->
+      <div id="s1" class="clip" data-start="0" data-duration="4" data-track-index="1">
+        <div class="scene-content">
+          <div class="header">
+            <div class="kicker">My First Code</div>
+            <h1>
+              <span class="accent-cyan">내</span>
+              <span class="accent-mag">첫</span>
+              코드
+            </h1>
+            <div class="by">by <span class="name">민지 (5 학년)</span></div>
+            <div class="stars-row" id="s1-stars">
+              <span class="mini-star" style="color: var(--cyan)">★</span>
+              <span class="mini-star" style="color: var(--magenta)">★</span>
+              <span class="mini-star" style="color: var(--yellow)">★</span>
+              <span class="mini-star" style="color: #8b5cf6">★</span>
+              <span class="mini-star" style="color: #22c55e">★</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 2 — draw the star one stroke at a time (4-9s) -->
+      <div id="s2" class="clip" data-start="4" data-duration="5" data-track-index="1">
+        <div class="scene-content">
+          <div class="draw-wrap">
+            <div class="label">for i in range(5)</div>
+            <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+              <!-- 5-pointed star drawn as 5 separate segments -->
+              <!-- vertices computed from center (300,300), r=240, starting at top -->
+              <path id="seg-1"
+                d="M 300 60 L 441 492"
+                fill="none" stroke="#ec4899" stroke-width="14"
+                stroke-linecap="round" stroke-linejoin="round" />
+              <path id="seg-2"
+                d="M 441 492 L 71 222"
+                fill="none" stroke="#ec4899" stroke-width="14"
+                stroke-linecap="round" stroke-linejoin="round" />
+              <path id="seg-3"
+                d="M 71 222 L 529 222"
+                fill="none" stroke="#ec4899" stroke-width="14"
+                stroke-linecap="round" stroke-linejoin="round" />
+              <path id="seg-4"
+                d="M 529 222 L 159 492"
+                fill="none" stroke="#ec4899" stroke-width="14"
+                stroke-linecap="round" stroke-linejoin="round" />
+              <path id="seg-5"
+                d="M 159 492 L 300 60"
+                fill="none" stroke="#ec4899" stroke-width="14"
+                stroke-linecap="round" stroke-linejoin="round" />
+              <!-- turtle dot at the start -->
+              <circle id="turtle" cx="300" cy="60" r="14" fill="#22d3ee" />
+            </svg>
+            <div class="for-label">forward(200) · right(144) · ×5</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3 — four-color stars stagger in (9-13s) -->
+      <div id="s3" class="clip" data-start="9" data-duration="4" data-track-index="1">
+        <div class="scene-content">
+          <div class="stars-grid">
+            <div class="col col-cyan" data-col="0">
+              <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="100,18 124,75 186,82 138,123 154,184 100,150 46,184 62,123 14,82 76,75"
+                  fill="#22d3ee" stroke="#0e7490" stroke-width="3" stroke-linejoin="round" />
+              </svg>
+              <div class="name">cyan</div>
+            </div>
+            <div class="col col-mag" data-col="1">
+              <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="100,18 124,75 186,82 138,123 154,184 100,150 46,184 62,123 14,82 76,75"
+                  fill="#ec4899" stroke="#9d174d" stroke-width="3" stroke-linejoin="round" />
+              </svg>
+              <div class="name">magenta</div>
+            </div>
+            <div class="col col-yel" data-col="2">
+              <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="100,18 124,75 186,82 138,123 154,184 100,150 46,184 62,123 14,82 76,75"
+                  fill="#fbbf24" stroke="#92400e" stroke-width="3" stroke-linejoin="round" />
+              </svg>
+              <div class="name">yellow</div>
+            </div>
+            <div class="col col-pur" data-col="3">
+              <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="100,18 124,75 186,82 138,123 154,184 100,150 46,184 62,123 14,82 76,75"
+                  fill="#8b5cf6" stroke="#4c1d95" stroke-width="3" stroke-linejoin="round" />
+              </svg>
+              <div class="name">purple</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 4 — outro wordmark (13-15s) -->
+      <div id="s4" class="clip" data-start="13" data-duration="2" data-track-index="1">
+        <div class="scene-content">
+          <div class="outro">
+            <div class="next">다음 챌린지</div>
+            <div class="wordmark">
+              <span class="rainbow">무지개별!</span>
+            </div>
+            <div class="repo">
+              <span class="at">type · run · </span>smile
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+
+      // ── Scene 1 — header (0-4 s) ──
+      tl.fromTo("#s1", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0);
+      tl.from("#s1 .kicker", { opacity: 0, y: 12, duration: 0.5, ease: "power3.out" }, 0.15);
+      tl.from("#s1 h1 .accent-cyan", { opacity: 0, y: 30, duration: 0.45, ease: "back.out(1.4)" }, 0.45);
+      tl.from("#s1 h1 .accent-mag", { opacity: 0, y: 30, duration: 0.45, ease: "back.out(1.4)" }, 0.65);
+      tl.from("#s1 h1", { y: 30, duration: 0.55, ease: "power3.out" }, 0.85);
+      tl.from("#s1 .by", { opacity: 0, y: 16, duration: 0.5, ease: "power2.out" }, 1.2);
+      tl.from("#s1 .stars-row .mini-star", {
+        opacity: 0, scale: 0, duration: 0.4, ease: "back.out(2)",
+        stagger: 0.1, transformOrigin: "50% 50%"
+      }, 1.6);
+      tl.to("#s1", { opacity: 0, duration: 0.5, ease: "power2.in" }, 3.4);
+      tl.set("#s1", { opacity: 0 }, 4);
+
+      // ── Scene 2 — draw star segment by segment (4-9 s) ──
+      tl.set("#s2", { opacity: 1 }, 4);
+      tl.from("#s2 .label", { opacity: 0, y: 10, duration: 0.4 }, 4.05);
+      tl.from("#s2 svg", { opacity: 0, scale: 0.92, duration: 0.5, ease: "power2.out" }, 4.05);
+      const segs = ["#seg-1", "#seg-2", "#seg-3", "#seg-4", "#seg-5"];
+      const starts = [4.6, 5.2, 5.8, 6.4, 7.0];
+      const turtlePos = [
+        { x: 441, y: 492 },
+        { x: 71, y: 222 },
+        { x: 529, y: 222 },
+        { x: 159, y: 492 },
+        { x: 300, y: 60 },
+      ];
+      segs.forEach((sel, i) => {
+        tl.set(sel, { strokeDasharray: 480, strokeDashoffset: 480 }, 4);
+        tl.to(sel, { strokeDashoffset: 0, duration: 0.45, ease: "power2.inOut" }, starts[i]);
+        tl.to("#turtle", {
+          attr: { cx: turtlePos[i].x, cy: turtlePos[i].y },
+          duration: 0.45, ease: "power2.inOut"
+        }, starts[i]);
+      });
+      tl.from("#s2 .for-label", { opacity: 0, y: 12, duration: 0.45 }, 7.5);
+      tl.to("#s2", { opacity: 0, duration: 0.5, ease: "power2.in" }, 8.4);
+      tl.set("#s2", { opacity: 0 }, 9);
+
+      // ── Scene 3 — four colors stagger (9-13 s) ──
+      tl.set("#s3", { opacity: 1 }, 9);
+      tl.from("#s3 .stars-grid .col", {
+        opacity: 0, y: 40, scale: 0.85, duration: 0.5,
+        ease: "back.out(1.6)", stagger: 0.25, transformOrigin: "50% 50%"
+      }, 9.1);
+      tl.to("#s3 .stars-grid .col", {
+        rotation: 360, duration: 1.6, ease: "power2.inOut",
+        stagger: 0.18, transformOrigin: "50% 50%"
+      }, 10.5);
+      tl.to("#s3", { opacity: 0, duration: 0.5, ease: "power2.in" }, 12.4);
+      tl.set("#s3", { opacity: 0 }, 13);
+
+      // ── Scene 4 — outro (13-15 s) ──
+      tl.set("#s4", { opacity: 1 }, 13);
+      tl.from("#s4 .next", { opacity: 0, y: 14, duration: 0.5, ease: "power2.out" }, 13.05);
+      tl.from("#s4 .wordmark", { opacity: 0, y: 24, scale: 0.9, duration: 0.7, ease: "back.out(1.5)" }, 13.3);
+      tl.from("#s4 .repo", { opacity: 0, y: 14, duration: 0.55, ease: "power2.out" }, 13.95);
+    </script>
+  </body>
+</html>

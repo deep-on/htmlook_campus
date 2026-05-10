@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Maren &amp; Vale Press — 15s bilingual book page</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #1a1208;
+        color: #1a1208;
+        font-family: "EB Garamond", "Source Serif Pro", "Georgia", serif;
+      }
+      :root {
+        --cream: #f4ecd8;
+        --ink: #1a1208;
+        --burgundy: #8b1a1a;
+        --rule: rgba(26, 18, 8, 0.18);
+        --footnote: #5a4838;
+        --fold: rgba(26, 18, 8, 0.06);
+      }
+
+      .clip {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        will-change: opacity, transform;
+      }
+
+      /* Page stage — sits behind every scene, preserves the page-flip */
+      .page-stage {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        perspective: 2400px;
+      }
+      .page {
+        width: 1280px;
+        height: 960px;
+        background: var(--cream);
+        box-shadow:
+          0 30px 80px rgba(0, 0, 0, 0.55),
+          inset 0 0 100px rgba(120, 90, 50, 0.05);
+        position: relative;
+        transform-origin: left center;
+        transform-style: preserve-3d;
+        backface-visibility: hidden;
+      }
+      /* page edge / spine shadow */
+      .page::before {
+        content: "";
+        position: absolute;
+        left: 0; top: 0; bottom: 0; width: 18px;
+        background: linear-gradient(90deg, var(--fold), transparent);
+      }
+      .page-grid {
+        position: absolute;
+        inset: 80px 110px 120px 110px;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        grid-template-columns: 1fr 1px 1fr;
+        column-gap: 36px;
+      }
+
+      /* Header (chapter number + title) — spans both columns */
+      .page-header {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        text-align: center;
+        margin-bottom: 26px;
+      }
+      .ch-num {
+        font-size: 20px;
+        letter-spacing: 12px;
+        color: var(--burgundy);
+        text-transform: uppercase;
+        font-weight: 600;
+        font-variant: small-caps;
+        margin-bottom: 6px;
+      }
+      .ch-title {
+        font-size: 54px;
+        font-weight: 700;
+        font-style: italic;
+        letter-spacing: -0.5px;
+        color: var(--ink);
+        line-height: 1.1;
+      }
+      .ch-rule {
+        width: 64px;
+        height: 2px;
+        background: var(--burgundy);
+        margin: 16px auto 0;
+        transform-origin: center;
+      }
+
+      /* Two-column body */
+      .col-left, .col-right {
+        grid-row: 2;
+        font-size: 19px;
+        line-height: 1.55;
+        text-align: justify;
+        text-justify: inter-word;
+        color: var(--ink);
+        overflow: hidden;
+      }
+      .col-left { grid-column: 1; }
+      .col-right {
+        grid-column: 3;
+        font-family: "Noto Serif KR", "Source Serif Pro", "EB Garamond", serif;
+        font-size: 18px;
+        line-height: 1.65;
+      }
+      .col-divider {
+        grid-column: 2;
+        grid-row: 2;
+        background: var(--rule);
+        opacity: 0.7;
+      }
+
+      .lang-label {
+        font-size: 11px;
+        letter-spacing: 4px;
+        font-variant: small-caps;
+        color: var(--burgundy);
+        margin-bottom: 14px;
+        text-transform: uppercase;
+      }
+
+      .para {
+        margin-bottom: 14px;
+      }
+      .para .drop {
+        font-size: 64px;
+        float: left;
+        line-height: 0.85;
+        margin: 6px 6px 0 0;
+        color: var(--burgundy);
+        font-weight: 700;
+      }
+      .fn-marker {
+        font-size: 12px;
+        vertical-align: super;
+        color: var(--burgundy);
+        font-weight: 600;
+        margin-left: 1px;
+      }
+
+      /* Footnote rule + body */
+      .footnotes {
+        grid-column: 1 / -1;
+        grid-row: 3;
+        margin-top: 18px;
+        padding-top: 10px;
+        border-top: 1px solid var(--rule);
+        font-size: 13px;
+        color: var(--footnote);
+        line-height: 1.45;
+        display: grid;
+        grid-template-columns: 1fr 36px 1fr;
+        column-gap: 0;
+      }
+      .footnotes .fn {
+        text-indent: -14px;
+        padding-left: 14px;
+      }
+      .footnotes .fn-l { grid-column: 1; }
+      .footnotes .fn-r {
+        grid-column: 3;
+        font-family: "Noto Serif KR", "Source Serif Pro", serif;
+      }
+
+      /* Folio (page number) */
+      .folio {
+        position: absolute;
+        bottom: 50px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 13px;
+        letter-spacing: 6px;
+        color: var(--ink);
+        font-variant: small-caps;
+        opacity: 0.7;
+      }
+
+      /* Background outside the page (book table backdrop) */
+      .table {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(ellipse at 50% 50%, #2a1f10 0%, #110b04 100%);
+      }
+
+      /* "Next chapter" hint visible during flip */
+      .next-page {
+        position: absolute;
+        inset: 0;
+        background: var(--cream);
+        display: grid;
+        place-items: center;
+        opacity: 0;
+        transform-origin: left center;
+      }
+      .next-page .next-num {
+        font-size: 18px;
+        letter-spacing: 12px;
+        color: var(--burgundy);
+        font-variant: small-caps;
+        margin-bottom: 10px;
+      }
+      .next-page .next-title {
+        font-size: 44px;
+        font-weight: 700;
+        font-style: italic;
+        color: var(--ink);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="15"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- Background table -->
+      <div class="table" aria-hidden="true"></div>
+
+      <!-- Scene 1 — Chapter header settle (0-3.5s) -->
+      <div id="s1" class="clip" data-start="0" data-duration="3.5" data-track-index="1">
+        <div class="page-stage">
+          <div class="page" id="page-1">
+            <div class="page-grid">
+              <div class="page-header">
+                <div class="ch-num" id="s1-num">Chapter 3</div>
+                <div class="ch-title" id="s1-title">The Workshop</div>
+                <div class="ch-rule" id="s1-rule"></div>
+              </div>
+              <div class="col-left"></div>
+              <div class="col-divider"></div>
+              <div class="col-right"></div>
+            </div>
+            <div class="folio">— 47 —</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 2 — English column reveals (3.5-7.5s) -->
+      <div id="s2" class="clip" data-start="3.5" data-duration="4" data-track-index="1">
+        <div class="page-stage">
+          <div class="page">
+            <div class="page-grid">
+              <div class="page-header">
+                <div class="ch-num">Chapter 3</div>
+                <div class="ch-title">The Workshop</div>
+                <div class="ch-rule"></div>
+              </div>
+              <div class="col-left">
+                <div class="lang-label" data-eng="0">English · source</div>
+                <p class="para" data-eng="1"><span class="drop">T</span>he workshop did not look like the place a craftsman would choose. It was square, low-ceilinged, and lit by a single window that faced the wrong way for morning work.</p>
+                <p class="para" data-eng="2">A long bench ran the length of the room. On it lay tools that had been sharpened so often the steel was thinner than the handles, and a row of nails ordered by size, smallest to largest, the way a child might sort buttons.</p>
+                <p class="para" data-eng="3">He had inherited the bench from his father, who had inherited it from his, and the maker's mark<span class="fn-marker">¹</span> in the corner was older than the building itself.</p>
+              </div>
+              <div class="col-divider"></div>
+              <div class="col-right"></div>
+            </div>
+            <div class="folio">— 47 —</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3 — Korean column reveals in matched paragraph order (7.5-12s) -->
+      <div id="s3" class="clip" data-start="7.5" data-duration="4.5" data-track-index="1">
+        <div class="page-stage">
+          <div class="page">
+            <div class="page-grid">
+              <div class="page-header">
+                <div class="ch-num">Chapter 3</div>
+                <div class="ch-title">The Workshop</div>
+                <div class="ch-rule"></div>
+              </div>
+              <div class="col-left">
+                <div class="lang-label">English · source</div>
+                <p class="para"><span class="drop">T</span>he workshop did not look like the place a craftsman would choose. It was square, low-ceilinged, and lit by a single window that faced the wrong way for morning work.</p>
+                <p class="para">A long bench ran the length of the room. On it lay tools that had been sharpened so often the steel was thinner than the handles, and a row of nails ordered by size, smallest to largest, the way a child might sort buttons.</p>
+                <p class="para">He had inherited the bench from his father, who had inherited it from his, and the maker's mark<span class="fn-marker">¹</span> in the corner was older than the building itself.</p>
+              </div>
+              <div class="col-divider"></div>
+              <div class="col-right">
+                <div class="lang-label" data-kor="0">한국어 · 번역</div>
+                <p class="para" data-kor="1">그 작업장은 장인이라면 고를 만한 곳이 아니었다. 네모반듯하고 천장이 낮았으며, 아침 작업에는 방향이 맞지 않는 창 하나로만 빛이 들었다.</p>
+                <p class="para" data-kor="2">긴 작업대가 방의 길이만큼 뻗어 있었다. 그 위에는 너무 자주 갈아 칼몸이 손잡이보다 얇아진 연장들과, 아이가 단추를 정렬하듯 작은 것에서 큰 것 순으로 늘어놓은 못들이 놓여 있었다.</p>
+                <p class="para" data-kor="3">그는 작업대를 아버지에게서 물려받았고, 아버지는 또 그 아버지에게서 물려받았다. 모서리에 새겨진 장인의 인장<span class="fn-marker">¹</span>은 건물 자체보다 오래된 것이었다.</p>
+              </div>
+              <div class="footnotes" id="s3-fn">
+                <div class="fn fn-l">¹ Maker's mark — a metalsmith's signature stamped into the work.</div>
+                <div></div>
+                <div class="fn fn-r">¹ 장인의 인장 — 장인이 자신의 작품에 새겨 넣는 고유한 표식.</div>
+              </div>
+            </div>
+            <div class="folio">— 47 —</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 4 — Page-flip outro (12-15s) -->
+      <div id="s4" class="clip" data-start="12" data-duration="3" data-track-index="1">
+        <div class="page-stage">
+          <div class="page" id="flip-page">
+            <div class="page-grid">
+              <div class="page-header">
+                <div class="ch-num">Chapter 3</div>
+                <div class="ch-title">The Workshop</div>
+                <div class="ch-rule"></div>
+              </div>
+              <div class="col-left">
+                <div class="lang-label">English · source</div>
+                <p class="para"><span class="drop">T</span>he workshop did not look like the place a craftsman would choose. It was square, low-ceilinged, and lit by a single window that faced the wrong way for morning work.</p>
+                <p class="para">A long bench ran the length of the room. On it lay tools that had been sharpened so often the steel was thinner than the handles.</p>
+                <p class="para">He had inherited the bench from his father, who had inherited it from his.</p>
+              </div>
+              <div class="col-divider"></div>
+              <div class="col-right">
+                <div class="lang-label">한국어 · 번역</div>
+                <p class="para">그 작업장은 장인이라면 고를 만한 곳이 아니었다. 네모반듯하고 천장이 낮았으며, 아침 작업에는 방향이 맞지 않는 창 하나로만 빛이 들었다.</p>
+                <p class="para">긴 작업대가 방의 길이만큼 뻗어 있었다.</p>
+                <p class="para">그는 작업대를 아버지에게서 물려받았다.</p>
+              </div>
+            </div>
+            <div class="folio">— 47 —</div>
+            <!-- Next page peek -->
+            <div class="next-page" id="next-page">
+              <div style="text-align:center;">
+                <div class="next-num">Chapter 4</div>
+                <div class="next-title">The Apprentice</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+
+      // ── Scene 1 — Chapter header settle (0-3.5s) ──
+      tl.fromTo("#s1", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" }, 0);
+      tl.from("#s1 .page", { opacity: 0, y: 20, duration: 0.7, ease: "power2.out" }, 0.1);
+      tl.from("#s1-num", { opacity: 0, y: 8, duration: 0.6, ease: "power2.out" }, 0.6);
+      tl.from("#s1-title", { opacity: 0, y: 14, duration: 0.7, ease: "power3.out" }, 0.95);
+      tl.fromTo("#s1-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: "power2.inOut" }, 1.6);
+      tl.from("#s1 .folio", { opacity: 0, duration: 0.6, ease: "power2.out" }, 2.1);
+      tl.to("#s1", { opacity: 0, duration: 0.5, ease: "power2.in" }, 3.0);
+      tl.set("#s1", { opacity: 0 }, 3.5);
+
+      // ── Scene 2 — English column reveals (3.5-7.5s) ──
+      tl.set("#s2", { opacity: 1 }, 3.5);
+      tl.from("#s2 [data-eng='0']", { opacity: 0, y: 6, duration: 0.5, ease: "power2.out" }, 3.6);
+      tl.from("#s2 [data-eng='1']", { opacity: 0, y: 10, duration: 0.6, ease: "power2.out" }, 4.0);
+      tl.from("#s2 [data-eng='2']", { opacity: 0, y: 10, duration: 0.6, ease: "power2.out" }, 5.0);
+      tl.from("#s2 [data-eng='3']", { opacity: 0, y: 10, duration: 0.6, ease: "power2.out" }, 6.0);
+      tl.to("#s2", { opacity: 0, duration: 0.4, ease: "power2.in" }, 7.1);
+      tl.set("#s2", { opacity: 0 }, 7.5);
+
+      // ── Scene 3 — Korean column reveals (7.5-12s) ──
+      tl.set("#s3", { opacity: 1 }, 7.5);
+      tl.from("#s3 [data-kor='0']", { opacity: 0, y: 6, duration: 0.5, ease: "power2.out" }, 7.6);
+      tl.from("#s3 [data-kor='1']", { opacity: 0, y: 10, duration: 0.6, ease: "power2.out" }, 8.0);
+      tl.from("#s3 [data-kor='2']", { opacity: 0, y: 10, duration: 0.6, ease: "power2.out" }, 9.0);
+      tl.from("#s3 [data-kor='3']", { opacity: 0, y: 10, duration: 0.6, ease: "power2.out" }, 10.0);
+      tl.from("#s3-fn", { opacity: 0, y: 8, duration: 0.6, ease: "power2.out" }, 10.9);
+      tl.to("#s3", { opacity: 0, duration: 0.4, ease: "power2.in" }, 11.6);
+      tl.set("#s3", { opacity: 0 }, 12);
+
+      // ── Scene 4 — Page-flip outro (12-15s) ──
+      tl.set("#s4", { opacity: 1 }, 12);
+      tl.from("#s4 .page", { opacity: 0, duration: 0.4, ease: "power2.out" }, 12);
+      // hold the finished spread for ~1.0s, then flip
+      tl.to("#flip-page", { rotateY: -160, duration: 1.4, ease: "power2.inOut" }, 13.0);
+      tl.to("#flip-page", { boxShadow: "0 30px 80px rgba(0, 0, 0, 0.7)", duration: 1.4, ease: "power2.inOut" }, 13.0);
+      // reveal a hint of next chapter on the back of the page mid-flip
+      tl.to("#next-page", { opacity: 1, duration: 0.5, ease: "power2.out" }, 13.9);
+      tl.to("#s4", { opacity: 0.96, duration: 0.4 }, 14.5);
+    </script>
+  </body>
+</html>

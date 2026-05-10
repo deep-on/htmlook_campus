@@ -1,0 +1,45 @@
+Maren & Vale Press — fictional independent publisher for the translator-book scenario.
+
+Title shown:    The Workshop · Chapter 3
+Source book:    "Hammers, Nails, and Other Lies" by E. R. Halloran (English original)
+Target:         Korean translation, footnoted scholarly edition
+One-liner:      A printed page, two languages.
+
+Palette
+  --cream        #f4ecd8   warm paper background
+  --ink          #1a1208   deep ink for body text
+  --burgundy     #8b1a1a   accent (chapter number, drop caps, footnote rules)
+  --rule         rgba(26, 18, 8, 0.18)   page rules and column dividers
+  --footnote     #5a4838   muted brown for footnote body
+  --fold         rgba(26, 18, 8, 0.06)   page-fold shadow
+
+Typography
+  Display       serif (Cormorant / Playfair / EB Garamond), 700 weight
+                for chapter title, 400 italic for chapter epigraph
+  Body          serif (EB Garamond / Source Serif), 400 weight,
+                12pt-equivalent, justified columns, hyphenation off
+  Korean body   Noto Serif KR / Pretendard Serif, 400 weight,
+                matched x-height to the English column
+  Folio         small caps, 1px tracking, very small
+  Footnote      same family as body, 9pt-equivalent, hung indent
+
+Motion language
+  No bouncy easing. The page reveals like ink soaking in: the
+  chapter header settles, then the English column flows in line
+  by line, then the Korean column flows in matched paragraph by
+  matched paragraph. Footnote markers pop only when the line they
+  belong to has finished. The outro is a single page-flip — the
+  whole composition rotates on the spine, revealing a hint of the
+  next chapter's first line, then settles. No glitter, no glow,
+  no kinetic typography.
+
+Copy guardrails
+  Page header:        "Chapter 3 · The Workshop"
+  Folio:              "— 47 —"  (em-dash both sides, small caps)
+  Source language:    English
+  Target language:    Korean (한국어)
+  Voice:              quiet, scholarly, finished. The artifact is
+                      a printed page that someone could buy in a
+                      bookstore, not a marketing render.
+  Avoid:              "AI", "instant", "magic", "translation
+                      engine", "powered by". This is craft.

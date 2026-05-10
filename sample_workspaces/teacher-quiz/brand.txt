@@ -1,0 +1,39 @@
+Seongsan Middle School — fictional school for the teacher-quiz scenario.
+
+Tagline:        Chapter on the left, paper on the right
+URL:            seongsan-ms.kr (fictional)
+Test shown:     Unit 1 단원평가 · Grade 2 English · School Life
+One-liner:      Answer key + rubric included.
+
+Palette
+  --paper       #fafafa   warm white test paper
+  --green       #16a34a   primary brand (school green)
+  --board       #1f2937   blackboard ink (text + section rules)
+  --red         #dc2626   채점 ink (stamp, ✗, hard tag)
+  --hi          #fef3c7   highlighter cream
+  --soft        #6b7280   muted meta text
+  --cyan        #67e8f9   secondary accent (medium tag, code in chapter)
+
+Typography
+  Display       Inter / Pretendard, 700-800 weight, tight tracking
+  Body / quiz   -apple-system / Inter, 400-600
+  Stamp / mono  ui-monospace / SF Mono, terminal & code blocks
+
+Motion language
+  Test paper sits still — never rotates, never floats. Stamp lands
+  with a back-out at -8°. Multiple-choice items stagger in left to
+  right; short-answer items reveal with a scaleX line-draw on the
+  hand-drawn answer lines. Rubric card slides up at the end. No
+  background drift — keep the page printable and quiet.
+
+Copy guardrails
+  Header line:        "Unit 1 단원평가" + "Chapter 1 · School Life"
+  Section heads:      "I. 객관식 (5)" / "II. 서술형 (2)"
+  Difficulty tags:    [하] · [중] · [상]
+  Rubric levels:      A · B · C — never 1/2/3 or pass/fail
+  Watermark:          "단원평가 · 2026 1학기 · seongsan-ms"
+  Voice:              calm, classroom-y, factual. No exclamation
+                      marks. No emoji (grading marks ✓ ✗ ✎ are OK).
+                      No marketing fluff.
+  Avoid:              "smart", "AI-powered", "magic", "blazing" —
+                      this is for a real teacher on a Sunday night.
