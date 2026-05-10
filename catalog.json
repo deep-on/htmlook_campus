@@ -500,7 +500,7 @@
         "hf-claude",
         "hyperframes"
       ],
-      "size_kb": 25,
+      "size_kb": 21,
       "path": "sample_workspaces/hf-claude/",
       "license": "CC0"
     },
@@ -517,7 +517,7 @@
         "hf-corp-deck",
         "hyperframes"
       ],
-      "size_kb": 39,
+      "size_kb": 35,
       "path": "sample_workspaces/hf-corp-deck/",
       "license": "CC0"
     },
@@ -534,7 +534,7 @@
         "hf-creator-podcast",
         "hyperframes"
       ],
-      "size_kb": 26,
+      "size_kb": 22,
       "path": "sample_workspaces/hf-creator-podcast/",
       "license": "CC0"
     },
@@ -551,7 +551,7 @@
         "hf-data-analyst",
         "hyperframes"
       ],
-      "size_kb": 33,
+      "size_kb": 29,
       "path": "sample_workspaces/hf-data-analyst/",
       "license": "CC0"
     },
@@ -568,7 +568,7 @@
         "hf-dev-pr-docs",
         "hyperframes"
       ],
-      "size_kb": 26,
+      "size_kb": 23,
       "path": "sample_workspaces/hf-dev-pr-docs/",
       "license": "CC0"
     },
@@ -585,7 +585,7 @@
         "hf-domain-battery",
         "hyperframes"
       ],
-      "size_kb": 31,
+      "size_kb": 28,
       "path": "sample_workspaces/hf-domain-battery/",
       "license": "CC0"
     },
@@ -602,7 +602,7 @@
         "hf-economy-analyst",
         "hyperframes"
       ],
-      "size_kb": 32,
+      "size_kb": 28,
       "path": "sample_workspaces/hf-economy-analyst/",
       "license": "CC0"
     },
@@ -619,7 +619,7 @@
         "hf-finance-report",
         "hyperframes"
       ],
-      "size_kb": 37,
+      "size_kb": 33,
       "path": "sample_workspaces/hf-finance-report/",
       "license": "CC0"
     },
@@ -636,7 +636,7 @@
         "hf-hobby-fiction",
         "hyperframes"
       ],
-      "size_kb": 29,
+      "size_kb": 25,
       "path": "sample_workspaces/hf-hobby-fiction/",
       "license": "CC0"
     },
@@ -653,7 +653,7 @@
         "hf-homework-helper",
         "hyperframes"
       ],
-      "size_kb": 32,
+      "size_kb": 28,
       "path": "sample_workspaces/hf-homework-helper/",
       "license": "CC0"
     },
@@ -670,7 +670,7 @@
         "hf-kid-coding",
         "hyperframes"
       ],
-      "size_kb": 29,
+      "size_kb": 25,
       "path": "sample_workspaces/hf-kid-coding/",
       "license": "CC0"
     },
@@ -687,7 +687,7 @@
         "hf-kids-science-mag",
         "hyperframes"
       ],
-      "size_kb": 38,
+      "size_kb": 35,
       "path": "sample_workspaces/hf-kids-science-mag/",
       "license": "CC0"
     },
@@ -704,7 +704,7 @@
         "hf-legal-redline",
         "hyperframes"
       ],
-      "size_kb": 35,
+      "size_kb": 32,
       "path": "sample_workspaces/hf-legal-redline/",
       "license": "CC0"
     },
@@ -721,7 +721,7 @@
         "hf-llama",
         "hyperframes"
       ],
-      "size_kb": 25,
+      "size_kb": 22,
       "path": "sample_workspaces/hf-llama/",
       "license": "CC0"
     },
@@ -738,7 +738,7 @@
         "hf-mobile-news",
         "hyperframes"
       ],
-      "size_kb": 26,
+      "size_kb": 22,
       "path": "sample_workspaces/hf-mobile-news/",
       "license": "CC0"
     },
@@ -755,7 +755,7 @@
         "hf-picture-book",
         "hyperframes"
       ],
-      "size_kb": 31,
+      "size_kb": 27,
       "path": "sample_workspaces/hf-picture-book/",
       "license": "CC0"
     },
@@ -772,7 +772,7 @@
         "hf-press-editor",
         "hyperframes"
       ],
-      "size_kb": 30,
+      "size_kb": 26,
       "path": "sample_workspaces/hf-press-editor/",
       "license": "CC0"
     },
@@ -789,7 +789,7 @@
         "hf-product-prd",
         "hyperframes"
       ],
-      "size_kb": 36,
+      "size_kb": 33,
       "path": "sample_workspaces/hf-product-prd/",
       "license": "CC0"
     },
@@ -806,7 +806,7 @@
         "hf-recipe-card",
         "hyperframes"
       ],
-      "size_kb": 24,
+      "size_kb": 21,
       "path": "sample_workspaces/hf-recipe-card/",
       "license": "CC0"
     },
@@ -823,7 +823,7 @@
         "hf-research-notes",
         "hyperframes"
       ],
-      "size_kb": 33,
+      "size_kb": 30,
       "path": "sample_workspaces/hf-research-notes/",
       "license": "CC0"
     },
@@ -840,7 +840,7 @@
         "hf-student-flashcard",
         "hyperframes"
       ],
-      "size_kb": 30,
+      "size_kb": 27,
       "path": "sample_workspaces/hf-student-flashcard/",
       "license": "CC0"
     },
@@ -857,7 +857,7 @@
         "hf-student-notes",
         "hyperframes"
       ],
-      "size_kb": 32,
+      "size_kb": 29,
       "path": "sample_workspaces/hf-student-notes/",
       "license": "CC0"
     },
@@ -874,7 +874,7 @@
         "hf-teacher-newsletter",
         "hyperframes"
       ],
-      "size_kb": 25,
+      "size_kb": 24,
       "path": "sample_workspaces/hf-teacher-newsletter/",
       "license": "CC0"
     },
@@ -891,7 +891,7 @@
         "hf-teacher-quiz",
         "hyperframes"
       ],
-      "size_kb": 29,
+      "size_kb": 28,
       "path": "sample_workspaces/hf-teacher-quiz/",
       "license": "CC0"
     },
@@ -908,7 +908,7 @@
         "hf-teacher-record",
         "hyperframes"
       ],
-      "size_kb": 29,
+      "size_kb": 28,
       "path": "sample_workspaces/hf-teacher-record/",
       "license": "CC0"
     },
@@ -925,7 +925,7 @@
         "hf-translator-book",
         "hyperframes"
       ],
-      "size_kb": 32,
+      "size_kb": 28,
       "path": "sample_workspaces/hf-translator-book/",
       "license": "CC0"
     },
