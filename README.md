@@ -91,8 +91,8 @@ Slidev / Quarto / D2 / Astro Starlight / Marimo / Excalidraw / Manim. profile
 |---|---|
 | [`videos/`](videos/) | 17 feature mp4 + 26 페르소나 mp4 (총 ~340 MB) |
 | [`profiles/`](profiles/) | 8 종 Profile 시드 (`profile.json` + `SKILL.md` + `seed/`) |
-| [`sample_workspaces/`](sample_workspaces/) | 75 종 추가 도메인 시드 (Wave A/B/C) |
-| [`catalog.json`](catalog.json) | 57 entries — 앱 Wizard fresh-fetch (24 h cache) |
+| [`sample_workspaces/`](sample_workspaces/) | 75 종 도메인 시드 (`hf-*` 26 + 7 프로파일×7) |
+| [`catalog.json`](catalog.json) | 83 entries (8 profile + 75 workspace seed) — 앱 Wizard fresh-fetch (24 h cache) |
 | [`scripts/`](scripts/) | `build-catalog.mjs` |
 | [`infra/`](infra/) | 라이센스 worker (별도 서비스) |
 | [`docs/`](docs/) | 생성 artifact 작업 공간 (gitignored) |

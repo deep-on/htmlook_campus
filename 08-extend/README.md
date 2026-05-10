@@ -112,4 +112,4 @@ profile 본체 외에 도메인-별 추가 시드를 [`../sample_workspaces/`](.
   mux 레시피.
 - [`FEATURES.md`](FEATURES.md) — 17 feature 영상 카탈로그 (hooks + accents).
 - [`../scripts/build-catalog.mjs`](../scripts/build-catalog.mjs) — 카탈로그 빌더 소스.
-- [`../catalog.json`](../catalog.json) — 현재 카탈로그 (8 profile + 49 seed).
+- [`../catalog.json`](../catalog.json) — 현재 카탈로그 (8 profile + 75 seed).

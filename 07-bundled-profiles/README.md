@@ -51,16 +51,21 @@ Wizard (⌘⇧N) 또는 Add wizard 의 카드로 한 클릭 설치.
 
 ## 7.4 · 추가 도메인 시드 (선택)
 
-8 profile 위에 75 개 추가 워크스페이스 시드가 [`../sample_workspaces/`](../sample_workspaces/)
-에 있음 (Wave A 11 high-quality + Wave B 24 mid + Wave C 14 light).
-profile 별로 grouping:
+8 profile 위에 75 개 워크스페이스 시드가 [`../sample_workspaces/`](../sample_workspaces/)
+에 있음 — 모두 prefix 로 매핑해 어느 profile 시드인지 한눈에:
 
-- `marimo-*/` (7 종) · `d2-*/` (7 종) · `manim-*/` (7 종)
-- `quarto-*/` (7 종) · `slidev-*/` (7 종) · `astro-*/` (7 종)
-- `excalidraw-*/` (7 종) · `hyperframes-*/` 시드는 위 personas/ 의 hf-* 폴더가 대표
+- `hf-*/` (26 종 — HyperFrames, 캠퍼스 영상 제작에 쓰는 전체 페르소나 라인업)
+- `slidev-*/` (7 종) · `quarto-*/` (7 종) · `marimo-*/` (7 종) · `manim-*/` (7 종)
+- `d2-*/` (7 종) · `excalidraw-*/` (7 종) · `astro-*/` (7 종)
 
-전체 catalog: [`../catalog.json`](../catalog.json) — 현재 **57 entries**
-(8 profile + 49 active workspace seed). CI 자동 갱신
+`hf-claude/` 와 `hf-llama/` 는 BYOM 레퍼런스 (Anthropic Claude / 로컬 Llama
+경로). 나머지 24 종 (`hf-corp-deck/`, `hf-teacher-quiz/`, `hf-kid-coding/` …)
+은 도메인 시나리오. 각 시드는 `index.html + hyperframes.json + brand.txt
++ prompts.txt + AGENTS.md + meta.json + README.md` 풀세트라 AI 에이전트가
+사용자의 BYOM 모델로 그대로 워크플로 재현 가능.
+
+전체 catalog: [`../catalog.json`](../catalog.json) — 현재 **83 entries**
+(8 profile + 75 workspace seed). CI 자동 갱신
 ([`../scripts/build-catalog.mjs`](../scripts/build-catalog.mjs)).
 
 ## ✅ Step 7 체크포인트
