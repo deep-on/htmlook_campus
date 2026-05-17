@@ -1,87 +1,94 @@
-# Step 2 · 첫 파일 (HTML / Markdown / PDF / 영상)
+# Step 2 · First file (HTML / Markdown / PDF / video)
 
-> HTMLook 의 *뷰어* 본질을 익힙니다. AI / MCP 없이도 가치가 있는 파트.
-> ~ 5 분.
+<p align="center">
+  <b>English</b> | <a href="README.ko.md">한국어</a> | <a href="README.ja.md">日本語</a> | <a href="README.de.md">Deutsch</a> | <a href="README.fr.md">Français</a> | <a href="README.es.md">Español</a> | <a href="README.pt.md">Português</a> | <a href="README.it.md">Italiano</a>
+</p>
 
-이번 step 끝나면: 4 가지 파일 종류 (md / html / pdf / 영상) 각각을 어떻게
-읽고, 분할뷰 / 미리보기 / outline 으로 navigate 하는지 알게 됩니다.
+> Learn the heart of HTMLook's *viewer*. The part that's already worthwhile
+> without AI / MCP.
+> ~ 5 min.
 
-## 2.1 · Markdown 라이브 에디트
+By the end of this step: you know how to read each of the four file kinds
+(md / html / pdf / video) and how to navigate them with split view,
+preview, and outline.
 
-1. 사이드바에서 임의의 `.md` 파일 (예: [`../05-command/personas/03-dev-pr-docs/docs.md`](../05-command/personas/03-dev-pr-docs/docs.md)) 더블클릭
-2. ⌘\\ 또는 메뉴 *View → Split* 으로 분할뷰 토글
-3. 좌측 source, 우측 preview. 좌측에서 타이핑하면 우측이 라이브 갱신
+## 2.1 · Markdown live edit
 
-> 영상: [BASIC #3 · Type left. See right. Live.](../videos/features/03-basic-03-md-live-edit.mp4)
-> (30 s)
+1. Double-click any `.md` in the sidebar (e.g. [`../05-command/personas/03-dev-pr-docs/docs.md`](../05-command/personas/03-dev-pr-docs/docs.md)).
+2. Toggle split view with ⌘\\ or *View → Split*.
+3. Source on the left, preview on the right. Type on the left, the right
+   refreshes live.
 
-## 2.2 · HTML — element 클릭해서 직접 수정
+> Video: [BASIC #3 · Type left. See right. Live.](../videos/features/03-basic-03-md-live-edit.mp4) (30 s)
 
-1. `.html` 파일 (예: [`../05-command/personas/01-hf-claude/landing.html`](../05-command/personas/01-hf-claude/landing.html))
-   더블클릭
-2. 기본 모드는 preview. 분할뷰에서 element 직접 클릭 → 텍스트 수정창이 뜸
-3. 양방향 sync — preview 의 변경이 source 에 즉시 반영
+## 2.2 · HTML — click an element to edit it
 
-> 영상: [BASIC #4 · Click anything. Edit it.](../videos/features/04-basic-04-html-split.mp4)
-> (30 s)
+1. Double-click an `.html` (e.g. [`../05-command/personas/01-hf-claude/landing.html`](../05-command/personas/01-hf-claude/landing.html)).
+2. Default mode is preview. In split view, click an element directly →
+   a text editor pops up.
+3. Two-way sync — changes in preview land in source instantly.
 
-## 2.3 · HTML 4가지 선택 모드
+> Video: [BASIC #4 · Click anything. Edit it.](../videos/features/04-basic-04-html-split.mp4) (30 s)
 
-같은 HTML 파일에서 ⌘E 로 선택 모드 전환:
+## 2.3 · HTML — four selection modes
 
-| 모드 | 동작 |
+In the same HTML file, ⌘E cycles through the four selection modes:
+
+| Mode | What it picks |
 |---|---|
-| element | 단일 DOM 노드 |
-| range | 텍스트 범위 |
-| region | 사각형 페인트 |
-| outline | 헤딩 트리 |
+| element | a single DOM node |
+| range | a text range |
+| region | a rectangular paint |
+| outline | the heading tree |
 
-영상: [BASIC #6 · Pick what you see.](../videos/features/06-basic-06-html-4mode.mp4) (30 s)
+Video: [BASIC #6 · Pick what you see.](../videos/features/06-basic-06-html-4mode.mp4) (30 s)
 
-각 모드의 결과는 [Step 4 · editing](../04-editing/) 의 cite anchor 진입점입니다.
+Whatever each mode picks becomes the cite-anchor entry point in
+[Step 4 · editing](../04-editing/).
 
-## 2.4 · PDF — 페이지 + 텍스트 layer
+## 2.4 · PDF — pages + text layer
 
-1. 임의의 `.pdf` 파일 (예: [`../05-command/personas/05-domain-battery/vendor.pdf`](../05-command/personas/05-domain-battery/vendor.pdf))
-   더블클릭
-2. 좌측 thumbnail navigator + 우측 페이지 캔버스 + 텍스트 selection 가능
-3. 영역 드래그 → region cite (Step 4 에서 사용)
+1. Double-click any `.pdf` (e.g. [`../05-command/personas/05-domain-battery/vendor.pdf`](../05-command/personas/05-domain-battery/vendor.pdf)).
+2. Left-hand thumbnail navigator + right-hand page canvas + selectable
+   text layer.
+3. Drag-select a region → region cite (used in Step 4).
 
-## 2.5 · 영상 — frame thumbnail + outline
+## 2.5 · Video — frame thumbnails + outline
 
-1. 임의의 mp4 (예: [`../videos/features/01-basic-01-drop-open.mp4`](../videos/features/01-basic-01-drop-open.mp4))
-   더블클릭
-2. 영상 viewer 가 timeline + thumbnail 미리보기를 표시
-3. ⌘shift+T 또는 hover 로 frame 위에 1 초 미리보기 (스크럽 없이)
+1. Double-click any mp4 (e.g. [`../videos/features/01-basic-01-drop-open.mp4`](../videos/features/01-basic-01-drop-open.mp4)).
+2. The video viewer shows a timeline with thumbnail previews.
+3. ⌘Shift+T or hover gives you a 1-second frame preview (no scrubbing).
 
-> 영상: [ADV · Frame check. No scrub.](../videos/features/15-advanced-09-thumbnail.mp4)
-> (30 s, advanced 카테고리)
+> Video: [ADV · Frame check. No scrub.](../videos/features/15-advanced-09-thumbnail.mp4) (30 s, advanced category)
 
-## 2.6 · Outline — 큰 문서 navigate
+## 2.6 · Outline — navigating a long document
 
-긴 md / html / PDF 의 헤딩 구조 → 우측 패널의 Outline 탭. 헤딩 클릭하면
-그 위치로 jump.
+The heading structure of any long md / html / PDF → Outline tab in the
+right panel. Click a heading to jump there.
 
-> 영상: [ADV · Click §3.2. You're there.](../videos/features/16-advanced-10-outline.mp4)
-> (30 s)
+> Video: [ADV · Click §3.2. You're there.](../videos/features/16-advanced-10-outline.mp4) (30 s)
 
-## 2.7 · 분할뷰 / 멀티 pane (⌘1 / ⌘2 / ⌘3 / ⌘J)
+## 2.7 · Split view / multi-pane (⌘1 / ⌘2 / ⌘3 / ⌘J)
 
-| 단축키 | 효과 |
+| Shortcut | Effect |
 |---|---|
 | ⌘1 | Preview only |
 | ⌘2 | Source only |
 | ⌘3 | Split (preview + source) |
-| ⌘J | Terminal panel toggle |
+| ⌘J | Toggle terminal panel |
 
-영상: [ADV · Two keys. Three views.](../videos/features/10-advanced-04-multi-pane.mp4)
-(30 s — 영상 narration 의 *"Two keys"* 는 ⌘D + ⌘J 였다가 v1.0 에서 ⌘1/⌘2/⌘3 + ⌘J 로 정정됐습니다. 자세한 lineage 는 [`../08-extend/PRODUCTION.md`](../08-extend/PRODUCTION.md) 의 *fix 된 false claims* 표 참고.)
+Video: [ADV · Two keys. Three views.](../videos/features/10-advanced-04-multi-pane.mp4)
+(30 s — the narration's *"Two keys"* was ⌘D + ⌘J in the original cut and
+was corrected to ⌘1/⌘2/⌘3 + ⌘J for v1.0. Full lineage in
+[`../08-extend/PRODUCTION.md`](../08-extend/PRODUCTION.md), in the *fixed
+false claims* table.)
 
-## ✅ Step 2 체크포인트
+## ✅ Step 2 checkpoint
 
-- md / html / pdf / 영상 4 종을 분할뷰로 열어봤다.
-- HTML 4 모드 (element / range / region / outline) 의 차이를 직접 클릭으로 체감.
-- ⌘1 / ⌘2 / ⌘3 / ⌘J 로 화면 레이아웃 토글이 익숙해졌다.
+- You've opened one of each: md / html / pdf / video in split view.
+- You've felt the difference between the four HTML modes (element / range
+  / region / outline) by clicking directly.
+- ⌘1 / ⌘2 / ⌘3 / ⌘J for layout toggling is muscle memory.
 
-다 맞으면 → [Step 3 · BYOM setup](../03-byom-setup/) — 한 vendor 만 골라서
-key 등록.
+All three? → [Step 3 · BYOM setup](../03-byom-setup/) — pick one vendor
+and register a key.
