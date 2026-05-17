@@ -16,7 +16,8 @@
 | `.svg` | Inline render | Source view to edit |
 | `.json` `.csv` `.tsv` | Table + tree view | View only |
 | Images | Native viewer with zoom, fit, pan | — |
-| Video / audio | Custom player (see below) | — |
+| Video | Custom player (see below) | — |
+| Audio (`.m4a` etc.) | Generic file fallback ("Preview not available"). Voice memos play through the **doc-bound Voice Player** drawer — see [Voice memos](Voice-Memos.md). | — |
 | Source code | Syntax-highlighted code | Source view to edit |
 | Unknown | Hex / text fallback | — |
 

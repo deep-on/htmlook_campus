@@ -12,12 +12,14 @@ First time, macOS will ask for microphone permission. The dialog explains the re
 
 ## Playback player
 
-The bottom **Voice Player** appears whenever a `.m4a` file is selected in the sidebar, or whenever the workspace has memos and you haven't dismissed the player.
+Voice memos are **attached to documents** — not stand-alone files in the viewer. The bottom **Voice Player** appears when the *active document* has one or more memos linked to it (matched by filename stem in `.htmlook-voice/`). Recording while a document is open auto-files the memo under that document.
 
-- ◀ / ▶ navigate through the workspace's memos
+- ◀ / ▶ navigate the memos linked to the active document
 - The waveform shows the loudness envelope
 - ⌃ collapses the player (a single ▶︎ button with a badge stays until you expand again)
 - ✏ rename, ✕ delete
+
+Clicking a `.m4a` directly in the sidebar opens it as a generic file (the viewer shows "Preview not available for this file type") — the player is doc-bound, not file-bound. To preview a memo, open the document it's attached to (or use *Voice memos* in the sidebar's filters once a memo exists).
 
 ## Transcripts
 

@@ -12,12 +12,14 @@
 
 ## 재생 플레이어
 
-`.m4a` 가 사이드바에서 선택될 때 또는 워크스페이스에 메모가 있고 플레이어를 dismiss 하지 않은 경우 하단 **Voice Player**:
+음성 메모는 **문서에 attach 되는 메타** — 뷰어에서 단독으로 열리지 않습니다. 활성 *문서* 에 연결된 메모 (`.htmlook-voice/` 안의 파일명 stem 매칭) 가 있을 때 하단 **Voice Player** 등장. 문서 열어둔 상태에서 녹음하면 그 문서에 자동 attached.
 
-- ◀ / ▶ 워크스페이스 메모 순환
+- ◀ / ▶ 활성 문서에 연결된 메모 순환
 - waveform 으로 음량 envelope
 - ⌃ 플레이어 접기 (배지 달린 ▶︎ 버튼만 남음)
 - ✏ 이름 변경, ✕ 삭제
+
+사이드바에서 `.m4a` 를 직접 클릭하면 generic file 로 열려 뷰어가 "Preview not available for this file type" 표시 — 플레이어는 파일이 아닌 문서 기반. 메모를 미리듣기하려면 그것이 attach 된 문서를 여세요.
 
 ## Transcript
 
