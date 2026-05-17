@@ -2,6 +2,8 @@
 
 > 가장 큰 영역. 파일 타입별 렌더러 + Pro 의 마크다운 풀 WYSIWYG.
 
+![Preview / Source / Split 토글이 있는 뷰어](images/04-viewer.png)
+
 ## 파일 타입별 렌더러
 
 | 타입 | 렌더러 | 편집 가능? |

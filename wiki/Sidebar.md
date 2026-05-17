@@ -4,24 +4,7 @@
 
 ## Anatomy
 
-```
-┌──────────────────────┐
-│ ▾ ~/Notes      ⊕ ⊟  │ ← workspace dropdown + new file + collapse all
-├──────────────────────┤
-│  Filter…       ⨯    │ ← live filter (path + filename, case-insensitive)
-├──────────────────────┤
-│  ▾ docs/             │
-│    • intro.md        │
-│    • plan.md   ●     │ ← ● = modified in editor
-│  ▾ images/           │
-│    • hero.png        │
-│    • thumb.jpg       │
-│  ▸ archive/          │ ← collapsed dir
-│  • notes.html        │
-├──────────────────────┤
-│  12 files · 2 dirs   │ ← footer
-└──────────────────────┘
-```
+![Sidebar](images/02-sidebar.png)
 
 ## Workspace dropdown
 

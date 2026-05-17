@@ -2,6 +2,8 @@
 
 > Tabs keep multiple files open. Views are how you arrange what one tab shows.
 
+![Tab strip and view-mode toggles](images/03-tabs.png)
+
 ## Opening a file as a tab
 
 | Way | Trigger |

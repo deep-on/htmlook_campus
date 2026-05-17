@@ -2,6 +2,8 @@
 
 > The biggest pane. Different renderer per file type, full WYSIWYG for Markdown in Pro.
 
+![Viewer with Preview / Source / Split toggles](images/04-viewer.png)
+
 ## Renderers by file type
 
 | Type | Renderer | Editing? |

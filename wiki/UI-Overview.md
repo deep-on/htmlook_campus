@@ -2,29 +2,7 @@
 
 > One layout, every pane named. Bookmark this page.
 
-```
-┌──────────────────────────────────────────────────────────────────────┐
-│  ⎙  ▼ workspace          file.md            ●  HTMLook Pro    🪟 ⊟ ⨯ │ ← Title bar
-├──┬──────────────┬────────────────────────────────┬──────────────────┤
-│A │  Sidebar     │  Tabs strip                     │  AI Assistant    │
-│c │              │ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ │   (⌘I toggle)   │
-│t │   filter…    │                                 │                  │
-│i │   ▾ docs/    │      Viewer                     │   conversation   │
-│v │     • intro.md│                                │                  │
-│i │     • plan.md│      (Markdown / HTML / PDF /   │                  │
-│t │   ▾ images/  │       image / video / audio /   │   ▸ "summarize…" │
-│y │     • hero.png│      DOCX / PPTX / code)       │   ▸ response …   │
-│B │              │                                 │                  │
-│a │              │                                 │                  │
-│r │              │                                 │                  │
-├──┴──────────────┴────────────────────────────────┴──────────────────┤
-│  Terminal panel  (⌘J)  ⠿ + Claude + Codex + Gemini + Shell      ⊟  │ ← dockable
-│  ─ tab 1 ─ tab 2 ─ tab 3 ─                                          │
-│  $                                                                  │
-├──────────────────────────────────────────────────────────────────────┤
-│  ▣ 12 files · 1 modified ●   ⏺ rec 00:12   ▾ Easier mode      🟢 OK│ ← Status bar
-└──────────────────────────────────────────────────────────────────────┘
-```
+![HTMLook Pro main window](images/01-ui-overview.png)
 
 ## The six surfaces
 
