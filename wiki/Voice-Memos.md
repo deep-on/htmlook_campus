@@ -12,13 +12,13 @@ First time, macOS will ask for microphone permission. The dialog explains the re
 
 ## Playback player
 
-Voice memos are **doc-attached metadata** — the player is bound to the document, not to the audio file. The bottom **Voice Player** drawer appears when the active document has one or more memos linked to it (the link is established by recording while that document is open).
+![Voice player inline in the viewer for welcome.md](images/08-voice.png)
 
-- ◀ / ▶ navigate memos attached to the active document
-- Waveform shows the loudness envelope
-- Progress bar — drag the playhead to seek anywhere in the memo
-- ⌃ collapses the player (a single ▶︎ button with a badge stays until you expand again)
-- ✏ rename, ✕ delete
+Voice memos are **doc-attached metadata** — the player is bound to the document, not to the audio file. When the active document has one or more memos linked to it (the link is established by recording while that document was open), a player strip is inlined inside the viewer alongside the rendered content.
+
+- ◀ ▶▶ navigate memos attached to the active document; the badge shows `n / total`
+- Memo filename + elapsed / total time (e.g. `0:00 / 0:06`)
+- Volume slider on the right
 
 **Clicking a `.m4a` directly in the sidebar does not open the player** — the viewer treats it as an unrecognised file type and shows a generic "Preview not available" card. To listen, open the document the memo was recorded against.
 

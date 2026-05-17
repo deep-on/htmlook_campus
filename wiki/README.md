@@ -5,4 +5,4 @@
 Start at **[Home](Home.md)** (English) or **[Home-ko](Home-ko.md)** (한국어).
 
 Source-of-truth: `deep-on/htmlook` at `docs/wiki/` — mirrored here by
-`scripts/sync-wiki.sh` (last mirror: e4fc9dd).
+`scripts/sync-wiki.sh` (last mirror: f6ff7d5).
