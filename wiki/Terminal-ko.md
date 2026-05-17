@@ -2,6 +2,8 @@
 
 > 앱 안의 진짜 터미널. AI 어시스턴트 (Claude / Codex / Gemini) 가 같은 워크스페이스에 *함께* 앉도록 설계.
 
+![Claude / Codex / Gemini / Shell preset 이 있는 터미널 패널](images/05-terminal.png)
+
 ## 토글과 docking
 
 | 동작 | 단축키 |

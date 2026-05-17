@@ -2,6 +2,8 @@
 
 > A transparent sketch canvas on top of the viewer. ⌘⌥P toggles. Circle, point, send.
 
+![Paint canvas overlay on top of a Markdown viewer](images/07-paint.png)
+
 ## Why it's there
 
 Half of "explaining what you mean" is gesture — *this column*, *this trend*, *this misalignment*. Paint gives you a layer to mark on, save the result, and drop it straight into the AI Assistant as an image attachment.

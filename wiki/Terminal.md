@@ -2,6 +2,8 @@
 
 > A real terminal inside the app, designed so an AI assistant (Claude / Codex / Gemini) sits *with* you in the same workspace.
 
+![Terminal panel with Claude / Codex / Gemini / Shell presets](images/05-terminal.png)
+
 ## Toggle and dock
 
 | Action | Shortcut |
