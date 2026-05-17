@@ -39,7 +39,7 @@ Export · Settings · 단축키. 인간 사용자 트랙과 AI 어시스턴트 (
 | 갈래 | 시작 | 언어 |
 |---|---|---|
 | 사람용 매뉴얼 | [`wiki/Home.md`](wiki/Home.md) · [한국어](wiki/Home-ko.md) | EN / KO |
-| AI 어시스턴트 가이드 | [`wiki/AI-Overview.md`](wiki/AI-Home.md) · [한국어](wiki/AI-Overview-ko.md) | EN / KO |
+| AI 어시스턴트 가이드 | [`wiki/AI-Overview.md`](wiki/AI-Overview.md) · [한국어](wiki/AI-Overview-ko.md) | EN / KO |
 
 튜토리얼은 한 번만 따라가면 됩니다; wiki 는 앱을 쓰는 내내 손이 닿는 곳에
 둡니다 (앱 내 *Help → HTMLook Wiki* 또는 사이드바 ? 아이콘에서 바로 열림).
