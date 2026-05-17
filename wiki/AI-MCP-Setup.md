@@ -27,7 +27,7 @@ The HTMLook MCP server is auto-registered when you install Claude Code with `htm
 }
 ```
 
-Restart Claude Code. The 123 tools appear under the `htmlook__*` namespace.
+Restart Claude Code. All tools appear under the `htmlook__*` namespace.
 
 ## Codex
 

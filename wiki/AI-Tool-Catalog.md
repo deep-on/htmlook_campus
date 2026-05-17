@@ -1,10 +1,12 @@
 # Tool catalog
 
-> All 123 tools by category. Schema and parameter detail in the linked sub-pages.
+> Every tool the HTMLook MCP server exposes, grouped by purpose. Schema and parameter detail in the linked sub-pages.
+>
+> **Authoritative source**: call `tools/list` on the connected MCP server. The catalog below is hand-maintained and may lag the live surface by one or two builds — use this for orientation, the live response for exact parameter shapes and any tools added after a release.
 
 Names are listed without the `htmlook_` prefix for readability. Real names are `htmlook_<name>` on the wire.
 
-## 1. Workspace · Tabs · Window (≈20)
+## 1. Workspace · Tabs · Window
 
 | Tool | Returns / Effect |
 |---|---|
@@ -29,8 +31,7 @@ Names are listed without the `htmlook_` prefix for readability. Real names are `
 | `outline` | Heading outline (`.md`, `.html`, `.pdf`) |
 | `hyperframes` | Active hyperframe links of the current file |
 
-## 2. Selection · Element · Navigation (≈15)
-
+## 2. Selection · Element · Navigation
 | Tool | Use |
 |---|---|
 | `selection_text` | Current selection as plain text |
@@ -49,8 +50,7 @@ Names are listed without the `htmlook_` prefix for readability. Real names are `
 | `visual_overlap_check` | Detect text-truncation / overflow / zero-size |
 | `layout_map` | Landmark / heading / button / link / form survey |
 
-## 3. Visual Capture (≈10)
-
+## 3. Visual Capture
 | Tool | What you get |
 |---|---|
 | `capture_viewport` | PNG of the active pane |
@@ -63,8 +63,7 @@ Names are listed without the `htmlook_` prefix for readability. Real names are `
 
 Full how-to: [Visual Capture](AI-Visual-Capture.md)
 
-## 4. Apply-edit family (≈5)
-
+## 4. Apply-edit family
 | Tool | Effect |
 |---|---|
 | `apply_edit` | Find + replace inside the active file with audit |
@@ -75,8 +74,7 @@ Full how-to: [Visual Capture](AI-Visual-Capture.md)
 
 Full how-to: [Apply-edit round-trip](AI-Apply-Edit.md)
 
-## 5. Annotation · Sketch · Paint (≈15)
-
+## 5. Annotation · Sketch · Paint
 | Tool | Effect |
 |---|---|
 | `annotation_add` / `annotation_list` | Workspace annotations (note + bounding region) |
@@ -87,8 +85,7 @@ Full how-to: [Apply-edit round-trip](AI-Apply-Edit.md)
 | `sketch_current_png` | Current sketch as base64 |
 | `highlight_element` | Soft visual highlight |
 
-## 6. PDF tools (≈6)
-
+## 6. PDF tools
 | Tool | Effect |
 |---|---|
 | `pdf_highlight_add` / `pdf_highlight_clear` | Persistent highlights |
@@ -99,8 +96,7 @@ Full how-to: [Apply-edit round-trip](AI-Apply-Edit.md)
 
 Full how-to: [PDF tools](AI-PDF-Tools.md)
 
-## 7. Audio · Video · Voice (≈25)
-
+## 7. Audio · Video · Voice
 ### Voice memos
 | Tool | Effect |
 |---|---|
@@ -129,8 +125,7 @@ Full how-to: [PDF tools](AI-PDF-Tools.md)
 
 Full how-to: [Audio / video tools](AI-Audio-Video-Tools.md)
 
-## 8. Terminal & process (≈3)
-
+## 8. Terminal & process
 | Tool | Effect |
 |---|---|
 | `terminal_buffer_get` | Active terminal scrollback |
@@ -139,8 +134,7 @@ Full how-to: [Audio / video tools](AI-Audio-Video-Tools.md)
 
 > v1.0.9 explicitly excludes `terminal_run_managed` and `send_keys` to limit blast radius.
 
-## 9. Collaboration · Audit (≈5)
-
+## 9. Collaboration · Audit
 | Tool | Effect |
 |---|---|
 | `agent_message_post` / `agent_message_list` | Cross-agent JSONL messages |
@@ -149,7 +143,7 @@ Full how-to: [Audio / video tools](AI-Audio-Video-Tools.md)
 
 Full how-to: [Multi-agent collaboration](AI-Collaboration.md)
 
-## 10. User-facing UI hooks (≈8)
+## 10. User-facing UI hooks
 
 | Tool | Effect |
 |---|---|
@@ -162,7 +156,7 @@ Full how-to: [Multi-agent collaboration](AI-Collaboration.md)
 | `print_active` | Trigger Print |
 | `insert_at_selection` | (also listed above) |
 
-## 11. Region & screenshot (≈2)
+## 11. Region & screenshot
 
 | Tool | Effect |
 |---|---|

@@ -1,10 +1,12 @@
 # 도구 카탈로그
 
-> 카테고리별 123 도구 전체. 스키마 / 파라미터 디테일은 링크된 서브 페이지에서.
+> HTMLook MCP 서버가 노출하는 모든 도구를 목적별로 그룹화. 스키마 / 파라미터 디테일은 링크된 서브 페이지.
+>
+> **정식 source**: 연결된 MCP 서버에 `tools/list` 호출. 아래는 hand-maintained 라 빌드 1-2 개 뒤처질 수 있음 — 오리엔테이션 용으로 보고, 정확한 parameter shape 과 신규 도구는 live 응답으로.
 
 가독성 위해 `htmlook_` prefix 없이 표기. 실제 wire 명은 `htmlook_<name>`.
 
-## 1. 워크스페이스 · 탭 · 윈도우 (~20)
+## 1. 워크스페이스 · 탭 · 윈도우
 
 | 도구 | 반환 / 효과 |
 |---|---|
@@ -29,7 +31,7 @@
 | `outline` | heading outline (`.md`, `.html`, `.pdf`) |
 | `hyperframes` | 현재 파일의 hyperframe 링크 |
 
-## 2. 선택 · 요소 · 네비게이션 (~15)
+## 2. 선택 · 요소 · 네비게이션
 
 | 도구 | 용도 |
 |---|---|
@@ -49,7 +51,7 @@
 | `visual_overlap_check` | text-truncation / overflow / zero-size 감지 |
 | `layout_map` | landmark / heading / button / link / form 조사 |
 
-## 3. Visual Capture (~10)
+## 3. Visual Capture
 
 | 도구 | 반환 |
 |---|---|
@@ -63,7 +65,7 @@
 
 전체 가이드: [Visual Capture](AI-Visual-Capture-ko.md)
 
-## 4. Apply-edit 군 (~5)
+## 4. Apply-edit 군
 
 | 도구 | 효과 |
 |---|---|
@@ -75,7 +77,7 @@
 
 전체 가이드: [Apply-edit 왕복](AI-Apply-Edit-ko.md)
 
-## 5. Annotation · Sketch · Paint (~15)
+## 5. Annotation · Sketch · Paint
 
 | 도구 | 효과 |
 |---|---|
@@ -87,7 +89,7 @@
 | `sketch_current_png` | 현재 스케치 base64 |
 | `highlight_element` | 부드러운 시각 강조 |
 
-## 6. PDF 도구 (~6)
+## 6. PDF 도구
 
 | 도구 | 효과 |
 |---|---|
@@ -99,7 +101,7 @@
 
 전체 가이드: [PDF 도구](AI-PDF-Tools-ko.md)
 
-## 7. 오디오 · 비디오 · 음성 (~25)
+## 7. 오디오 · 비디오 · 음성
 
 ### 음성 메모
 | 도구 | 효과 |
@@ -129,7 +131,7 @@
 
 전체 가이드: [오디오/비디오 도구](AI-Audio-Video-Tools-ko.md)
 
-## 8. 터미널 & 프로세스 (~3)
+## 8. 터미널 & 프로세스
 
 | 도구 | 효과 |
 |---|---|
@@ -139,7 +141,7 @@
 
 > v1.0.9 는 blast radius 제한 위해 `terminal_run_managed` 와 `send_keys` 명시 제외.
 
-## 9. 협업 · audit (~5)
+## 9. 협업 · audit
 
 | 도구 | 효과 |
 |---|---|
@@ -149,7 +151,7 @@
 
 전체 가이드: [다중 에이전트 협업](AI-Collaboration-ko.md)
 
-## 10. UI 훅 (~8)
+## 10. UI 훅
 
 | 도구 | 효과 |
 |---|---|
@@ -162,7 +164,7 @@
 | `print_active` | Print 트리거 |
 | `insert_at_selection` | (위에도 표시) |
 
-## 11. 영역 & 스크린샷 (~2)
+## 11. 영역 & 스크린샷
 
 | 도구 | 효과 |
 |---|---|

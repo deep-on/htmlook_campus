@@ -8,7 +8,7 @@
 
 ## 한 문단 contract
 
-HTMLook 이 MCP 로 **123 도구** 노출. 각 호출은 실행 중인 HTMLook Pro 인스턴스 안에서, 사용자가 지금 보고 있는 워크스페이스 컨텍스트로 실행. 결과는 JSON-RPC 응답 또는 이미지 도구의 경우 `data:image/png;base64,…` payload + JSON sidecar. 워크스페이스 root 로 스코프 — 바깥 path traversal 은 `path_guard` 가 거부. 도구별 rate limit + 모든 호출의 append-only audit log.
+HTMLook 이 MCP 로 **~120 도구** 노출. 각 호출은 실행 중인 HTMLook Pro 인스턴스 안에서, 사용자가 지금 보고 있는 워크스페이스 컨텍스트로 실행. 결과는 JSON-RPC 응답 또는 이미지 도구의 경우 `data:image/png;base64,…` payload + JSON sidecar. 워크스페이스 root 로 스코프 — 바깥 path traversal 은 `path_guard` 가 거부. 도구별 rate limit + 모든 호출의 append-only audit log.
 
 ## 데스크톱 앱 vs CLI
 
@@ -27,7 +27,7 @@ CLI 가 쉽게 못 주는 세 가지:
                        │                            │
                        ▼                            ▼
               ┌──────────────────┐         ┌──────────────────┐
-              │   123 tools      │ ◄──────►│  apply_edit      │
+              │   ~120 tools     │ ◄──────►│  apply_edit      │
               │  ──────────────  │  audit  │  insert_at_      │
               │   여섯 기둥으로  │   log   │    selection     │
               │   조직됨         │         │   create_file    │

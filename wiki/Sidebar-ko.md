@@ -25,7 +25,7 @@
 
 ## 워크스페이스 dropdown
 
-상단 버튼이 현재 워크스페이스 이름 표시. 클릭 → 최근 워크스페이스 + *폴더 열기…* (⌘⇧O) + *폴더로 새 워크스페이스…*. 호버 시 절대 경로.
+상단 버튼이 현재 워크스페이스 이름. 클릭 → 최근 워크스페이스 + *폴더 열기…* (⌘⇧O) + *폴더로 새 워크스페이스…*. 호버 시 절대 경로.
 
 ★ 로 핀 고정 — 상단에 고정 유지.
 
@@ -38,7 +38,7 @@
 | 이름 변경 | 행을 300 ms 길게 누르기 또는 컨텍스트 메뉴 → Rename |
 | 복제 | 컨텍스트 메뉴 → Duplicate (` copy` suffix) |
 | 휴지통 이동 | ⌫ (2개 이상이면 확인) |
-| Finder 표시 | 컨텍스트 메뉴 또는 ⌘⌥R |
+| Finder 표시 | 컨텍스트 메뉴 또는 *File → Reveal* |
 | 터미널에서 열기 | 컨텍스트 메뉴 — 다음 빈 터미널 탭에서 부모 디렉토리로 chdir |
 | 폴더에 새 파일 | 폴더 우클릭 → *새 파일* |
 | 새 폴더 | 폴더 우클릭 → *새 폴더* |
@@ -54,9 +54,7 @@ Delete · Move-to-Trash 가 전체 선택에 적용. 컨텍스트 메뉴의 *Del
 
 ## Drag-out
 
-사이드바 파일을 Finder · Mail · Slack · Notion 등으로 드래그. drop 에 실제 파일 경로 (`text/uri-list`) 가 실립니다. `.html` 을 웹메일 compose 창에 던지면 첨부. 폴더 드래그 시 *복사*.
-
-내부는 `tauri-plugin-drag` + 파일 아이콘 기반 1회용 PNG preview.
+사이드바 파일을 Finder · Mail · Slack · Notion 으로 드래그. drop 에 실제 파일 경로 실림. `.html` 을 웹메일 compose 창에 던지면 첨부. 폴더 드래그 시 *복사*.
 
 ## Filter
 
@@ -80,9 +78,9 @@ footer 우클릭으로 활성 정렬 설정:
 
 워크스페이스별 저장.
 
-## Tier 배지 (사용자 도구)
+## Extensions 패널
 
-워크스페이스의 `.htmlook/tools.json` 에 user-added tool 이 선언되면 *Power tools* expansion 에 표시. 각 행 앞에 컬러 dot — 녹색 = detected, 흐린 ring = PATH 에 없음 — 그리고 tier 배지: **Verified** (built-in), **Curated** (Deep-On 리뷰), **Custom** (직접 추가). v1.0.9 에서 옛 `border-left` stripe 제거 후 dot 으로 교체.
+하단 접을 수 있는 **Extensions** 섹션이 파일 열기 외 HTMLook 이 할 수 있는 것들 (Mermaid · D2 · LibreOffice 렌더 등) 표시. 컬러 dot 으로 각 항목 준비 상태 (진한 색 = 준비됨, 흐린 ring = 외부 도구 미설치 — 클릭으로 설치). 전체 목록은 [확장 (Extensions)](Skills-ko.md).
 
 ## 다음
 

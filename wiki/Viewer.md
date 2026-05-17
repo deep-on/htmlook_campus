@@ -7,20 +7,20 @@
 | Type | Renderer | Editing? |
 |---|---|---|
 | `.md` `.markdown` `.mdx` | WYSIWYG Markdown editor | Yes — full in Pro, read-only render in Easier |
-| `.html` `.htm` | iframe sandbox + relative-asset inlining | View only (use Code view to edit source) |
+| `.html` `.htm` | Self-contained iframe (relative assets inlined) | View only (use Source view to edit raw HTML) |
 | `.qmd` | Quarto render → iframe | View only |
-| `.pdf` | PDF.js with text layer | Highlight + comment via Pro tools |
+| `.pdf` | PDF renderer with text layer | Highlight + comment in Pro |
 | `.docx` `.pptx` `.xlsx` | LibreOffice → PDF → render | View only |
-| `.svg` | Inline render | Code view to edit |
+| `.svg` | Inline render | Source view to edit |
 | `.json` `.csv` `.tsv` | Table + tree view | View only |
-| Images | Native `<img>` with zoom, fit, pan | — |
+| Images | Native viewer with zoom, fit, pan | — |
 | Video / audio | Custom player (see below) | — |
-| Source code | Highlighted code (Shiki) | Code view to edit |
+| Source code | Syntax-highlighted code | Source view to edit |
 | Unknown | Hex / text fallback | — |
 
 ## Markdown WYSIWYG (Pro)
 
-The editor renders Markdown but you type *into the render*. The features below are what makes it feel like a normal word processor while still emitting clean Markdown.
+The editor *renders* Markdown but you *type into the render*. It feels like a normal word processor while still emitting clean Markdown.
 
 ### Block-level autocorrect
 
@@ -37,7 +37,7 @@ The editor renders Markdown but you type *into the render*. The features below a
 ### Inline autocorrect
 
 Closing delimiters turn the matched span into formatting:
-`**bold**`, `*em*`, `_em_`, `` `code` ``, `~~strike~~`, `~sub~`, `^sup^` (Pandoc).
+`**bold**`, `*em*`, `_em_`, `` `code` ``, `~~strike~~`, `~sub~`, `^sup^`.
 
 ### Selection wrap
 
@@ -45,54 +45,54 @@ Select text, hit `*` `_` `` ` `` to wrap. Hit `[` `(` `{` `'` `"` to surround an
 
 ### Engineering symbols
 
-`-> <- => <-> <=> >= <= != +-` rewrite to `→ ← ⇒ ↔ ⇔ ≥ ≤ ≠ ±` (outside code blocks only).
+Outside code blocks, `-> <- => <-> <=> >= <= != +-` rewrite to `→ ← ⇒ ↔ ⇔ ≥ ≤ ≠ ±`.
 
-### Links · ⌘K
+### Links — ⌘K
 
 Selection-aware link dialog. If a selection exists it pre-fills the text field. If the caret is inside an existing `<a>` you can edit the URL or *Remove* the link. Otherwise you get a fresh insert. The classic `[text](url.md)` autocorrect also still works.
 
 ### Code blocks
 
-Caret inside a fenced block → top-right corner shows a **language picker** pill. Pick from a curated list or type freely. The selection round-trips to ```` ```python ```` etc. The list is fed by the Skill manifest, so any language a workspace skill registers shows up automatically.
+Caret inside a fenced block → top-right corner shows a **language picker**. Pick from a curated list or type freely. The selection round-trips to ```` ```python ```` etc. Any language an Extension registers appears in the picker automatically.
 
 ### Images
 
-Selected image → popover with *alt text* + *align* (left / center / right / none). Alignment writes inline `style` and turndown preserves it as raw `<img>` on save.
+Selected image → popover with *alt text* + *align* (left / center / right / none). Alignment writes inline style so it round-trips through Markdown save/load.
 
 ### Footnotes
 
-`[^id]: body…` defines a footnote, `[^id]` references it. The editor renumbers and renders a `Footnotes` section at the end automatically. Round-trips through save/load.
+`[^id]: body…` defines a footnote, `[^id]` references it. The editor renumbers and renders a `Footnotes` section at the end automatically. Round-trips through save / load.
 
 ### Paste
 
-⌘V follows a fallback chain: image → HTML (sanitised to strip Word's `mso-*` and `<o:p>` junk, keeping only allowed tags) → text. ⌘⇧V always plain-text. WKWebView's `paste` event sometimes silent-fails on text — we fall back to `clipboard.readText()` automatically.
+⌘V tries image → HTML (sanitised — Word's clutter is stripped) → text. ⌘⇧V always plain-text.
 
 ### Auto-save
 
-Tab-level `$effect` watches `modified + rawContent`, 1.5 s debounce → write. Untitled tabs skip auto-save.
+1.5 s after the last keystroke, the file writes. Untitled tabs skip auto-save and ask for a destination on ⌘S.
 
-### Print / PDF
+### Print / PDF header & footer
 
-`Settings → Viewer → printHeader / printFooter` accept tokens `{filename} {date} {page} {pages}`. Empty string suppresses the line.
+*Settings → Viewer → Print header / Print footer* accept tokens — `{filename}`, `{date}`, `{page}`, `{pages}`. Empty string suppresses the line.
 
 ## PDF viewer
 
-Continuous scroll, zoom controls in the toolbar, *Find in PDF* (⌘F), highlight tool with colour picker. Highlights persist to `<file>.pdf.highlights.json` next to the PDF — same companion-file pattern as elsewhere. Comments attach to a highlight and surface in the right margin.
+Continuous scroll, zoom controls in the toolbar, *Find in PDF* (⌘F), highlight tool with colour picker. Highlights persist next to the PDF, so they travel when you move or share the file. Comments attach to a highlight and show in the right margin.
 
 ## Video / audio player
 
-Built-in player has:
+Built-in player:
 
 - Scrubber with bookmark markers
 - Speed control (0.5× → 2×)
-- *Mark moment* (⌘B inside player) → append to `<file>.bookmarks.json`
-- Transcript panel (if `<file>.transcript.json` sibling exists)
-- Chapter strip below the seek bar (from `<file>.chapters.json`)
+- *Mark moment* — append to the file's bookmark sidecar
+- Transcript panel — appears when a transcript sidecar exists
+- Chapter strip below the seek bar
 - AB-loop range tool
 
 ## Find bar
 
-⌘F opens a find bar inside the viewer. ⏎ next, ⇧⏎ previous, ⌘G next. Highlights persist while open; close clears them. Live-incremental, regex toggle, case toggle.
+⌘F inside the viewer. ⏎ next, ⇧⏎ previous, ⌘G next. Live-incremental, regex toggle, case toggle. Closing clears the highlights.
 
 ## Next
 

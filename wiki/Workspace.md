@@ -4,9 +4,9 @@
 
 ## The folder *is* the project
 
-Open `~/Notes`, or your client folder, or an empty `~/Desktop/scratch`. That's a workspace. HTMLook Pro reads what's inside it, lays out tabs for the file types it recognises, and writes everything it generates *back into that folder* as plain files. Move the folder → the workspace moves with it. Send it to Dropbox / git / a USB stick → the workspace travels.
+Open `~/Notes`, or your client folder, or an empty `~/Desktop/scratch`. That's a workspace. HTMLook Pro reads what's inside, lays out tabs for the file types it recognises, and writes anything it generates *back into that folder* as plain files. Move the folder → the workspace moves with it. Send it to Dropbox / git / a USB stick → the workspace travels.
 
-Drop multiple workspaces side-by-side: each one stays self-contained, with its own settings, AI permissions, and tool detection.
+Drop multiple workspaces side-by-side: each one stays self-contained, with its own settings and tool detection.
 
 ## File types HTMLook reads
 
@@ -14,60 +14,52 @@ Drop multiple workspaces side-by-side: each one stays self-contained, with its o
 |---|---|
 | Web / structured | `.html`, `.htm`, `.svg`, `.json`, `.csv`, `.tsv` |
 | Markdown family | `.md`, `.markdown`, `.mdx`, `.qmd` |
-| Office (read-only render via LibreOffice / Quarto) | `.docx`, `.pptx`, `.xlsx` |
+| Office (read-only render) | `.docx`, `.pptx`, `.xlsx` (LibreOffice / Quarto must be installed) |
 | PDF | `.pdf` |
 | Images | `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`, `.avif`, `.heic` |
 | Video | `.mp4`, `.mov`, `.webm` |
 | Audio | `.m4a`, `.mp3`, `.wav`, `.aac` |
-| Diagrams (via skills) | `.mmd` (Mermaid), `.d2` |
-| Source (rendered as code) | most common languages |
+| Diagrams (via Extensions) | `.mmd` (Mermaid), `.d2` |
+| Source code (rendered as code) | most common languages |
 
-Anything else opens in a hex/text fallback.
+Anything else opens in a hex / text fallback.
 
-## Sidecar folders (the dot-prefixed siblings)
+## What HTMLook keeps next to your files
 
-HTMLook keeps generated content in dot-prefixed folders next to your files. They are *yours* — version-control them or `.gitignore` them, your call.
+HTMLook keeps anything it generates as plain files in your workspace — so you can see it, version-control it, or `.gitignore` it as you prefer.
 
-| Sidecar | What lives there |
+| Path | What lives there |
 |---|---|
-| `.htmlook/` | App-managed: `tools.json` (user-registered tools), `chat-history/`, `sketches/`, `agent-messages.jsonl`, `audit-log.jsonl`, paste assets, view-state snapshots |
-| `.htmlook-voice/` | Voice memos (AAC `.m4a`) + matching `*.transcript.json` sidecars |
-| `.claude/skills/` | Workspace-scoped skills, loaded into BYOM ChatPanel and the AI tool catalog |
-| `.agents/skills/` | Cross-tool skills (Codex, Gemini, Aider compat) |
+| `.htmlook/` | App-managed: sketches you draw, chat history, configuration, paste assets |
+| `.htmlook-voice/` | Voice memos (`.m4a`) + optional transcript siblings |
 
-The global `~/.claude/skills/` (and `~/.agents/skills/`) is layered underneath — workspace files win on conflict.
+For specific files HTMLook drops a *sibling* file next to it instead — so the relationship is obvious in Finder and survives `mv`.
 
-## Companion files (next to your file)
-
-For specific files HTMLook drops *sibling* files instead of using a sidecar — so the relationship is obvious in Finder and survives `mv`.
-
-| Sibling pattern | Owner feature |
+| Sibling pattern | What it stores |
 |---|---|
-| `foo.mp4.segments.json` | audio/video segment markers |
-| `foo.mp4.chapters.json` | video chapters |
-| `foo.mp4.bookmarks.json` | review markers / scrub bookmarks |
+| `foo.m4a.transcript.json` | Voice memo transcript |
 | `foo.pdf.highlights.json` | PDF highlights + comments |
-| `foo.m4a.transcript.json` | voice memo transcript |
-| `foo.html.draft.md` | Markdown round-trip draft |
+| `foo.mp4.chapters.json` | Video chapters |
+| `foo.mp4.bookmarks.json` | Video scrub bookmarks |
 
 ## Multi-window, multi-workspace
 
-`File → New Window` (⌘N) opens a second independent window. Each window pins to one workspace root, has its own tab list, terminal panel, and ChatPanel. Two windows can sit on the same workspace without stepping on each other — file-watcher events propagate, sidecars are append-only.
+*File → New Window* (or ⌘⌥⇧N in Pro) opens a second independent window. Each window pins to one workspace root, has its own tab list, terminal, and AI Assistant. Two windows can sit on the same workspace without stepping on each other — file changes propagate.
 
-## HyperFrames (lightweight cross-file links)
+## Cross-file links (HyperFrames)
 
-Inside a workspace, files can reference each other with `htmlook://` links: `[See the regression plot](htmlook://regression-results.html#sec-q3)` opens the target file in the same window, scrolling to the anchor. This is the substrate for the persona-video demo workflows — same workspace, multiple lenses.
+Inside a workspace, files can reference each other. Click a `htmlook://` link in any file (`[See the plot](htmlook://results.html#sec-q3)`) and the target file opens in the same window, scrolled to the anchor. Useful for stitching report + raw data + chart into one navigable flow.
 
 ## What gets synced to the cloud
 
 Nothing, unless you opt in. No telemetry, no workspace upload. The only outbound traffic from a default install is:
 
-- Auto-update check to `htmlook-releases.kdk3606.workers.dev/pro/latest.json`
-- Whatever BYOM provider you configured (OpenAI, DeepSeek, etc.) when you actively use ChatPanel
+- The auto-update check on launch
+- Whatever AI provider you configured (OpenAI, DeepSeek, etc.) when you actively use the AI Assistant
 
-You can run HTMLook Pro fully offline by skipping BYOM setup and the auto-update check.
+You can run HTMLook Pro fully offline by skipping AI provider setup.
 
 ## Next
 
 - [UI Overview →](UI-Overview.md)
-- [Pro vs Easier →](Pro-vs-Easier.md)
+- [Quick start →](Quick-Start.md)

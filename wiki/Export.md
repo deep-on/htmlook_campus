@@ -1,10 +1,10 @@
 # Export
 
-> One menu, every format. Skill-extensible.
+> One menu, every format. Extension-extensible.
 
 ## Where to find it
 
-Top-right of the viewer toolbar: a download icon. Click → format dropdown. Keyboard: ⌘E (Export menu) → ⏎ on the desired format.
+Top-right of the viewer toolbar: a download icon. Click → format dropdown.
 
 ## Built-in formats
 
@@ -12,42 +12,40 @@ Top-right of the viewer toolbar: a download icon. Click → format dropdown. Key
 |---|---|---|
 | **PDF** | file | print-rendered PDF of the active tab |
 | **Print** | printer | OS print dialog (same renderer as PDF) |
-| **DOCX** | file | best-effort Word doc (pandoc) |
-| **Markdown** | file | clean Markdown from any renderer (turndown-driven) |
-| **Markdown (Smart)** | feather | pandoc-polished Markdown — heuristic cleanup, footnote restoration |
+| **DOCX** | file | best-effort Word doc (requires Pandoc) |
+| **Markdown** | file | clean Markdown from any renderer |
+| **Markdown (Smart)** | feather | polished Markdown — heuristic cleanup, footnote restoration (requires Pandoc) |
 | **HTML** | code | self-contained `.html` with inlined assets |
 
-## Skill-registered formats (dynamic)
+## Extension-registered formats
 
-Below the divider, the dropdown lists every format declared by a loaded skill. v1.0.9 ships these:
+Below the divider, the dropdown lists every format an installed Extension adds. With the default set you'll see:
 
-- **mp4** — animated SVG → mp4 (via the SVG-animate skill)
-- **svg** — passthrough export of a rendered diagram
-- **pptx** — slide deck from headings (Slide-Deck skill)
+- **mp4** — animated SVG → mp4
+- **svg** — diagram passthrough
+- **pptx** — slide deck from your Markdown headings (requires LibreOffice)
 
-The list updates live when skills are added or removed.
+The list updates live when Extensions are added or removed.
 
 ## Print header / footer
 
-`Settings → Viewer → printHeader` and `printFooter` accept tokens — `{filename}`, `{date}`, `{page}`, `{pages}`. Empty string skips that line.
+*Settings → Viewer → Print header* and *Print footer* accept tokens — `{filename}`, `{date}`, `{page}`, `{pages}`. Empty string skips that line.
 
-These flow into the `@page @top-center` / `@bottom-center` CSS rules that the renderer attaches before the print render. Identical wording in PDF export and Print.
+These flow into both Print and PDF export with identical wording.
 
 ## Per-file destination
 
 Each export prompts for a destination on first use. The directory is remembered per format per workspace — your next PDF goes into the same folder unless you change it.
 
-## MCP-exposed export
-
-- `htmlook_export_active { format }` — kicks off the same export pipeline programmatically. The `format` argument matches the dropdown's internal key (`pdf`, `print`, `docx`, `md`, `smart-md`, `html`, plus any skill-registered key).
-
-The tool returns the absolute path of the written file. A user-facing toast appears when a non-interactive export finishes.
-
 ## Round-trip
 
-`Markdown` and `Markdown (Smart)` round-trip with the WYSIWYG editor — open the exported `.md`, edit it, save, and you get the same markdown back (modulo whitespace).
+`Markdown` and `Markdown (Smart)` round-trip with the WYSIWYG editor — open the exported `.md`, edit it, save, and you get the same Markdown back (modulo whitespace).
 
-`HTML` export uses the same inline-assets pipeline the viewer uses internally — relative `<img src>`, `<script src>`, `<link href>` are inlined so the resulting file is self-contained.
+`HTML` export inlines relative `<img src>` / `<script src>` / `<link href>` so the resulting file is self-contained — easy to email or attach.
+
+## Missing a format?
+
+If the dropdown is missing a format you expect, the underlying external tool may not be installed. Open *Settings → Tools* — the row with a dim ring next to the format's tool (LibreOffice for PPTX, Pandoc for Smart Markdown, etc.) has a one-click *Install* button.
 
 ## Next
 

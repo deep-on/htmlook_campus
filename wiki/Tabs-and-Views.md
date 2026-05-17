@@ -1,6 +1,6 @@
 # Tabs & Views
 
-> Tabs are how you keep multiple files open. Views are how you arrange what one tab shows.
+> Tabs keep multiple files open. Views are how you arrange what one tab shows.
 
 ## Opening a file as a tab
 
@@ -11,24 +11,23 @@
 | ⌘+click sidebar | Open in background tab |
 | Drag file from Finder onto window | New tab |
 | `htmlook://` link in viewer | Reuses or opens new tab |
-| MCP `htmlook_open_file` | Programmatic open |
-| ⌘O | OS open dialog |
+| ⌘O / ⌘⇧O | OS open dialog (folder / file) |
 
 ## Tab strip behaviour
 
-- ⌘1..9 jumps to tab 1..9
+- ⌘⌥1..9 jumps to tab 1..9
 - ⌘W closes the active tab (asks if modified)
 - ⌘⇧T reopens last closed tab
-- ⌘\` cycles forward, ⌘⇧\` cycles back
+- ⌘⌥→ next tab, ⌘⌥← previous
 - Middle-click closes
 - Drag horizontally to reorder
 - Drag a tab off the strip → tear-out into a new window
-- ● indicates unsaved changes; turns into × on hover for one-click close
-- Letter-mark glyph (Cl/Cx/Gm/Sh) appears for terminal tabs and streams animate while output is arriving
+- ● indicates unsaved changes
+- Letter-mark glyph (Cl/Cx/Gm/Sh) appears for terminal tabs and gently animates while output is streaming
 
 ### Tab context menu (right-click)
 
-- *Pin / Unpin* — pinned tabs survive ⌘W-all
+- *Pin / Unpin* — pinned tabs survive "close all"
 - *Close others*, *Close to the right*, *Close all*
 - *Reveal in Finder*
 - *Copy path*, *Copy relative path*
@@ -36,20 +35,23 @@
 
 ## View modes (per active tab)
 
-### Single (default · ⌘1 if remapped)
-One viewer pane fills the centre.
+### Preview · ⌘1
+Renders the file. Default for everything readable (Markdown rendered, PDF as PDF, video plays, etc.).
 
-### Dual (⌘⇧D)
-Splits the centre into left/right. Each side can show a different file or the same file in a different mode (e.g. `.md` render on the left, raw source on the right). Toggle **Sync scroll** in the dual-view toolbar to lock vertical positions.
+### Source · ⌘2
+Raw source — Markdown text, HTML markup, JSON text, etc. Editing here writes back to the file.
 
-### Code (⌘E in Pro, ⌘⌥E in Easier)
-Shows the file's raw source next to its rendered view. Works for `.md`, `.html`, `.json`, `.csv`, `.svg`. Editing the source updates the render live.
+### Split · ⌘3
+Preview on the left, source on the right. Toggle **Sync scroll** in the toolbar to lock vertical positions.
 
-### Paint (⌘⇧P, Pro only)
-Overlays a transparent sketch canvas on the viewer. Anything you draw is saved per-tab to `.htmlook/sketches/<basename>.<timestamp>.png`. See [Paint](Paint.md).
+### Gallery · ⌘G
+Thumbnail grid of the workspace's files. Click a thumbnail to open.
 
-### Present (⌘⌥P)
-Hides chrome (sidebar, tabs, status bar). Useful when projecting or recording. Press ⎋ to leave.
+### Paint (Pro) · ⌘⌥P
+Transparent sketch canvas over the viewer. See [Paint](Paint.md).
+
+### Present
+Hides chrome (sidebar, tabs, status bar). *View → Present mode*. ⎋ to leave.
 
 ## Save model
 
@@ -57,9 +59,9 @@ Markdown and HTML tabs auto-save 1.5 s after the last keystroke. The status bar 
 
 Untitled tabs (drafts) don't auto-save — they ask for a destination on ⌘S.
 
-## Reopening tab state
+## Reopening last session
 
-HTMLook restores tabs from the last session per workspace. The list lives in `.htmlook/session.json`. Clearing it is safe; you just lose the "what was open last time" memory for that workspace.
+HTMLook can restore the last set of tabs per workspace on launch. Settings → General → *On launch* → *Restore last session* (default) or *Start empty*.
 
 ## Next
 

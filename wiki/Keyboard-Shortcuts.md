@@ -1,97 +1,108 @@
 # Keyboard shortcuts
 
-> All shortcuts on one page. Rebind any of them in *Settings → Keyboard*.
+> Every shortcut wired into the native menu. Apple Silicon Mac assumed (⌘ = Cmd). The macOS menu bar is the canonical list — these are mirrored from there.
 
-## Files & tabs
+## File
 
 | Shortcut | Action |
 |---|---|
-| ⌘O | Open file… |
-| ⌘⇧O | Open folder as workspace |
-| ⌘N | New window |
-| ⌘T | New tab (terminal preset → new terminal) |
-| ⌘W | Close tab |
-| ⌘⇧T | Reopen last closed tab |
-| ⌘1..9 | Jump to tab N |
-| ⌘\` | Cycle tab forward (also terminal toggle if focused there) |
-| ⌘⇧\` | Cycle tab back |
+| ⌘N | New Text |
+| ⌘⇧T | New from Template… |
+| ⌘⇧N | New Workspace Wizard (Pro) / New Window (Easier) |
+| ⌘⌥⇧N | New Window (Pro) |
+| ⌘O | Open Folder… |
+| ⌘⇧O | Open File… |
 | ⌘S | Save |
-| ⌘⇧S | Save as… |
+| ⌘⇧S | Save As… |
+| ⌘W | Close Tab |
 | ⌘P | Print |
-| ⌘E | Export menu |
-| ⌘, | Settings |
+
+## Edit
+
+| Shortcut | Action |
+|---|---|
+| ⌘Z | Undo |
+| ⌘⇧Z | Redo |
+| ⌘⇧F | Find in workspace |
+| ⌘L | Go to line… |
+
+## View
+
+| Shortcut | Action |
+|---|---|
+| ⌘1 | Preview mode |
+| ⌘2 | Source mode |
+| ⌘3 | Split (preview + source) |
+| ⌘G | Gallery view |
+| ⌘B | Toggle sidebar |
+| ⌘⌥P | Toggle Paint (Pro) |
+| ⌘J | Toggle terminal (Pro · macOS) |
+| ⌘⌥⇧T | Send selection to terminal (Pro) |
+| ⌘D | Split terminal — top/bottom (Pro) |
+| ⌘⇧D | Split terminal — left/right (Pro) |
+| ⌘I | Toggle AI Assistant / ChatPanel (Pro) |
+
+## Tabs
+
+| Shortcut | Action |
+|---|---|
+| ⌘⌥1 .. ⌘⌥9 | Jump to tab 1..9 |
+| ⌘⌥→ | Next tab |
+| ⌘⌥← | Previous tab |
+| ⌘⇧T (after close) | Reopen last closed tab |
+
+## Inside the Markdown editor
+
+| Shortcut | Action |
+|---|---|
+| ⌘B / ⌘I / ⌘U | Bold / Italic / Underline |
+| ⌘K | Link dialog (insert / edit / remove) |
+| ⌘⌥0 .. ⌘⌥6 | Toggle heading level 0..6 |
+| ⌘⇧V | Paste as plain text |
+
+## Inside the viewer
+
+| Shortcut | Action |
+|---|---|
+| ⌘F | Find inside the current file |
+| ⌘G | Next match |
+| ⇧⌘G | Previous match |
+| ⌘+ / ⌘− | Zoom in / out |
+| ⌘0 | Reset zoom |
+
+## ChatPanel (Pro)
+
+| Shortcut | Action |
+|---|---|
+| ⌘I | Toggle ChatPanel |
+| ⌘⏎ | Submit message |
+| ⌘. | Cancel streaming response |
 
 ## Sidebar
 
 | Shortcut | Action |
 |---|---|
 | ⌘⇧F | Find in workspace |
-| ⌘A | Select all (in sidebar) |
-| ⌫ | Delete selection (with confirm if 2+) |
-| ⌘⌥R | Reveal in Finder |
+| ⌫ | Move selection to Trash (confirms when 2+ selected) |
 | ⌘+click | Add to selection |
 | ⇧+click | Range select |
-| Long-press 300 ms | Rename |
+| Long-press (300 ms) | Rename |
 
-## Viewer / editor
-
-| Shortcut | Action |
-|---|---|
-| ⌘F | Find in viewer |
-| ⌘G | Next match |
-| ⇧⌘G | Previous match |
-| ⌘B / ⌘I / ⌘U | Bold / Italic / Underline (Markdown) |
-| ⌘K | Link dialog (Markdown) |
-| ⌘⌥0..6 | Toggle heading level 0..6 |
-| ⌘⇧V | Plain-text paste |
-| ⌘+ / ⌘− | Zoom in / out |
-| ⌘0 | Reset zoom |
-
-## View modes
+## Window
 
 | Shortcut | Action |
 |---|---|
-| ⌘⇧D | Toggle Dual view |
-| ⌘E (Pro) / ⌘⌥E (Easier) | Toggle Code view |
-| ⌘⇧P | Toggle Paint mode (Pro) |
-| ⌘⌥P | Toggle Present mode |
+| ⌘, | Settings |
+| ⌘M | Minimise window (macOS) |
+| ⌘H | Hide window (macOS) |
+| ⌘Q | Quit application |
 
-## Terminal
+## Reminders
 
-| Shortcut | Action |
-|---|---|
-| ⌘\` | Toggle terminal panel |
-| ⌘T | New tab in active preset |
-| ⌘D | Split active pane left/right |
-| ⌘⇧D | Split active pane top/bottom |
-| ⌘[ / ⌘] | Cycle pane focus |
-
-## ChatPanel
-
-| Shortcut | Action |
-|---|---|
-| ⌘L | Toggle ChatPanel |
-| ⌘⏎ | Submit message |
-| ⌘. | Cancel streaming response |
-
-## Region capture & screenshot
-
-| Shortcut | Action |
-|---|---|
-| ⌘⌥R | Region selector → clipboard |
-| ⌘⌥⇧R | Region selector → Paint canvas |
-| ⌘⌥⇧S | Save the current viewer as PNG |
-
-## Voice memo
-
-| Shortcut | Action |
-|---|---|
-| (Bindable in Settings) | Start / stop recording |
-
-## Notes
-
-- Some shortcuts conflict with macOS reserved combos. On a clamshell external-keyboard setup the bindings stay the same.
-- `⌘M` (window minimize) and `⌘⇧M` are managed by macOS — HTMLook avoids overlapping these so an alternative dev-only shortcut uses `⌘⇧M` only when DEV builds are running.
+- The native menu bar shows every shortcut next to its menu item. When in doubt, look there.
+- `⌘L` is **Go to line**, not ChatPanel — that one is `⌘I`.
+- `⌘\`` is not a built-in shortcut; use `⌘J` to toggle the terminal on macOS.
+- A few shortcuts swap with Easier (e.g. `⌘⇧N` is *New Window* on Easier and *Workspace Wizard* on Pro).
 
 ## Next
 

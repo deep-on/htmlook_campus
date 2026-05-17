@@ -27,7 +27,7 @@ HTMLook MCP 서버는 `htmlook_install_claude_code_mcp` (앱 빌트인, Settings
 }
 ```
 
-Claude Code 재시작. 123 도구가 `htmlook__*` 네임스페이스로.
+Claude Code 재시작. 모든 도구가 `htmlook__*` 네임스페이스로.
 
 ## Codex
 

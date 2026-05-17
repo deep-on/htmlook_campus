@@ -8,7 +8,7 @@
 
 ## The contract in one paragraph
 
-HTMLook exposes **123 tools** over MCP. Each call runs inside the running HTMLook Pro instance, with the same workspace context the user is currently looking at. You receive results as JSON-RPC responses or, in the case of image-bearing tools, as a `data:image/png;base64,…` payload + JSON sidecar. Tools are scoped to the workspace root — path traversal outside the workspace is refused by `path_guard`. There's a per-tool rate limit and an append-only audit log of everything you did.
+HTMLook exposes **~120 tools** over MCP. Each call runs inside the running HTMLook Pro instance, with the same workspace context the user is currently looking at. You receive results as JSON-RPC responses or, in the case of image-bearing tools, as a `data:image/png;base64,…` payload + JSON sidecar. Tools are scoped to the workspace root — path traversal outside the workspace is refused by `path_guard`. There's a per-tool rate limit and an append-only audit log of everything you did.
 
 ## Why a desktop app and not a CLI
 
@@ -28,7 +28,7 @@ Three things a CLI can't easily give you:
                        │                            │
                        ▼                            ▼
               ┌──────────────────┐         ┌──────────────────┐
-              │   123 tools      │ ◄──────►│  apply_edit      │
+              │   ~120 tools     │ ◄──────►│  apply_edit      │
               │  ──────────────  │  audit  │  insert_at_      │
               │   organised in   │   log   │    selection     │
               │   six pillars    │         │   create_file    │

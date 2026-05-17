@@ -38,7 +38,7 @@ Pin a workspace with the ★ icon — pinned ones stay at the top.
 | Rename | Long-press the row (300 ms), or context menu → Rename |
 | Duplicate | Context menu → Duplicate (adds ` copy` suffix) |
 | Move to Trash | ⌫ (deletes the selection — confirms if 2+) |
-| Reveal in Finder | Context menu, or ⌘⌥R |
+| Reveal in Finder | Context menu, or *File → Reveal* |
 | Open in terminal | Context menu — chdir to parent in next free terminal tab |
 | New file in folder | Right-click folder → *New file* |
 | New folder | Right-click folder → *New folder* |
@@ -54,9 +54,7 @@ Actions like Delete and Move-to-Trash apply to the entire selection. The context
 
 ## Drag-out
 
-Drag any file from the sidebar onto Finder, Mail, Slack, Notion, etc. The drop carries the actual file path (`text/uri-list`). Drag an `.html` onto a webmail compose window to attach it. Drag a folder out to *copy* it.
-
-The drag-out uses `tauri-plugin-drag` under the hood with a one-shot PNG preview generated from the file icon.
+Drag any file from the sidebar onto Finder, Mail, Slack, Notion, etc. The drop carries the actual file path. Drag an `.html` onto a webmail compose window to attach it. Drag a folder out to *copy* it.
 
 ## Filter
 
@@ -80,9 +78,9 @@ Footer context-menu sets the active sort:
 
 The choice is per-workspace and remembered.
 
-## Tier badges (custom tools)
+## Extensions panel
 
-When the workspace's `.htmlook/tools.json` declares a user-added tool, it shows up under the *Power tools* expansion. Each row has a coloured leading dot — green = detected, dimmed transparent ring = not detected on PATH — and a tier badge: **Verified** (built-in), **Curated** (Deep-On reviewed), **Custom** (you added it). v1.0.9 removed the old `border-left` stripe and replaced it with the dot.
+The collapsible **Extensions** section at the bottom shows what HTMLook can do beyond opening files (Mermaid, D2, LibreOffice render, etc.). A coloured dot indicates each item is ready (solid) or needs its external tool installed (dim ring — click to install). See [Extensions](Skills.md) for the full list.
 
 ## Next
 

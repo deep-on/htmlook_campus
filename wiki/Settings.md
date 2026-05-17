@@ -1,49 +1,45 @@
 # Settings
 
-> ⌘, opens the Settings dialog. Workspace-scoped and global keys both live here.
+> ⌘, opens the Settings dialog. Eight sections, the last six only appear in Pro.
 
-## Tabs
+## Sections
 
-| Tab | What's in it |
+| Section | Where the controls live |
 |---|---|
-| **General** | Theme (system / light / dark), language (auto / en / ko), update channel (stable / staging), auto-save delay, telemetry (off by default and stays off) |
-| **Viewer** | Print header / footer tokens, dual-view sync-scroll default, code-view default for `.md`, font family + size, OpenType features |
-| **Terminal** | Preset commands (Claude / Codex / Gemini / Shell), preset prompt-to-text, shell environment, zsh-autosuggestions install button, font family + size, cursor style |
-| **AI · BYOM** | Provider list with key per provider, default model, request timeout, vision toggle, system-prompt header, skill auto-inject limit |
-| **Permissions** | The 4-button consent decisions; revoke / edit per-tool / per-workspace / global rows |
-| **Power tools** | The `tools.json` editor; tier badges; add wizard; mark "detected" overrides |
-| **Sidebar** | Default sort, hide dot-files, follow active file, multi-select max (default 200) |
-| **Keyboard** | All shortcuts (see [Keyboard shortcuts](Keyboard-Shortcuts.md)) with rebind |
-| **Voice** | Mic device override, sample rate, transcript provider hook |
-| **About** | Build version, signing identity, manifest endpoint, "Check for updates" button |
+| **General** | Theme (System / Light / Dark), On launch (restore last session / start empty), language (auto + 한국어 + English + others), accent colour swatches (Default / Feature Accents / Persona Tones) |
+| **Viewer** | Viewer theme (Built-in / From Persona Videos / Feature Accents), font family + size, OpenType features, print header / footer tokens (`{filename}` `{date}` `{page}` `{pages}`), dual-view sync-scroll default, code-view default for `.md` |
+| **Files** | Workspace defaults, sidebar follow-active-file toggle, hide-dotfiles toggle, default sort, search exclusions |
+| **Terminal** (Pro) | Preset commands (Claude / Codex / Gemini / Shell), Warp-style inline-suggest toggle, zsh-autosuggestions install button, terminal font + size, cursor style, OSC 7 cwd handling |
+| **AI** (Pro) | BYOM providers — add / edit / remove. Each provider holds base URL + key + default model + vision toggle. Permission ledger lives here too (per-tool / per-workspace / global decisions you can revoke) |
+| **Tools** (Pro) | The `tools.json` editor — built-in tools (Mermaid, D2, Quarto, LibreOffice, …), add-wizard for custom tools, tier badges, install dependencies via Homebrew |
+| **Plans** | Subscription state (Easier) / Pro Solo trial state (Pro), upgrade buttons, license keys |
+| **About** | Version, "Check for updates" button (Pro), system dependencies status (LibreOffice detected ✓ / not detected ●), library credits (pdf.js, LibreOffice for PPTX) |
 
 ## Scope: workspace vs global
 
-Most fields show a small `W` / `G` badge to indicate scope. A workspace-scoped field falls back to the global value when empty; setting it pins it. *Settings → reset to global* on a workspace-scoped field clears the workspace override.
+Some settings — font size, accent color, code-view default, terminal preset commands, default sort — are *global* (apply to every workspace). Others — sidebar visibility, last-opened tab, tool permissions, AI provider state — are *workspace-scoped* and live inside the workspace's `.htmlook/` folder.
 
-Workspace settings live in `<workspace>/.htmlook/settings.json`. Global lives in `~/Library/Application Support/com.deep-on.htmlook-pro/settings.json`.
+The dialog labels each control accordingly. Workspace overrides fall back to the global value when cleared.
 
-## Update channel
+## "Check for updates"
 
-`stable` = `pro/latest.json`. `staging` = `pro/staging/latest.json` — a separate manifest the ship pipeline writes when `publish-update.sh --staging` is used. You'd only flip to staging in a dev build to test the auto-update plumbing.
+About → Check for updates does an explicit check now (Pro auto-checks on launch). A *Download & install* button appears when a newer build is signed and ready. Click → background download → relaunch.
 
-## App Management permission (macOS Sequoia+)
+If macOS Sequoia or later blocks the swap, the modal points you to **System Settings → Privacy & Security → App Management** with a button that opens the right pane.
 
-When the updater detects it can't swap the bundle, the in-app modal shows a *System Settings 열기* button that takes you to the right pane. Toggle HTMLook Pro on and click *Retry*.
+## CLI tools (Pro only)
 
-## CLI tools auto-install
+Tools → *+Add* opens the custom-tool wizard. Below it, *Install dependencies* triggers Homebrew with a streaming log modal. The same plumbing handles `brew install ffmpeg`, `brew install --cask libreoffice`, `brew install --cask quarto`, `brew install pandoc`, `pipx install <pkg>`, `npm i -g <pkg>` — pick the tool, click *Install*, watch the log.
 
-Settings → Power tools → *+Add* opens the BYOM tool wizard. Below it, *Auto-install dependencies* surfaces the consent flow that runs `brew install <tool>` (or `--cask`, or `pipx install …`, or `npm i -g …`) with streaming logs in a modal. Same plumbing the dependency-missing toasts use.
+Homebrew not installed yet? The first install offers to install Homebrew first (~3 minutes).
 
 ## Sign-in vs accounts
 
-There's no sign-in for Pro. The only "account" concept is the BYOM provider you configure. Easier has a subscription account; Pro doesn't.
+There is no sign-in on Pro. The only "account" is whichever AI provider you point Pro at in the AI section. Easier has a subscription account managed under Plans.
 
-## Reset / nuke
+## Reset
 
-*About → Reset settings* clears the global settings file (asks confirm). Workspace settings are unaffected — they live next to your workspace.
-
-To fully reset, quit the app, then `rm -rf "~/Library/Application Support/com.deep-on.htmlook-pro/"`. Your workspaces are not touched.
+About → Reset confirms, then clears settings. Workspace data (your files, sidecars, voice memos, sketches) stays intact — Reset only touches the app's own preferences.
 
 ## Next
 
