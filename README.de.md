@@ -57,14 +57,14 @@ Das Tutorial läufst du einmal durch; das Wiki liegt dauerhaft in Reichweite
 - **HTMLook Pro** (v1.0) — für Power-User. BYOM-Chat + integriertes PTY-Terminal
   + CLI-Adapter (claude / codex / gemini) + MCP-Brücke + Paint-Canvas +
   Region-Capture + Element-Pick + Save-as-Skill + 8 Bundle-Profile + 49 Seeds.
-- **HTMLook Easier** *(soon)* — Einsteiger-Edition, wird gerade neu definiert.
+- **HTMLook Easier** *(demnächst)* — Einsteiger-Edition, wird gerade neu definiert.
 
 ## Schritt 1 — Installation + erster Start
 
 Beginne bei [`01-getting-started/README.md`](01-getting-started/README.md).
 
 Lade das .dmg unter [htmlook.app](https://htmlook.app), zieh es in Applications,
-und Drag-and-Drop deine erste Datei hinein.
+und leg deine erste Datei per Drag & Drop ab.
 
 ## Schritt 2 — Erste Datei (HTML / MD / PDF / Video)
 
@@ -153,9 +153,10 @@ Verifikationsprozess und die Liste korrigierter False Claims stehen in
 ## Status
 
 Dieses Repo synchronisiert mit dem **HTMLook Pro v1.0 Release Candidate** (GA
-für Mitte 2026 geplant) als lebendiges Lernmaterial. Mit v1.0 GA wechselt es
-gleichzeitig öffentlich + der Katalog-Endpoint (`htmlook.app/catalog`)
-fresh-fetcht ab dann die raw-URLs dieses Repos (24 h Cache).
+für Mitte 2026 geplant) als lebendiges Lernmaterial. Mit v1.0 GA wird es
+gleichzeitig öffentlich gestellt, und der Katalog-Endpoint
+(`htmlook.app/catalog`) ruft ab dann die raw-URLs dieses Repos frisch ab
+(24 h Cache).
 
 ## Lizenz
 

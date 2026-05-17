@@ -9,7 +9,7 @@
 > BYOM → editing → comandi → save-as-skill → profili inclusi → scrivere il
 > tuo profilo personale.
 
-Questa repo segue il **HTMLook Pro v1.0 release-candidate** (GA prevista
+Questo repo segue il **HTMLook Pro v1.0 release-candidate** (GA prevista
 per metà 2026). L'app desktop è su [htmlook.app](https://htmlook.app), con
 14 giorni di prova gratuita. BYOM (Bring-Your-Own-Model) significa margine
 zero sui token — Claude · GPT · Gemini · DeepSeek · Mistral · Together ·
@@ -26,7 +26,7 @@ Dall'alto in basso. Ogni step si appoggia su quello precedente.
 | 2 | [`02-first-file/`](02-first-file/) | md / html / pdf / video — 4 tipi, split view, outline | 5 min |
 | 3 | [`03-byom-setup/`](03-byom-setup/) | scegli un fornitore e registra la chiave (oppure Ollama) | 5 min |
 | 4 | [`04-editing/`](04-editing/) | element pick · region paint · sentence-id · cite anchor | 5 min |
-| 5 | [`05-command/`](05-command/) | chat · terminale CLI · apply_edit · 26 walkthrough di persona | 10 min |
+| 5 | [`05-command/`](05-command/) | chat · terminale CLI · apply_edit · 26 walkthrough per persona | 10 min |
 | 6 | [`06-save-as-skill/`](06-save-as-skill/) | catturare un workflow → scheda catalogo ⌘K | 5 min |
 | 7 | [`07-bundled-profiles/`](07-bundled-profiles/) | HyperFrames · Slidev · Quarto · D2 · Astro Starlight · Marimo · Excalidraw · Manim | 5 min |
 | 8 | [`08-extend/`](08-extend/) | scrivere il proprio profilo + PR sul catalogo | facoltativo |
@@ -58,7 +58,7 @@ giorno (lo apri dall'app via *Help → Documentation*).
   integrato + adattatori CLI (claude / codex / gemini) + ponte MCP + canvas
   Paint + cattura regione + selezione elemento + save-as-skill + 8 profili
   inclusi + 49 seed.
-- **HTMLook Easier** *(soon)* — edizione entry-level, in ridefinizione.
+- **HTMLook Easier** *(prossimamente)* — edizione entry-level, in ridefinizione.
 
 ## Step 1 — Installazione + primo avvio
 
@@ -91,7 +91,7 @@ region paint · sentence-id · range select. Video chiave: BASIC #5 ⭐ region-c
 ## Step 5 — Modificare con un comando (cite + apply_edit)
 
 [`05-command/README.md`](05-command/README.md). La parte più profonda del
-campus — 26 walkthrough di persona in
+campus — 26 walkthrough per persona in
 [`05-command/personas/`](05-command/personas/) (raggruppati per ruolo, ogni
 cartella con un WALKTHROUGH.md da seguire + before/after).
 
@@ -128,7 +128,7 @@ percorso, quindi non si spostano nelle singole cartelle di step):
 | [`videos/`](videos/) | 17 mp4 feature + 26 mp4 persona (~340 MB in totale) |
 | [`profiles/`](profiles/) | 8 seed di profilo (`profile.json` + `SKILL.md` + `seed/`) |
 | [`sample_workspaces/`](sample_workspaces/) | 75 seed di dominio (`hf-*` 26 persona + 49 seed di profilo) |
-| [`catalog.json`](catalog.json) | 83 voci (8 profili + 75 seed di workspace) — fresh-fetch dal Wizard dell'app (cache 24 h) |
+| [`catalog.json`](catalog.json) | 83 voci (8 profili + 75 seed di workspace) — ricaricato on-demand dal Wizard dell'app (cache 24 h) |
 | [`scripts/`](scripts/) | `build-catalog.mjs` |
 | [`infra/`](infra/) | worker delle licenze (servizio separato) |
 | [`docs/`](docs/) | spazio di lavoro per artefatti generati (gitignored) |
@@ -154,10 +154,10 @@ verifica + elenco dei claim falsi corretti:
 
 ## Stato
 
-Questa repo segue il **HTMLook Pro v1.0 release-candidate** (GA prevista
-per metà 2026) come materiale didattico vivo. Diventa pubblica insieme al
+Questo repo segue il **HTMLook Pro v1.0 release-candidate** (GA prevista
+per metà 2026) come materiale didattico vivo. Diventa pubblico insieme al
 v1.0 GA, momento in cui l'endpoint del catalogo (`htmlook.app/catalog`)
-inizia a fresh-fetch degli URL raw di questa repo (cache 24 h).
+inizia a ricaricare gli URL raw di questo repo (cache 24 h).
 
 ## Licenza
 

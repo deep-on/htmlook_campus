@@ -59,7 +59,7 @@ les jours (l'ouvrir depuis l'app via *Help → Documentation*).
   terminal PTY intégré + adaptateurs CLI (claude / codex / gemini) + pont MCP
   + canvas Paint + capture de région + sélection d'élément + save-as-skill +
   8 profils livrés + 49 seeds.
-- **HTMLook Easier** *(soon)* — édition d'entrée de gamme, en cours de
+- **HTMLook Easier** *(bientôt)* — édition d'entrée de gamme, en cours de
   redéfinition.
 
 ## Étape 1 — Installation + premier lancement
@@ -71,8 +71,8 @@ dans Applications, et drag-and-drop votre premier fichier.
 
 ## Étape 2 — Premier fichier (HTML / MD / PDF / vidéo)
 
-[`02-first-file/README.md`](02-first-file/README.md). Naviguer quatre types
-de fichier en split view + outline + miniatures.
+[`02-first-file/README.md`](02-first-file/README.md). Naviguez à travers
+quatre types de fichier en split view + outline + miniatures.
 
 Vidéos : BASIC #3 #4 #6 + ADV multi-pane / thumbnail / outline. Les mp4
 eux-mêmes sont sous [`videos/features/`](videos/features/).
@@ -131,7 +131,7 @@ chemin, donc ils ne migrent pas dans un dossier d'étape) :
 | [`videos/`](videos/) | 17 mp4 de fonctionnalités + 26 mp4 de personas (~340 Mo au total) |
 | [`profiles/`](profiles/) | 8 seeds de profil (`profile.json` + `SKILL.md` + `seed/`) |
 | [`sample_workspaces/`](sample_workspaces/) | 75 seeds de domaine (`hf-*` 26 personas + 49 seeds de profil) |
-| [`catalog.json`](catalog.json) | 83 entrées (8 profils + 75 seeds de workspace) — fresh-fetché par l'assistant de l'app (cache 24 h) |
+| [`catalog.json`](catalog.json) | 83 entrées (8 profils + 75 seeds de workspace) — rechargé à chaud par l'assistant de l'app (cache 24 h) |
 | [`scripts/`](scripts/) | `build-catalog.mjs` |
 | [`infra/`](infra/) | worker de licences (service séparé) |
 | [`docs/`](docs/) | espace de travail pour les artefacts générés (gitignored) |
@@ -150,8 +150,8 @@ vidéos a un guide interactif correspondant, un pour un.
 
 ## Promesse de reverse-verification
 
-Chaque vidéo de ce campus **n'avance que des claims que HTMLook fait
-réellement**. Les fonctionnalités qui n'existent pas ne sont pas annoncées.
+Chaque vidéo de ce campus **ne promet que ce que HTMLook fait
+vraiment**. Les fonctionnalités qui n'existent pas ne sont pas annoncées.
 Procédure de vérification + liste des fausses affirmations corrigées :
 [`08-extend/PRODUCTION.md`](08-extend/PRODUCTION.md).
 
@@ -160,7 +160,7 @@ Procédure de vérification + liste des fausses affirmations corrigées :
 Ce dépôt suit le **HTMLook Pro v1.0 release-candidate** (GA prévu mi-2026)
 en tant que matériel pédagogique vivant. Il bascule en public en même temps
 que la v1.0 GA, moment où l'endpoint catalogue (`htmlook.app/catalog`)
-commencera à fresh-fetcher les URLs raw de ce dépôt (cache 24 h).
+commencera à recharger à chaud les URLs raw de ce dépôt (cache 24 h).
 
 ## Licence
 

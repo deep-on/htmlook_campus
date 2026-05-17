@@ -22,7 +22,7 @@ De cima para baixo. Cada passo se apoia no anterior.
 
 | Passo | Pasta | O que você faz | Tempo |
 |---|---|---|---|
-| 1 | [`01-getting-started/`](01-getting-started/) | instalação · primeiro launch · drag-drop · abrir pasta | 3 min |
+| 1 | [`01-getting-started/`](01-getting-started/) | instalação · primeira execução · drag-drop · abrir pasta | 3 min |
 | 2 | [`02-first-file/`](02-first-file/) | md / html / pdf / vídeo — 4 tipos, split view, outline | 5 min |
 | 3 | [`03-byom-setup/`](03-byom-setup/) | escolher um fornecedor e cadastrar a chave (ou Ollama) | 5 min |
 | 4 | [`04-editing/`](04-editing/) | element pick · region paint · sentence-id · cite anchor | 5 min |
@@ -59,9 +59,9 @@ O tutorial você percorre uma vez; o wiki fica ao alcance da mão todo dia
   embutido + adaptadores CLI (claude / codex / gemini) + ponte MCP + canvas
   Paint + captura de região + seleção de elemento + save-as-skill + 8 perfis
   incluídos + 49 seeds.
-- **HTMLook Easier** *(soon)* — edição de entrada, em redefinição.
+- **HTMLook Easier** *(em breve)* — edição de entrada, em redefinição.
 
-## Passo 1 — Instalação + primeiro launch
+## Passo 1 — Instalação + primeira execução
 
 Comece em [`01-getting-started/README.md`](01-getting-started/README.md).
 
@@ -129,7 +129,7 @@ por caminho, então não migram para pastas de passo):
 | [`videos/`](videos/) | 17 mp4 de features + 26 mp4 de personas (~340 MB no total) |
 | [`profiles/`](profiles/) | 8 seeds de perfil (`profile.json` + `SKILL.md` + `seed/`) |
 | [`sample_workspaces/`](sample_workspaces/) | 75 seeds de domínio (`hf-*` 26 personas + 49 seeds de perfil) |
-| [`catalog.json`](catalog.json) | 83 entradas (8 perfis + 75 seeds de workspace) — fresh-fetch pelo Wizard do app (cache 24 h) |
+| [`catalog.json`](catalog.json) | 83 entradas (8 perfis + 75 seeds de workspace) — recarregado on-demand pelo Wizard do app (cache 24 h) |
 | [`scripts/`](scripts/) | `build-catalog.mjs` |
 | [`infra/`](infra/) | worker de licenças (serviço separado) |
 | [`docs/`](docs/) | área de trabalho para artefatos gerados (gitignored) |
@@ -150,7 +150,7 @@ guia interativo correspondente, um para um.
 
 Cada vídeo deste campus **só afirma coisas que o HTMLook realmente faz**.
 Funcionalidades que não existem não são anunciadas. Procedimento de
-verificação + lista de claims falsos corrigidos:
+verificação + lista de afirmações falsas corrigidas:
 [`08-extend/PRODUCTION.md`](08-extend/PRODUCTION.md).
 
 ## Status
@@ -158,7 +158,7 @@ verificação + lista de claims falsos corrigidos:
 Este repositório acompanha o **HTMLook Pro v1.0 release-candidate** (GA
 prevista para meados de 2026) como material didático vivo. Vira público
 junto com o v1.0 GA, quando o endpoint de catálogo
-(`htmlook.app/catalog`) passa a fresh-fetchar as URLs raw deste repo (cache
+(`htmlook.app/catalog`) passa a recarregar as URLs raw deste repo (cache
 24 h).
 
 ## Licença

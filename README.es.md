@@ -58,7 +58,7 @@ todos los días (ábrelo desde la app con *Help → Documentation*).
   integrado + adaptadores CLI (claude / codex / gemini) + puente MCP + canvas
   Paint + captura de región + selección de elemento + save-as-skill + 8 perfiles
   incluidos + 49 seeds.
-- **HTMLook Easier** *(soon)* — edición de entrada, en proceso de
+- **HTMLook Easier** *(próximamente)* — edición de entrada, en proceso de
   redefinición.
 
 ## Paso 1 — Instalación + primer arranque
@@ -70,8 +70,8 @@ Aplicaciones y haz drag-and-drop con tu primer archivo.
 
 ## Paso 2 — Primer archivo (HTML / MD / PDF / vídeo)
 
-[`02-first-file/README.md`](02-first-file/README.md). Navegar cuatro tipos
-de archivo con split view + outline + miniaturas.
+[`02-first-file/README.md`](02-first-file/README.md). Navega por cuatro
+tipos de archivo con split view + outline + miniaturas.
 
 Vídeos: BASIC #3 #4 #6 + ADV multi-pane / thumbnail / outline. Los mp4 están
 en [`videos/features/`](videos/features/).
@@ -128,7 +128,7 @@ por ruta, por lo que no se mueven a carpetas de paso individuales):
 | [`videos/`](videos/) | 17 mp4 de funciones + 26 mp4 de personas (~340 MB total) |
 | [`profiles/`](profiles/) | 8 seeds de perfil (`profile.json` + `SKILL.md` + `seed/`) |
 | [`sample_workspaces/`](sample_workspaces/) | 75 seeds de dominio (`hf-*` 26 personas + 49 seeds de perfil) |
-| [`catalog.json`](catalog.json) | 83 entradas (8 perfiles + 75 seeds de workspace) — fresh-fetcheado por el Wizard de la app (caché 24 h) |
+| [`catalog.json`](catalog.json) | 83 entradas (8 perfiles + 75 seeds de workspace) — recargado al vuelo por el Wizard de la app (caché 24 h) |
 | [`scripts/`](scripts/) | `build-catalog.mjs` |
 | [`infra/`](infra/) | worker de licencias (servicio aparte) |
 | [`docs/`](docs/) | espacio de trabajo para artefactos generados (gitignored) |
@@ -149,7 +149,7 @@ tiene una guía interactiva equivalente, uno a uno.
 
 Cada vídeo de este campus **solo afirma cosas que HTMLook hace de
 verdad**. Las funciones que no existen no se anuncian. Procedimiento de
-verificación + lista de claims falsos corregidos:
+verificación + lista de afirmaciones falsas corregidas:
 [`08-extend/PRODUCTION.md`](08-extend/PRODUCTION.md).
 
 ## Estado
@@ -157,8 +157,8 @@ verificación + lista de claims falsos corregidos:
 Este repo sigue el **HTMLook Pro v1.0 release-candidate** (GA prevista para
 mediados de 2026) como material de aprendizaje vivo. Se hará público a la
 vez que la v1.0 GA, momento en que el endpoint de catálogo
-(`htmlook.app/catalog`) empezará a fresh-fetchear las URLs raw de este repo
-(caché 24 h).
+(`htmlook.app/catalog`) empezará a recargar al vuelo las URLs raw de este
+repo (caché 24 h).
 
 ## Licencia
 
