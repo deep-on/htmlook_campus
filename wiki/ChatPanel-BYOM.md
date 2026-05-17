@@ -2,6 +2,8 @@
 
 > Bring Your Own Model. The right pane is a chat surface that calls *your* AI provider — never ours.
 
+![AI Assistant panel](images/06-ai-assistant.png)
+
 ## Open and close
 
 ⌘I toggles the AI Assistant on the right side. First-launch you'll see a 5-card guided setup. After that ⌘I is just a panel toggle.

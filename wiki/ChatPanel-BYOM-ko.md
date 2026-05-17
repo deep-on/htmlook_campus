@@ -2,6 +2,8 @@
 
 > Bring Your Own Model. 우측 패널은 *내* AI provider 를 호출하는 채팅 — 우리 서버를 거치지 않음.
 
+![AI 어시스턴트 패널](images/06-ai-assistant.png)
+
 ## 열기 / 닫기
 
 ⌘I 로 우측 AI 어시스턴트 토글. 첫 실행 시 5-카드 가이드 setup. 이후 ⌘I 는 단순 토글.
