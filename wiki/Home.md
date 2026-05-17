@@ -17,7 +17,6 @@ Start here:
 1. **[Installation](Installation.md)** — download, first launch, permissions
 2. **[Workspace](Workspace.md)** — the folder-is-everything model
 3. **[UI Overview](UI-Overview.md)** — what each pane does, at a glance
-4. **[Pro vs Easier](Pro-vs-Easier.md)** — which build is right for you
 
 More chapters: Markdown editor, Terminal, AI Assistant, Paint, Voice memos, Extensions, Export, Settings, Shortcuts, Troubleshooting.
 

@@ -17,7 +17,6 @@ HTMLook Pro 를 *사용*하실 분 — 파일 열고, 읽고, Markdown 편집하
 1. **[설치](Installation-ko.md)** — 다운로드, 첫 실행, 권한
 2. **[워크스페이스](Workspace-ko.md)** — "폴더가 곧 전부" 모델
 3. **[UI 한눈에 보기](UI-Overview-ko.md)** — 각 영역이 무엇을 하는지
-4. **[Pro vs Easier 차이점](Pro-vs-Easier-ko.md)** — 어떤 빌드가 맞는지
 
 뒤이은 챕터: Markdown 에디터, 터미널, AI 어시스턴트, Paint, 음성 메모, 확장 (Extensions), Export, Settings, 단축키, Troubleshooting.
 
