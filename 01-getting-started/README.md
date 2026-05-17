@@ -1,64 +1,71 @@
 # Step 1 · Getting Started
 
-> Install HTMLook Pro and run it for the first time. ~ 3 분.
+<p align="center">
+  <b>English</b> | <a href="README.ko.md">한국어</a> | <a href="README.ja.md">日本語</a> | <a href="README.de.md">Deutsch</a> | <a href="README.fr.md">Français</a> | <a href="README.es.md">Español</a> | <a href="README.pt.md">Português</a> | <a href="README.it.md">Italiano</a>
+</p>
 
-이번 step 끝나면: 앱이 dock 에 떠 있고, blank workspace 한 개가 열려 있고,
-임의의 파일 하나를 drag-drop 해서 화면이 뜨는 것까지 확인.
+> Install HTMLook Pro and run it for the first time. ~ 3 min.
+
+By the end of this step: the app sits in your dock, one blank workspace is
+open, and you've drag-dropped a single file to see it land in the viewer.
 
 ## 1.1 · Download & install
 
-1. [htmlook.app](https://htmlook.app) → **Download for macOS** 클릭.
-   .dmg 받기. (Win / iPad 후속 출시.)
-2. .dmg 더블클릭 → HTMLook Pro 를 Applications 로 드래그.
-3. Launchpad 에서 HTMLook Pro 실행. 첫 launch 시 Gatekeeper 가 묻는다면 *열기*.
+1. Go to [htmlook.app](https://htmlook.app) → click **Download for macOS**.
+   Grab the .dmg. (Windows / iPad ship later.)
+2. Double-click the .dmg → drag HTMLook Pro into Applications.
+3. Launch HTMLook Pro from Launchpad. If Gatekeeper asks on the first run,
+   pick *Open*.
 
-> **14 일 무료 체험** 모든 기능 활성화. 결제 정보 입력 없음.
-> 토큰은 BYOM 이라 마진 0 — 자기 vendor 키로 직접 호출 ([Step 3](../03-byom-setup/) 참고).
+> **14-day free trial** with every feature unlocked. No payment info up front.
+> Tokens are BYOM — zero markup, called directly with your own vendor key
+> (see [Step 3](../03-byom-setup/)).
 
-## 1.2 · 첫 launch — empty workspace
+## 1.2 · First launch — empty workspace
 
-앱이 열리면 세 영역이 보입니다:
+When the app opens you'll see three regions:
 
-- 좌측: 사이드바 (지금은 비어 있음 · *Open Folder* 버튼)
-- 중앙: 뷰어 캔버스 (지금은 *Drop a file here* placeholder)
-- 우측: 패널 영역 (Settings / Tutorials / AI / Terminal · 토글 가능)
+- Left: sidebar (empty for now · *Open Folder* button)
+- Center: viewer canvas (a *Drop a file here* placeholder)
+- Right: panel area (Settings / Tutorials / AI / Terminal · toggleable)
 
-## 1.3 · 첫 파일 drop & open
+## 1.3 · First file — drop & open
 
-원하는 HTML 파일 한 개를 Finder 에서 끌어다 중앙 캔버스에 떨어뜨리세요.
-없으면 [`../05-command/personas/01-hf-claude/landing.html`](../05-command/personas/01-hf-claude/landing.html)
-이 가까이에 있습니다.
+Drag any HTML file from Finder into the center canvas.
+If you don't have one handy, [`../05-command/personas/01-hf-claude/landing.html`](../05-command/personas/01-hf-claude/landing.html)
+is right next door.
 
-> 영상으로 확인: [BASIC #1 · Drop. Open. Done.](../videos/features/01-basic-01-drop-open.mp4) (30 s)
+> Watch it: [BASIC #1 · Drop. Open. Done.](../videos/features/01-basic-01-drop-open.mp4) (30 s)
 
-## 1.4 · 폴더 단위 열기 (workspace)
+## 1.4 · Open a folder (workspace)
 
-앱 메뉴 *File → Open Folder* 또는 사이드바의 *Open Folder* 버튼.
-폴더를 한 개 고르면 사이드바가 그 폴더의 트리로 전환됩니다.
+App menu *File → Open Folder*, or the *Open Folder* button in the sidebar.
+Pick any folder and the sidebar switches to its tree view.
 
-캠퍼스의 step 폴더 어느 것이든 골라도 됩니다. 가장 콘텐츠 많은 곳:
-[`../05-command/personas/`](../05-command/personas/) (26 페르소나 폴더).
+Any step folder in the campus works. The folder with the most content:
+[`../05-command/personas/`](../05-command/personas/) (26 persona folders).
 
-> 영상: [BASIC #2 · Folder ready.](../videos/features/02-basic-02-workspace.mp4) (30 s)
+> Video: [BASIC #2 · Folder ready.](../videos/features/02-basic-02-workspace.mp4) (30 s)
 
-## 1.5 · Tutorial 탭 (인터랙티브 가이드)
+## 1.5 · Tutorials tab (interactive guide)
 
-앱 우측 패널에서 **Settings → Tutorials** 탭 열기. 영상 17편 각각에 대응하는
-spotlight + tooltip 가이드 (4 step) 가 내장. 영상이 *what (무엇이 되는지)* 를
-보여주면, Tutorials 탭은 *how (어떻게 하는지)* 를 실제 UI 위에서 안내.
+Open the right-hand menu *Help → Interactive Tutorials…*. There's a
+spotlight + tooltip guide (4 steps) for each of the 17 feature videos.
+Where the videos show *what* is possible, the Tutorials walkthroughs show
+*how* to do it on the real UI.
 
-## ✅ Step 1 체크포인트
+## ✅ Step 1 checkpoint
 
-- HTMLook Pro 설치되어 dock 에서 launch 됨.
-- 임의의 파일을 drag-drop → 뷰어에 표시됨.
-- 폴더 하나를 *Open Folder* 로 열었더니 사이드바가 트리로 채워짐.
+- HTMLook Pro is installed and launches from the dock.
+- A drag-dropped file shows up in the viewer.
+- *Open Folder* on a real folder filled the sidebar with its tree.
 
-다 맞으면 → [Step 2 · 첫 파일 (HTML / MD / PDF / 영상)](../02-first-file/)
+All three? → [Step 2 · First file (HTML / MD / PDF / video)](../02-first-file/)
 
-## 더 자세히
+## Further reading
 
-- [`LEARNING_PATH.md`](LEARNING_PATH.md) — 8 step 의 전체 시간 추정 + 영상 mapping.
-- [`../08-extend/PRODUCTION.md`](../08-extend/PRODUCTION.md) — 영상 제작 표준 + 역검증.
-- [`../08-extend/FEATURES.md`](../08-extend/FEATURES.md) — 17 feature 영상 카탈로그.
-- Deep-dive 데모 (앱 설치 없이 web 으로): [lv1](https://htmlook.app/demos/lv1.html) ·
+- [`LEARNING_PATH.md`](LEARNING_PATH.md) — full timing per step + video mapping.
+- [`../08-extend/PRODUCTION.md`](../08-extend/PRODUCTION.md) — video production standard + reverse verification.
+- [`../08-extend/FEATURES.md`](../08-extend/FEATURES.md) — catalog of the 17 feature videos.
+- Deep-dive demos (no install, web only): [lv1](https://htmlook.app/demos/lv1.html) ·
   [lv2](https://htmlook.app/demos/lv2.html) · [lv3](https://htmlook.app/demos/lv3.html).
