@@ -8,7 +8,7 @@
 
 ## 한 문단 contract
 
-HTMLook 이 MCP 로 **~120 도구** 노출. 각 호출은 실행 중인 HTMLook Pro 인스턴스 안에서, 사용자가 지금 보고 있는 워크스페이스 컨텍스트로 실행. 결과는 JSON-RPC 응답 또는 이미지 도구의 경우 `data:image/png;base64,…` payload + JSON sidecar. 워크스페이스 root 로 스코프 — 바깥 path traversal 은 `path_guard` 가 거부. 도구별 rate limit + 모든 호출의 append-only audit log.
+HTMLook 이 MCP 로 **~100 도구** 노출. 각 호출은 실행 중인 HTMLook Pro 인스턴스 안에서, 사용자가 지금 보고 있는 워크스페이스 컨텍스트로 실행. 결과는 JSON-RPC 응답 또는 이미지 도구의 경우 `data:image/png;base64,…` payload + JSON sidecar. 워크스페이스 root 로 스코프 — 바깥 path traversal 은 `path_guard` 가 거부. 도구별 rate limit + 모든 호출의 append-only audit log.
 
 ## 데스크톱 앱 vs CLI
 
@@ -27,7 +27,7 @@ CLI 가 쉽게 못 주는 세 가지:
                        │                            │
                        ▼                            ▼
               ┌──────────────────┐         ┌──────────────────┐
-              │   ~120 tools     │ ◄──────►│  apply_edit      │
+              │   ~100 tools     │ ◄──────►│  apply_edit      │
               │  ──────────────  │  audit  │  insert_at_      │
               │   여섯 기둥으로  │   log   │    selection     │
               │   조직됨         │         │   create_file    │
@@ -67,8 +67,8 @@ htmlook_audit_log_query    # 흔적 (자동)
 ## 프라이버시와 capability
 
 - 모든 게 사용자의 HTMLook Pro 프로세스 안에서 로컬 실행. Deep-On 서버 경유 없음.
-- 사용자가 워크스페이스마다 첫 호출 시 4-버튼 동의 모달로 도구별 권한 부여. 부여 후 자유롭게 호출 가능 (사용자가 해제할 때까지).
-- 워크스페이스 root 바깥 파일 못 읽음. 임의 프로세스 exec 못 함. v1.0.9 에서 명시적 제외: `terminal_run_managed` · `send_keys` · semantic search · visual search.
+- 쓰기 도구는 세 가지 체크로 게이트: Free Viewer 라이선스 · 워크스페이스 path-guard 스코프 · 도구별 rate limit. v1.0.9 의 MCP 쓰기 경로에는 per-call 동의 모달이 **없음** — 도구 호출 전에 채팅으로 무엇을 할지 명시해서 사용자가 필요 시 interrupt 가능하도록.
+- `apply_edit` 로 워크스페이스 root 바깥 파일 못 읽음 (path_guard 거부). 임의 프로세스 exec 못 함. v1.0.9 에서 명시적 제외: `terminal_run_managed` · `send_keys` · semantic search · visual search.
 
 ## 다음
 

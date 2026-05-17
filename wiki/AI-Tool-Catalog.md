@@ -10,9 +10,9 @@ Names are listed without the `htmlook_` prefix for readability. Real names are `
 
 | Tool | Returns / Effect |
 |---|---|
-| `ping` | `{ version, build_id, started_at }` |
-| `workspace_info` | Current workspace `{ root, name, opened_at, tab_count }` |
-| `workspace_files` | Recursive list (paged) of files in the workspace |
+| `ping` | The literal text `"pong"` (no JSON envelope). For version info call `workspace_info`. |
+| `workspace_info` | `{ app_version, launch_cwd, workspace_root }` |
+| `workspace_files` | Files grouped by media kind. Args `{ kinds?, path_contains?, path_excludes? }`. Capped at 2000, **not paged**. |
 | `workspace_tree` | Tree representation |
 | `workspace_tools` | Tools registered in `.htmlook/tools.json` |
 | `search_workspace` | Full-text search (and-or, file/path filters) |
@@ -36,7 +36,6 @@ Names are listed without the `htmlook_` prefix for readability. Real names are `
 |---|---|
 | `selection_text` | Current selection as plain text |
 | `selection_html` | Current selection as HTML |
-| `selection_scope` | Selection's containing element |
 | `sidebar_selection` | Currently selected sidebar files |
 | `element_active` | Currently selected element info |
 | `select_element` | Programmatically select via CSS selector |
@@ -70,7 +69,8 @@ Full how-to: [Visual Capture](AI-Visual-Capture.md)
 | `insert_at_selection` | Insert at current cursor / selection |
 | `replace_in_active` | Same as #3 but for the active file specifically |
 | `create_file` | Write a new file |
-| `cite` / `citation_anchor` | Drop a `htmlook://` anchor |
+| `cite` | Cross-file content slice as a citation (unrelated to PDF anchors) |
+| `pdf_citation_anchor` | PDF page → link-sidecar entry. Returns `{ id, total, path }` (no `htmlook://` URL). See PDF tools. |
 
 Full how-to: [Apply-edit round-trip](AI-Apply-Edit.md)
 
@@ -79,7 +79,8 @@ Full how-to: [Apply-edit round-trip](AI-Apply-Edit.md)
 |---|---|
 | `annotation_add` / `annotation_list` | Workspace annotations (note + bounding region) |
 | `view_state_snapshot` / `view_state_restore` | Save and restore the viewer state |
-| `paint_enable` / `paint_disable` / `paint_dimensions` | Toggle and size paint canvas |
+| `paint_enable` / `paint_disable` | Toggle paint canvas |
+| `paint_dimensions` | Returns `{ width, height, dpr }` of the active paint canvas |
 | `sketch_add_shape` / `sketch_set_color` / `sketch_set_stroke` | Programmatic paint |
 | `sketch_undo` / `sketch_redo` / `sketch_clear` / `sketch_save` | History + persistence |
 | `sketch_current_png` | Current sketch as base64 |
@@ -100,8 +101,8 @@ Full how-to: [PDF tools](AI-PDF-Tools.md)
 ### Voice memos
 | Tool | Effect |
 |---|---|
-| `voice_record_start` / `_record_stop` | Start / stop |
-| `voice_list` / `_workspace_all` | List memos |
+| `voice_record_start` / `voice_record_stop` | Start / stop (start accepts optional `{ file_path?, label? }`) |
+| `voice_list` / `voice_workspace_all` | List memos (workspace_all accepts optional `{ workspace_root? }`) |
 | `voice_get_bytes` | Base64 of the file |
 | `voice_rename` / `_delete` | Manage |
 | `voice_transcript_get` / `_transcript_set` | Read / write transcript sidecar |
@@ -147,11 +148,11 @@ Full how-to: [Multi-agent collaboration](AI-Collaboration.md)
 
 | Tool | Effect |
 |---|---|
-| `show_toast` | Toast in user's window |
-| `confirm` | Yes / no modal |
-| `request_user_input` | Prompt + return value |
-| `wait_for_user_action` | Block on user click |
-| `chatpanel_post` | Push a message into ChatPanel |
+| `show_toast` | `{ message, kind?: info\|success\|warn\|error, duration_ms? }` — toast in user's window |
+| `confirm` | `{ prompt, timeout_ms? }` → boolean |
+| `request_user_input` | `{ prompt, default_value?, timeout_ms? }` → string |
+| `wait_for_user_action` | `{ hint, timeout_ms? }` — block on user click |
+| `chatpanel_post` | `{ role: user\|assistant\|note, content }` — push into ChatPanel conversation |
 | `export_active` | Trigger Export menu programmatically |
 | `print_active` | Trigger Print |
 | `insert_at_selection` | (also listed above) |
@@ -160,8 +161,10 @@ Full how-to: [Multi-agent collaboration](AI-Collaboration.md)
 
 | Tool | Effect |
 |---|---|
-| `region_current_png` | Last user-captured region |
+| `region_current_png` | Last user-captured region — **image-only result** (no JSON sibling) |
 | `active_file_thumbnail` | Generic thumbnail (≠ region) |
+
+> Both also appear earlier in the catalog (workspace + capture rows) — listed again here for "region & screenshot" topic discoverability.
 
 ## Names you won't find here (deferred)
 

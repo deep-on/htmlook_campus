@@ -25,7 +25,7 @@ More chapters: Markdown editor, Terminal, AI Assistant, Paint, Voice memos, Exte
 
 ## 🤖 [For AI Agents](AI-Overview.md)
 
-You're a Claude / Codex / Gemini / OpenAI-compatible agent that will *operate* HTMLook Pro through its MCP server. HTMLook exposes ~120 tools across capture, editing, collaboration, audit, and media.
+You're a Claude / Codex / Gemini / OpenAI-compatible agent that will *operate* HTMLook Pro through its MCP server. HTMLook exposes ~100 tools across capture, editing, collaboration, audit, and media.
 
 Start here:
 

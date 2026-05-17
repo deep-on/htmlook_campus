@@ -72,16 +72,15 @@ Every tool runs against the workspace the user is currently focused on. If they 
 
 For deterministic agents you may want to pin a workspace — there is no per-call workspace override, so coordinate with the user (or call `htmlook_focus_tab` first).
 
-## First call: the consent modal
+## First call: what the user sees
 
-The first call to a *workspace-mutating* tool (`apply_edit`, `create_file`, `replace_in_active`, `voice_record_start`, etc.) triggers HTMLook's 4-button consent modal in the user's window:
+Workspace-mutating tools are gated by three checks before they run:
 
-- **Yes, once** — allow this one call
-- **Yes, this workspace**
-- **Yes, all workspaces**
-- **No**
+1. **Free Viewer license check** — if the trial expired and the user hasn't upgraded, edit-class tools return `refused: HTMLook is in Free Viewer mode (trial expired)…` and don't run.
+2. **Path-guard scope check** — `apply_edit` refuses paths outside the workspace root with `refused: <p> is outside the current workspace…`. (Note: `create_file` doesn't enforce this — caller's responsibility.)
+3. **Per-tool rate limit** — token bucket of 8 burst, 8 refill / sec, keyed per tool.
 
-Until the user clicks, the tool call awaits. Until the modal is dismissed, the JSON-RPC response is held. Plan your prompts so the user expects the modal — name what you're about to do *before* you call the tool.
+There is no per-call "Yes once / Yes workspace / Yes all / No" consent modal blocking the MCP write path today. (A consent UI exists for other surfaces but not for MCP write tools in v1.0.9.) Plan your prompts assuming the tool just runs — but name what you're about to do *before* you call it, so the user can interrupt if needed.
 
 ## Rate limiting
 
@@ -93,7 +92,7 @@ Every call appends an entry to `<workspace>/.htmlook/audit-log.jsonl`. Each line
 
 ## Versioning
 
-Check the running server with `htmlook_ping` — it returns `{ version, build_id, started_at }`. Use this if your prompt logic is version-sensitive.
+`htmlook_ping` returns the literal text `"pong"` — useful as a liveness probe but it carries no version. For build version + workspace path, call `htmlook_workspace_info`; the response is `{ app_version, launch_cwd, workspace_root }`.
 
 ## Next
 

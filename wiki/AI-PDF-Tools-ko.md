@@ -1,6 +1,6 @@
 # PDF 도구
 
-> 텍스트 읽기 · 페이지 인용 · 영역 캡처 · 영구 하이라이트/코멘트, 6 도구.
+> 텍스트 읽기 · 페이지 인용 · 영역 캡처 · 영구 하이라이트 / 코멘트.
 
 ## 읽기 전용: 텍스트 span + 영역 캡처
 
@@ -27,7 +27,7 @@
 }
 ```
 
-"X 라는 문장 찾기" 에 사용 — `spans` 배열 직접 검색. PDF.js getTextContent 가 backbone. 빈/공백 span 필터링.
+"X 라는 문장 찾기" 에 사용 — `spans` 배열 직접 검색. `font` 는 옵션. 빈/공백 span 필터링.
 
 ### `capture_pdf_region`
 
@@ -39,13 +39,13 @@
   "args": {
     "file_path": "/abs/path.pdf",
     "page":  3,
-    "rect":  { "x": 72, "y": 80, "w": 460, "h": 200 },   // optional, default = 페이지 전체
+    "rect":  { "x": 72, "y": 80, "w": 460, "h": 200 },   // 옵션, 기본 = 페이지 전체
     "scale": 1.5
   }
 }
 ```
 
-다른 캡처 도구와 같은 envelope: `{ base64, width, height, page, rect, scale }`. 좌표는 PDF-points, 렌더러가 내부 스케일.
+표준 capture envelope (이미지 블록 + JSON sibling) 반환. JSON sibling 의 `rect` 좌표는 scale = 1 의 PDF-points; 렌더러가 내부 스케일.
 
 ## 주석: 영구 하이라이트 + 코멘트
 
@@ -57,27 +57,28 @@
 {
   "tool": "htmlook_pdf_highlight_add",
   "args": {
-    "file_path": "/abs/path.pdf",
+    "file":  "/abs/path.pdf",
     "page":  3,
-    "rects": [
-      { "x": 72, "y": 100, "w": 200, "h": 14 }
-    ],
-    "color": "#fff59d",
-    "label": "핵심 주장"
+    "rect":  [72, 100, 200, 14],     // [x, y, w, h] — 정확히 4 float
+    "color": "#fff59d",                // 옵션
+    "note":  "핵심 주장"               // 옵션
   }
 }
 ```
 
-여러 `rects` 가 하나의 하이라이트로 그룹 (텍스트가 줄 넘는 경우).
+- 인자는 `file` (file_path 아님).
+- `rect` 는 단일 4-tuple `[x, y, w, h]`, 객체 배열 아님. 1 호출 → 1 rect → 1 하이라이트. 멀티라인 span 강조하려면 여러 번 호출.
+- 라벨 필드는 `note` (label 아님).
 
 ### `pdf_highlight_clear`
 
 ```jsonc
 { "tool": "htmlook_pdf_highlight_clear",
-  "args": { "file_path": "/abs/path.pdf", "page": 3 } }
+  "args": { "file": "/abs/path.pdf", "page": 3 } }
 ```
 
-페이지 스코프 정리.
+- 인자는 `file`.
+- `page` 는 옵션 — 생략 시 모든 페이지 정리.
 
 ### `pdf_comment_add`
 
@@ -85,51 +86,53 @@
 {
   "tool": "htmlook_pdf_comment_add",
   "args": {
-    "file_path": "/abs/path.pdf",
-    "highlight_id": "h_5f8e",         // pdf_highlight_add 가 반환
-    "comment": "분기 잘못 인용."
+    "page":  3,
+    "rect":  [72, 100, 200, 14],
+    "note":  "분기 잘못 인용.",
+    "color": "#ffd54f"               // 옵션
   }
 }
 ```
 
-코멘트는 하이라이트에 attach (한 하이라이트에 여러 개 가능). 뷰어가 우측 마진에 렌더.
+`file_path` 없음 (활성 PDF 사용), `highlight_id` 없음 — `page + rect + note` 전달 시 서버가 코멘트가 attach 된 하이라이트를 한 번에 생성. 필드는 `note`.
 
 ## 페이지 인용
 
 ### `pdf_citation_anchor`
 
-따라가면 PDF 가 같은 페이지 + 뷰포트로 열리는 `htmlook://` 링크 emit:
+주어진 PDF 페이지에 대한 link-sidecar 항목 반환:
 
 ```jsonc
-{ "tool": "htmlook_pdf_citation_anchor",
-  "args": { "file_path": "abs/path.pdf", "page": 3 } }
+{
+  "tool": "htmlook_pdf_citation_anchor",
+  "args": {
+    "pdf_path":    "/abs/path.pdf",        // file_path 아님
+    "page":        3,
+    "rect":        [72, 80, 460, 200],     // 옵션, 인용 범위 좁힘
+    "from_path":   "/abs/notes.md",        // 옵션, 인용 주체 파일
+    "from_anchor": "#sec-q3",              // 옵션
+    "label":       "Q3 figures"            // 옵션
+  }
+}
 ```
 
-`htmlook://abs/path.pdf#page=3` 반환. 마크다운 노트 · 채팅 · 다른 뷰어 내용에 drop.
+`{ id, total, path }` 반환 — 새 항목 id (`L_*`), 갱신된 링크 총수, 링크 sidecar 의 절대 경로 (예: `/abs/.htmlook/links.jsonl`). `htmlook://` URL 문자열은 반환 **안 함**. sidecar 항목을 `id` 로 읽어 링크 resolve.
 
 ## 포함 안 한 것
 
-- `pdf_figure_detect` — 이미지/차트 추출 (ML, v1.0.10+ deferred)
+- `pdf_figure_detect` — 이미지/차트 추출 (ML, deferred)
 - `pdf_table_extract` — 구조화 테이블 (ML, deferred)
 
 필요 시 사용자가 별도 도구 (예: `tabula`) 실행 → JSON 을 워크스페이스로 `create_file` → 결과 파일에 `find_in_active`.
 
 ## 자주 쓰는 루프
 
-### "인용하고 cite"
-
-```
-pdf_text_spans → 문장 찾기
-pdf_citation_anchor → 링크
-agent_message_post (body: 인용 + 링크) → 사용자가 클릭
-```
-
 ### "이 단락 읽기"
 
 ```
 pdf_text_spans → 단락 덮는 bbox 식별
-capture_pdf_region with that bbox → PNG
-(PNG 를 LLM 에 vision content block 으로 전달)
+capture_pdf_region with that bbox → PNG (이미지 블록)
+(이미지를 reasoning 단계로 전달)
 ```
 
 ### "마크하고 기억"
@@ -138,6 +141,13 @@ capture_pdf_region with that bbox → PNG
 pdf_highlight_add → 색 사각형 영구
 pdf_comment_add → 이유 설명
 (다음 세션) 더 이상 관련 없으면 pdf_highlight_clear
+```
+
+### "노트에 페이지 인용"
+
+```
+pdf_citation_anchor → 링크 항목 id + sidecar path
+agent_message_post body: "Q3 figures — see link <id>"
 ```
 
 ## 다음

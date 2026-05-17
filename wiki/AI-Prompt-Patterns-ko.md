@@ -90,11 +90,11 @@ apply_edit(...)
 
 확인 없이 진행하면 안 된다고 판단 시:
 
-- `confirm({ title, message })` → 사용자 클릭까지 block, boolean 반환
-- `request_user_input({ prompt })` → 문자열 반환
-- `wait_for_user_action({ hint })` → 설명한 hint 버튼 클릭까지 block
-- `show_toast({ message, level })` → fire-and-forget 알림
-- `chatpanel_post({ text })` → ChatPanel 에 메시지 push (사용자 입력 박스가 아닌 대화 스트림)
+- `confirm({ prompt, timeout_ms? })` → 사용자 클릭까지 block, boolean 반환
+- `request_user_input({ prompt, default_value?, timeout_ms? })` → 문자열 반환
+- `wait_for_user_action({ hint, timeout_ms? })` → 설명한 hint 버튼 클릭까지 block
+- `show_toast({ message, kind?: 'info'|'success'|'warn'|'error', duration_ms? })` → fire-and-forget 알림
+- `chatpanel_post({ role: 'user'|'assistant'|'note', content })` → ChatPanel 에 메시지 push (사용자 입력 박스가 아닌 대화 스트림)
 
 기본: "되돌릴 수 없는 액션" 에 `confirm`, "추정 어려운 값 필요" 에 `request_user_input`.
 

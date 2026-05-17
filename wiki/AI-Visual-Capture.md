@@ -2,107 +2,164 @@
 
 > Read what the user actually sees. Most powerful when chained with `apply_edit` + `capture_diff`.
 
-## The capture surface (six tools)
+## The capture surface
 
 | Tool | Use when |
 |---|---|
 | `capture_viewport` | You need the whole active pane |
-| `capture_selector` | You can name a CSS selector (`#hero`, `.card:nth-child(2)`) |
+| `capture_selector` | You can name a CSS selector |
 | `capture_active_element` | The user just clicked an element; capture that |
-| `capture_text_match` | You can quote a string the user can read on screen |
-| `capture_rect` | You know coordinates (often after `region_current_png`) |
+| `capture_text_match` | You can quote a visible string |
+| `capture_rect` | You know coordinates |
 | `capture_diff` | Compare two PNGs you just captured |
+| `capture_video_frame_region` | A sub-region of the active video at a given time |
+| `capture_pdf_region` | A sub-rectangle of a PDF page |
+| `region_current_png` | Re-fetch the last region the user manually captured |
 
-All capture tools return:
+## Return envelope
+
+Every image-bearing tool returns **two MCP content blocks** plus a JSON sibling text block:
+
+- one `image/png` content block with the bitmap
+- one `text` content block with a JSON object describing the capture
+
+The JSON sibling's shape is **flat** (no nested `scope`) and stripped of `base64` (the PNG is the image block, not duplicated in JSON):
 
 ```jsonc
 {
-  "base64": "iVBORw0KGgo…",      // image/png, NOT a data URL
-  "mime": "image/png",
-  "width": 1280,
-  "height": 720,
-  "captured_at": "2026-05-17T03:14:00Z",
-  "scope": {                     // what got captured
-    "kind": "selector",          // viewport | selector | active_element | text_match | rect
-    "selector": ".hero",         // tool-specific
-    "bbox": { "x": 0, "y": 0, "w": 1280, "h": 320 }
-  }
+  "pane":      "active",     // "active" | "primary" | "secondary"
+  "full_page": false,         // true if the page was rendered as one tall image
+  "width":     1280,
+  "height":    720,
+  // per-tool extras follow, flat at the top level:
+  "selector":      ".hero",      // capture_selector
+  "match_count":   1,             // capture_selector / _text_match
+  "matched_index": 0,             // _text_match / _selector when multiple
+  "text":          "Sign up",     // _text_match
+  "tag":           "BUTTON",      // _active_element
+  "rect":          { "x":0,"y":0,"w":300,"h":120 }, // _rect / _video_frame_region
+  "timestamp_sec": 14.7,          // _video_frame_region
+  "page":          3,             // _pdf_region
+  "scale":         1.5            // _pdf_region
 }
 ```
 
-Decode `base64` with your client's image-handling primitive — most MCP clients accept it as a vision content block directly.
+Note: there is no `mime` field, no `captured_at`, no `scope` wrapper — these were misdocumented in earlier drafts.
 
 ## The "before / after" pattern
 
 ```text
-1. capture_selector(".cta") → before.png
-2. plan the edit (text colour change)
-3. apply_edit("Sign up free", "Start free trial")
-4. (wait ~150 ms for re-render)
+1. capture_selector(".cta") → before.png + JSON sibling
+2. plan the edit
+3. apply_edit(path, find, replace)
+4. (viewer reload event fires automatically)
 5. capture_selector(".cta") → after.png
-6. capture_diff(before, after, threshold=0.05) → bbox + did_change
+6. capture_diff(before_base64, after_base64, threshold)
 ```
 
-The diff is computed in pure Rust on the `png` crate. The result includes a tight bounding box of changed pixels, useful for sanity check ("did my edit only touch the CTA, or did it cascade?").
-
-## visual_overlap_check
-
-Returns elements that:
-
-- have **truncated** text (`text-overflow: ellipsis` active)
-- **overflow** their container
-- have **zero size** (likely a layout bug)
-- **clip** content
+## capture_diff
 
 ```jsonc
 {
+  "tool": "htmlook_capture_diff",
+  "args": {
+    "before_base64": "iVBORw0…",
+    "after_base64":  "iVBORw0…",
+    "threshold":     0.1                  // optional, default 0.1
+  }
+}
+```
+
+Returns image + JSON:
+
+```jsonc
+{
+  "width":         1280,
+  "height":        720,
+  "changed_pixels": 234,
+  "total_pixels":   921600,
+  "changed_ratio":  0.00025,
+  "bbox":           [120, 480, 160, 40],   // optional [x, y, w, h]
+  "threshold":      0.1
+}
+```
+
+No `did_change` field — infer from `changed_pixels > 0` or `bbox != null`. The image block holds a visualisation of the diff.
+
+## visual_overlap_check
+
+Returns layout issues on the active pane:
+
+```jsonc
+{
+  "pane":     "active",
+  "viewport": { "w": 1280, "h": 720 },
+  "scanned":  142,
   "issues": [
-    { "selector": ".hero h1", "kind": "text-truncated", "rect": {…} },
-    { "selector": "#cta-row",  "kind": "overflow-x",   "rect": {…} }
+    {
+      "kind":   "text-truncation",        // | horizontal-overflow | vertical-overflow | zero-size | element-overlap
+      "tag":    "H1",
+      "text":   "Welcome to…",
+      "bbox":   { "x": 120, "y": 80, "w": 400, "h": 32 },
+      "detail": "text-overflow: ellipsis"
+    }
   ]
 }
 ```
 
-Useful for a pre-flight check before changing copy length.
+Field is `bbox`, not `rect`. Kind values are hyphenated as listed above (`text-truncation`, not `text-truncated`).
 
 ## layout_map
 
-Returns a structural survey:
+Returns one flat list of structural entries, tagged by `kind`:
 
 ```jsonc
 {
-  "landmarks":   [{ "role": "banner", "selector": "header" }, …],
-  "headings":    [{ "level": 1, "text": "Hello", "selector": "h1" }, …],
-  "buttons":     [{ "text": "Sign up", "selector": "#cta-row > button:nth-child(1)" }, …],
-  "links":       [{ "text": "Pricing", "href": "/pricing", "selector": "nav a:nth-child(2)" }, …],
-  "images":      [{ "alt": "hero", "src": "hero.png", "selector": "img.hero" }, …],
-  "tables":      [{ "rows": 12, "cols": 4, "selector": "#data" }, …],
-  "forms":       [{ "fields": 5, "selector": "form#contact" }, …]
+  "pane":     "active",
+  "viewport": { "w": 1280, "h": 720 },
+  "entries": [
+    { "kind": "landmark", "tag": "HEADER",  "bbox": { "x":0,"y":0,"w":1280,"h":80 }, "selector": "header" },
+    { "kind": "heading",  "tag": "H1",      "bbox": {…}, "text": "Hello",  "selector": "h1" },
+    { "kind": "button",   "tag": "BUTTON",  "bbox": {…}, "text": "Sign up", "selector": "#cta button:nth-child(1)" },
+    { "kind": "link",     "tag": "A",       "bbox": {…}, "text": "Pricing","href": "/pricing", "selector": "nav a:nth-child(2)" },
+    { "kind": "image",    "tag": "IMG",     "bbox": {…}, "src": "hero.png","selector": "img.hero" }
+  ],
+  "total":     142,
+  "truncated": false
 }
 ```
 
-Run it once at the start of a session to "see the page".
+Run it once at the start of a session to "see the page". One iteration may be capped — check `truncated`.
 
 ## select_element + capture_active_element
 
-The fastest way to talk about a specific node:
-
+```text
+select_element({ selector: ".cta button" })
+  → returns { selector, matched_index, match_count, tag, id, class, bbox }
+capture_active_element({ padding: 8 })
+  → captures the selected element with N px padding around its bbox
 ```
-htmlook_select_element({ selector: ".cta button" })
-htmlook_capture_active_element({ padding: 8 })
-```
-
-Padding adds margin around the bounding box so the screenshot includes context.
 
 ## Rate limit
 
-Capture tools share an 8-burst / 8-per-second token-bucket. A typical "before / 5 candidates / after" loop = 7 captures, well below the limit. If you bust the limit you get a friendly error — back off ~125 ms and continue.
+Capture tools use a token-bucket of 8 burst, 8 refill / sec, **keyed per tool name** (so `capture_viewport` and `capture_selector` have independent buckets). On exhaustion you get a plain-text error
+`rate-limited: <tool_name> burst exhausted. Retry after ~<ms> ms.` Back off the specified ms.
+
+## Failure modes
+
+| Message prefix | Meaning |
+|---|---|
+| `selector "<sel>" matched no elements in <pane> pane` | The selector resolved zero nodes |
+| `text "<t>" not found in <pane> pane (mode=<mode>)` | The text-match tool's query string isn't on screen |
+| `no <pane> viewer pane available — open a file first` | The targeted pane isn't mounted |
+| `<pane> viewer is not same-origin…` | iframe srcdoc / asset:// barrier blocks DOM access |
+| `rate-limited: <tool_name> burst exhausted…` | Token bucket exhausted |
 
 ## When *not* to capture
 
-- **Don't capture to "understand layout"** if `layout_map` answers the question. Cheaper, smaller, deterministic.
-- **Don't capture twice in a row** without an intervening change — your second call gives the same PNG you already have.
-- **Don't capture the viewport** when you can name an element. Tight crops are 5–10× smaller and the diff is more useful.
+- **Don't capture to "understand layout"** if `layout_map` answers the question. Smaller, deterministic.
+- **Don't capture twice in a row** without an intervening change — your second call gives the same PNG.
+- **Don't capture the viewport** when you can name an element. Tight crops are smaller and the diff is more useful.
 
 ## Next
 

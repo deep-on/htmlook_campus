@@ -1,6 +1,6 @@
 # PDF tools
 
-> Six tools cover reading text, citing pages, capturing regions, and adding persistent highlights / comments.
+> Reading text, citing pages, capturing regions, persistent highlights / comments.
 
 ## Read-only: text spans + region capture
 
@@ -27,7 +27,7 @@ Returns every text fragment of a page with screen-space coordinates (top-left or
 }
 ```
 
-Use it to "find the sentence that says X" — search the `spans` array yourself; PDF.js's getTextContent is what powers it. Empty / whitespace-only spans are filtered.
+Use it to "find the sentence that says X" — search the `spans` array yourself. `font` is optional; empty / whitespace-only spans are filtered.
 
 ### `capture_pdf_region`
 
@@ -45,7 +45,7 @@ Render a sub-rectangle of a page and return the cropped PNG (default scale 1.5 f
 }
 ```
 
-Returns the same envelope as other capture tools: `{ base64, width, height, page, rect, scale }`. Coordinates are PDF-points; the renderer scales internally.
+Returns the standard capture envelope (image content block + JSON sibling). Coordinates in the JSON sibling's `rect` are PDF-points at scale = 1; the renderer scales internally.
 
 ## Annotation: persistent highlights + comments
 
@@ -57,27 +57,28 @@ Annotations land in `<file>.pdf.highlights.json` next to the PDF — same compan
 {
   "tool": "htmlook_pdf_highlight_add",
   "args": {
-    "file_path": "/abs/path.pdf",
+    "file":  "/abs/path.pdf",
     "page":  3,
-    "rects": [
-      { "x": 72, "y": 100, "w": 200, "h": 14 }
-    ],
-    "color": "#fff59d",
-    "label": "key claim"
+    "rect":  [72, 100, 200, 14],     // [x, y, w, h] — exactly 4 floats
+    "color": "#fff59d",                // optional
+    "note":  "key claim"               // optional
   }
 }
 ```
 
-Multiple `rects` group as one highlight (useful when text spans lines).
+- Argument is `file`, not `file_path`.
+- `rect` is a single 4-tuple `[x, y, w, h]`, not an array of objects. One call → one rect → one highlight. Call multiple times if you need to highlight a multi-line span.
+- Annotation label field is `note`, not `label`.
 
 ### `pdf_highlight_clear`
 
 ```jsonc
 { "tool": "htmlook_pdf_highlight_clear",
-  "args": { "file_path": "/abs/path.pdf", "page": 3 } }
+  "args": { "file": "/abs/path.pdf", "page": 3 } }
 ```
 
-Page-scoped clearance.
+- Argument is `file`.
+- `page` is optional — omit it to clear all pages.
 
 ### `pdf_comment_add`
 
@@ -85,51 +86,53 @@ Page-scoped clearance.
 {
   "tool": "htmlook_pdf_comment_add",
   "args": {
-    "file_path": "/abs/path.pdf",
-    "highlight_id": "h_5f8e",         // returned by pdf_highlight_add
-    "comment": "Cites the wrong quarter."
+    "page":  3,
+    "rect":  [72, 100, 200, 14],
+    "note":  "Cites the wrong quarter.",
+    "color": "#ffd54f"               // optional
   }
 }
 ```
 
-Comments are attached to a highlight (you can have many per highlight). The viewer renders them in the right margin.
+There's no `file_path` (uses the active PDF) and no `highlight_id` — you pass `page + rect + note` and the server creates the commented highlight in one shot. Field is `note`.
 
-## Cite-a-page
+## Cite a page
 
 ### `pdf_citation_anchor`
 
-Emit a `htmlook://` link that, when followed, opens the PDF at the same page + viewport you're seeing:
+Returns a link-sidecar entry for the given PDF page:
 
 ```jsonc
-{ "tool": "htmlook_pdf_citation_anchor",
-  "args": { "file_path": "abs/path.pdf", "page": 3 } }
+{
+  "tool": "htmlook_pdf_citation_anchor",
+  "args": {
+    "pdf_path":    "/abs/path.pdf",        // NOT file_path
+    "page":        3,
+    "rect":        [72, 80, 460, 200],     // optional, narrows the citation
+    "from_path":   "/abs/notes.md",        // optional, the citing file
+    "from_anchor": "#sec-q3",              // optional
+    "label":       "Q3 figures"            // optional
+  }
+}
 ```
 
-Returns `htmlook://abs/path.pdf#page=3`. Drop the resulting link into a Markdown note, a chat message, or another viewer's content.
+Returns `{ id, total, path }` — the new entry's id (`L_*`), the updated total link count, and the absolute path of the link sidecar (e.g. `/abs/.htmlook/links.jsonl`). It does **not** return a `htmlook://` URL string. Resolve the link by reading the sidecar entry by `id`.
 
 ## What we don't include
 
-- `pdf_figure_detect` — image / chart extraction (ML, deferred to v1.0.10+)
+- `pdf_figure_detect` — image / chart extraction (ML, deferred)
 - `pdf_table_extract` — structured table out (ML, deferred)
 
 If you need these, ask the user to run a separate tool (e.g. `tabula`) and `create_file` the JSON into the workspace; you can then `find_in_active` on the resulting file.
 
 ## Common loops
 
-### "Quote and cite"
-
-```
-pdf_text_spans → find sentence
-pdf_citation_anchor → link
-agent_message_post (body: quote + link) → user can click through
-```
-
 ### "Read this paragraph"
 
 ```
 pdf_text_spans → identify bbox covering the paragraph
-capture_pdf_region with that bbox → PNG
-(pass the PNG as a vision content block to your LLM)
+capture_pdf_region with that bbox → PNG (image content block)
+(pass the image to your reasoning step)
 ```
 
 ### "Mark and remember"
@@ -138,6 +141,13 @@ capture_pdf_region with that bbox → PNG
 pdf_highlight_add → coloured rect persists
 pdf_comment_add → explain why
 (next session) pdf_highlight_clear if no longer relevant
+```
+
+### "Cite a page in a note"
+
+```
+pdf_citation_anchor → link entry id + sidecar path
+agent_message_post body: "Q3 figures — see link <id>"
 ```
 
 ## Next

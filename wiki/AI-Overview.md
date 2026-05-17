@@ -8,7 +8,7 @@
 
 ## The contract in one paragraph
 
-HTMLook exposes **~120 tools** over MCP. Each call runs inside the running HTMLook Pro instance, with the same workspace context the user is currently looking at. You receive results as JSON-RPC responses or, in the case of image-bearing tools, as a `data:image/png;base64,…` payload + JSON sidecar. Tools are scoped to the workspace root — path traversal outside the workspace is refused by `path_guard`. There's a per-tool rate limit and an append-only audit log of everything you did.
+HTMLook exposes **~100 tools** over MCP. Each call runs inside the running HTMLook Pro instance, with the same workspace context the user is currently looking at. You receive results as JSON-RPC responses or, in the case of image-bearing tools, as a `data:image/png;base64,…` payload + JSON sidecar. Tools are scoped to the workspace root — path traversal outside the workspace is refused by `path_guard`. There's a per-tool rate limit and an append-only audit log of everything you did.
 
 ## Why a desktop app and not a CLI
 
@@ -28,7 +28,7 @@ Three things a CLI can't easily give you:
                        │                            │
                        ▼                            ▼
               ┌──────────────────┐         ┌──────────────────┐
-              │   ~120 tools     │ ◄──────►│  apply_edit      │
+              │   ~100 tools     │ ◄──────►│  apply_edit      │
               │  ──────────────  │  audit  │  insert_at_      │
               │   organised in   │   log   │    selection     │
               │   six pillars    │         │   create_file    │
@@ -68,8 +68,8 @@ htmlook_audit_log_query    # leave a trail (auto)
 ## Privacy and capability
 
 - Everything runs locally inside the user's HTMLook Pro process. No tool result transits Deep-On servers.
-- The user grants per-tool permission via the 4-button consent modal on first call per workspace. Once granted you can call freely until the user revokes.
-- You cannot read files outside the workspace root. You cannot exec arbitrary processes. Specifically excluded from v1.0.9: `terminal_run_managed`, `send_keys`, semantic search, visual search.
+- Write tools gate on three checks: Free Viewer license, workspace path-guard scope, and a per-tool rate limit. There is **no** per-call consent modal blocking the MCP write path in v1.0.9 — name what you're about to do in chat before you call the tool, so the user can interrupt if needed.
+- You cannot read files outside the workspace root via `apply_edit` (path_guard refuses). You cannot exec arbitrary processes. Specifically excluded from v1.0.9: `terminal_run_managed`, `send_keys`, semantic search, visual search.
 
 ## Next
 

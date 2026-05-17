@@ -10,9 +10,9 @@
 
 | 도구 | 반환 / 효과 |
 |---|---|
-| `ping` | `{ version, build_id, started_at }` |
-| `workspace_info` | 현재 워크스페이스 `{ root, name, opened_at, tab_count }` |
-| `workspace_files` | 워크스페이스 파일 재귀 리스트 (paged) |
+| `ping` | 평문 `"pong"` (JSON envelope 없음). 버전은 `workspace_info` 호출. |
+| `workspace_info` | `{ app_version, launch_cwd, workspace_root }` |
+| `workspace_files` | 미디어 kind 별 파일 그룹화. 인자 `{ kinds?, path_contains?, path_excludes? }`. 2000 cap, **paged 아님**. |
 | `workspace_tree` | 트리 표현 |
 | `workspace_tools` | `.htmlook/tools.json` 등록 도구 |
 | `search_workspace` | 전체 텍스트 검색 (and-or, 파일/경로 필터) |
@@ -37,7 +37,6 @@
 |---|---|
 | `selection_text` | 현재 선택 평문 |
 | `selection_html` | 현재 선택 HTML |
-| `selection_scope` | 선택 포함 요소 |
 | `sidebar_selection` | 사이드바 현재 선택 파일들 |
 | `element_active` | 현재 선택 요소 정보 |
 | `select_element` | CSS selector 로 프로그램적 선택 |
@@ -73,7 +72,8 @@
 | `insert_at_selection` | 커서 / 선택 위치 삽입 |
 | `replace_in_active` | 활성 파일에 특화된 치환 |
 | `create_file` | 새 파일 작성 |
-| `cite` / `citation_anchor` | `htmlook://` anchor 떨어뜨림 |
+| `cite` | cross-file 내용 슬라이스를 인용으로 (PDF anchor 와 무관) |
+| `pdf_citation_anchor` | PDF 페이지 → 링크 sidecar 항목. `{ id, total, path }` 반환 (htmlook:// URL 아님). PDF 도구 참조. |
 
 전체 가이드: [Apply-edit 왕복](AI-Apply-Edit-ko.md)
 
@@ -83,7 +83,8 @@
 |---|---|
 | `annotation_add` / `annotation_list` | 워크스페이스 주석 (note + 경계) |
 | `view_state_snapshot` / `view_state_restore` | 뷰어 상태 저장/복원 |
-| `paint_enable` / `paint_disable` / `paint_dimensions` | paint 캔버스 토글/크기 |
+| `paint_enable` / `paint_disable` | paint 캔버스 토글 |
+| `paint_dimensions` | 활성 paint 캔버스의 `{ width, height, dpr }` 반환 |
 | `sketch_add_shape` / `sketch_set_color` / `sketch_set_stroke` | 프로그램적 paint |
 | `sketch_undo` / `sketch_redo` / `sketch_clear` / `sketch_save` | 히스토리 + 저장 |
 | `sketch_current_png` | 현재 스케치 base64 |
@@ -106,8 +107,8 @@
 ### 음성 메모
 | 도구 | 효과 |
 |---|---|
-| `voice_record_start` / `_record_stop` | 시작 / 정지 |
-| `voice_list` / `_workspace_all` | 메모 목록 |
+| `voice_record_start` / `voice_record_stop` | 시작 / 정지 (start 는 옵션 `{ file_path?, label? }`) |
+| `voice_list` / `voice_workspace_all` | 메모 목록 (workspace_all 은 옵션 `{ workspace_root? }`) |
 | `voice_get_bytes` | 파일 base64 |
 | `voice_rename` / `_delete` | 관리 |
 | `voice_transcript_get` / `_transcript_set` | transcript sidecar 읽기/쓰기 |
@@ -155,11 +156,11 @@
 
 | 도구 | 효과 |
 |---|---|
-| `show_toast` | 사용자 윈도우의 toast |
-| `confirm` | yes/no 모달 |
-| `request_user_input` | 프롬프트 + 값 반환 |
-| `wait_for_user_action` | 사용자 클릭에서 block |
-| `chatpanel_post` | ChatPanel 에 메시지 push |
+| `show_toast` | `{ message, kind?: info\|success\|warn\|error, duration_ms? }` — 사용자 윈도우 toast |
+| `confirm` | `{ prompt, timeout_ms? }` → boolean |
+| `request_user_input` | `{ prompt, default_value?, timeout_ms? }` → 문자열 |
+| `wait_for_user_action` | `{ hint, timeout_ms? }` — 사용자 클릭에서 block |
+| `chatpanel_post` | `{ role: user\|assistant\|note, content }` — ChatPanel 대화에 push |
 | `export_active` | Export 메뉴 프로그램적 트리거 |
 | `print_active` | Print 트리거 |
 | `insert_at_selection` | (위에도 표시) |
@@ -168,8 +169,10 @@
 
 | 도구 | 효과 |
 |---|---|
-| `region_current_png` | 사용자가 마지막 캡처한 영역 |
+| `region_current_png` | 사용자가 마지막 캡처한 영역 — **이미지 only 결과** (JSON sibling 없음) |
 | `active_file_thumbnail` | 일반 thumbnail (≠ 영역) |
+
+> 둘 다 앞 catalog 에도 등장 (workspace + capture 행) — "region & screenshot" 주제 발견용으로 여기 한 번 더 나열.
 
 ## 여기 없는 이름 (deferred)
 

@@ -6,14 +6,12 @@
 
 ```text
 1. capture_selector(".cta")              ← before
-2. apply_edit(find, replace)             ← 변경
-3. (htmlook:apply-edit-reload 이벤트로 뷰어 자동 reload)
+2. apply_edit(path, find, replace)       ← 변경
+3. (내부 이벤트로 뷰어 reload)
 4. capture_selector(".cta")              ← after
 5. capture_diff(before, after)           ← 검증
    ↳ audit_log 에 apply_edit 행 자동 기록
 ```
-
-자동 reload 는 백엔드가 `apply_edit` 성공 후 emit 하는 Tauri 이벤트. 프론트엔드가 listen → 파일 재읽기 → 활성 탭 `rawContent` 갱신. Race condition 없음.
 
 ## apply_edit shape
 
@@ -21,10 +19,9 @@
 {
   "tool": "htmlook_apply_edit",
   "args": {
-    "path": "/abs/path/to/file.html",   // optional; default = active file
-    "find":     "Sign up free",
-    "replace":  "Start free trial",
-    "scope":    "active_file"            // active_file | selection | whole_file
+    "path":    "/abs/path/to/file.html",   // 필수
+    "find":    "Sign up free",
+    "replace": "Start free trial"
   }
 }
 ```
@@ -33,31 +30,35 @@
 
 ```jsonc
 {
-  "ok": true,
-  "edits_applied": 1,
-  "before_hash": "ab12…",
-  "after_hash":  "cd34…",
-  "diff_summary": "1 replacement, 14 → 17 chars"
+  "path":         "/abs/path/to/file.html",
+  "applied":      true,
+  "bytes_before": 8423,
+  "bytes_after":  8426,
+  "backup_path":  "/abs/path/to/.file.html.bak.20260517-031400"
 }
 ```
 
-find 문자열이 모호하면 (>5 매치) HTMLook 이 `MULTIPLE_MATCHES` 에러 + 카운트 반환. find 좁히거나 `scope: "selection"`.
+성공한 편집마다 서버가 timestamped `.bak.<ts>` 를 원본 옆에 작성 — 필요 시 수동 롤백.
+
+`find` 는 **정확히 한 번** 매치해야 함. 둘 이상 매치 시 평문 에러 형식:
+`find string matched N places in /abs/path; expected exactly 1. Widen the context and retry.` find 좁히고 (주변 맥락 추가) 재시도. 참고: 이 에러들은 머신 판독 `kind` enum 없음 — 평문 prefix 로 매치.
+
+`find` 부재 시: `find string not found in /abs/path. Widen the context…`.
+
+Path 안전: 파일이 활성 워크스페이스 root 안으로 resolve 되어야. 바깥은 `refused: <p> is outside the current workspace. Open the file in HTMLook Pro first…` 로 거부.
 
 ## insert_at_selection
 
-찾지 않고 *추가* 만 할 때:
+사용자 현재 선택 위치에 삽입:
 
 ```jsonc
 {
   "tool": "htmlook_insert_at_selection",
-  "args": {
-    "text": "<p>2026-05-17 업데이트.</p>",
-    "where": "after"   // before | after | replace
-  }
+  "args": { "html": "<p>2026-05-17 업데이트.</p>" }
 }
 ```
 
-뷰어에 활성 선택 또는 커서 위치 필요 (`htmlook_selection_text` 가 non-empty).
+단일 인자 `html` (string). 활성 뷰어 pane 에 선택이 존재해야.
 
 ## create_file
 
@@ -66,39 +67,53 @@ find 문자열이 모호하면 (>5 매치) HTMLook 이 `MULTIPLE_MATCHES` 에러
   "tool": "htmlook_create_file",
   "args": {
     "path":    "drafts/q3-plan.md",
-    "content": "# Q3 plan\n\n…"
+    "content": "# Q3 plan\n\n…",
+    "open":    true,         // 옵션: 새 파일을 탭으로 열기
+    "position": "after"      // 옵션: 새 탭 위치
   }
 }
 ```
 
-`path` 는 워크스페이스 root 기준. `path_guard` 가 바깥 traversal 거부.
+`create_file` 은 `apply_edit` 처럼 워크스페이스 `path_guard` 제약 안 받음 — 절대 또는 워크스페이스-상대 경로 전달. 워크스페이스 안 유지는 caller 책임.
 
-## find 문자열이 신뢰 어려울 때
+## find 가 신뢰 어려울 때
 
 속성 · 공백 · 생성 ID 가 있는 HTML 에선:
 
-1. `select_element({ selector })` + `replace_in_active({ text })`
-2. `select_text_range({ start, end })` + `insert_at_selection`
+1. `select_element({ selector })` + `replace_in_active({ … })`
+2. `select_text_range({ start, end })` + `insert_at_selection({ html })`
 3. 최후 수단: `selection_html` 가져와 mutate 후 `replace_in_active` 로 쓰기
 
 ## Audit log
 
-모든 성공한 `apply_edit` 가 `<workspace>/.htmlook/audit-log.jsonl` 에 `{ ts, tool, path, find_len, replace_len, agent }` append. `audit_log_query({ since: "2026-05-17T00:00:00Z", tool: "htmlook_apply_edit" })` 로 조회.
+성공한 모든 `apply_edit` 가 `<workspace>/.htmlook/audit-log.jsonl` 에 append. 각 라인: `{ tool, args, ts }`. 조회:
 
-다른 에이전트와 워크스페이스 공유 시 ([다중 에이전트 협업](AI-Collaboration-ko.md)) 편집 재적용 전 이거 확인 — race 가능성.
+```jsonc
+{
+  "tool": "htmlook_audit_log_query",
+  "args": {
+    "tool":     "htmlook_apply_edit",   // 옵션 필터
+    "since_ts": 1715900000000,           // 옵션 UNIX-ms 하한
+    "limit":    50
+  }
+}
+```
 
-## 실패 모드
+서버는 `tool` · `since_ts` · `limit` 만 필터 — `agent` · ok/error 분리 없음. per-entry 반환 형태는 `{ tool, args, ts }`.
 
-| 코드 | 의미 |
-|---|---|
-| `MULTIPLE_MATCHES` | `find` 가 >5× 발생. 좁힐 것 |
-| `NO_MATCH` | `find` 부재 |
-| `PATH_OUT_OF_SCOPE` | 대상 파일이 워크스페이스 root 바깥 |
-| `PERMISSION_REFUSED` | 사용자가 동의 모달 "거부" |
-| `RATE_LIMITED` | 토큰 버킷 소진. back off |
-| `DEPENDENCY_MISSING` | 필요한 외부 도구 없음 (apply_edit 엔 드묾) |
+다른 에이전트와 워크스페이스 공유 시 ([다중 에이전트 협업](AI-Collaboration-ko.md)) 편집 재적용 전 조회 — race 가능성.
 
-응답 전략은 [에러 & 복구](AI-Errors-Recovery-ko.md) 참조.
+## 실패 모드 (평문 prefix, `data.kind` 아님)
+
+| 에러에 보일 prefix | 의미 | 복구 |
+|---|---|---|
+| `find string matched N places…` | 모호한 find | find 문자열 넓히기 |
+| `find string not found in…` | find 부재 | 렌더러로 파일 재읽기. `find_in_active` 먼저 |
+| `refused: <p> is outside the current workspace…` | 경로 traversal | 워크스페이스 안 경로 사용 |
+| `canonicalize <p>: No such file or directory` | 파일 부재 | `workspace_files` / `active_file` 확인 |
+| `refused: HTMLook is in Free Viewer mode…` | 트라이얼 만료 | 사용자에게 surface; 우회 불가 |
+| `rate-limited: <tool_name> burst exhausted. Retry after ~<ms> ms.` | 도구별 token bucket | 명시 ms back off |
+| `DEPENDENCY_MISSING:{…}` | 외부 도구 부재 | 특별 — [에러 & 복구](AI-Errors-Recovery-ko.md) 참조 |
 
 ## 다음
 

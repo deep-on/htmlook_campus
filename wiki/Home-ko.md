@@ -25,7 +25,7 @@ HTMLook Pro 를 *사용*하실 분 — 파일 열고, 읽고, Markdown 편집하
 
 ## 🤖 [AI 에이전트용](AI-Overview-ko.md)
 
-Claude / Codex / Gemini / OpenAI-compatible 에이전트가 HTMLook Pro 의 MCP 서버로 앱을 *조작*하는 흐름. HTMLook 은 capture / edit / collaboration / audit / media 까지 ~120 개의 tool 을 노출합니다.
+Claude / Codex / Gemini / OpenAI-compatible 에이전트가 HTMLook Pro 의 MCP 서버로 앱을 *조작*하는 흐름. HTMLook 은 capture / edit / collaboration / audit / media 까지 ~100 개의 tool 을 노출합니다.
 
 여기서 시작:
 

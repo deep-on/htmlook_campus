@@ -90,11 +90,11 @@ apply_edit(...)
 
 When the model decides it shouldn't proceed without confirmation:
 
-- `confirm({ title, message })` → blocks until user clicks; returns boolean
-- `request_user_input({ prompt })` → returns a string
-- `wait_for_user_action({ hint })` → blocks until the user clicks a hint button you described
-- `show_toast({ message, level })` → fire-and-forget notice
-- `chatpanel_post({ text })` → push a message into ChatPanel (not the user-typed input box, but the conversation stream)
+- `confirm({ prompt, timeout_ms? })` → blocks until user clicks; returns boolean
+- `request_user_input({ prompt, default_value?, timeout_ms? })` → returns a string
+- `wait_for_user_action({ hint, timeout_ms? })` → blocks until the user clicks the hint button you described
+- `show_toast({ message, kind?: 'info'|'success'|'warn'|'error', duration_ms? })` → fire-and-forget notice
+- `chatpanel_post({ role: 'user'|'assistant'|'note', content })` → push a message into ChatPanel (not the user-typed input box, but the conversation stream)
 
 Default to `confirm` for "any irreversible action" and `request_user_input` for "I need a value I can't reasonably guess".
 

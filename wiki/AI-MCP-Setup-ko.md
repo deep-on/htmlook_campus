@@ -72,16 +72,15 @@ async with stdio_client(params) as session:
 
 결정론적 에이전트가 워크스페이스 pin 하려면 — per-call 워크스페이스 override 없으니 사용자와 조율 (또는 `htmlook_focus_tab` 먼저 호출).
 
-## 첫 호출: 동의 모달
+## 첫 호출: 사용자가 보는 것
 
-*워크스페이스 변경* 도구 (`apply_edit` · `create_file` · `replace_in_active` · `voice_record_start` 등) 의 첫 호출이 사용자 윈도우에 HTMLook 의 4-버튼 동의 모달 trigger:
+워크스페이스 변경 도구는 실행 전 세 가지 체크로 게이트됩니다:
 
-- **이번만**
-- **이 워크스페이스에서**
-- **모든 워크스페이스**
-- **거부**
+1. **Free Viewer 라이선스 체크** — 트라이얼 만료 + 미업그레이드 시 편집 도구가 `refused: HTMLook is in Free Viewer mode (trial expired)…` 반환, 실행 안 됨.
+2. **Path-guard 스코프 체크** — `apply_edit` 가 워크스페이스 root 바깥 경로 거부 (`refused: <p> is outside the current workspace…`). (참고: `create_file` 은 이걸 강제하지 않음 — caller 책임.)
+3. **도구별 rate limit** — burst 8, 초당 8 refill token bucket, 도구별 키.
 
-사용자 클릭 전까지 도구 호출 await. 모달 dismiss 전까지 JSON-RPC 응답 hold. 사용자가 모달을 예상하도록 — 도구 호출 *전에* 무엇을 할지 명시하는 프롬프트 작성 권장.
+v1.0.9 의 MCP 쓰기 경로에 per-call "이번만 / 워크스페이스 / 모두 / 거부" 동의 모달은 없음. (다른 surface 에 동의 UI 가 있지만 v1.0.9 의 MCP 쓰기에는 적용 안 됨.) 도구가 그냥 실행된다고 가정하고 프롬프트 — 단 호출 *전에* 무엇을 할지 명시해서 사용자가 필요 시 interrupt 가능하도록.
 
 ## Rate limit
 
@@ -93,7 +92,7 @@ async with stdio_client(params) as session:
 
 ## 버전 체크
 
-`htmlook_ping` 으로 실행 중 서버 확인 — `{ version, build_id, started_at }` 반환. 프롬프트 로직이 버전 민감하면 사용.
+`htmlook_ping` 은 평문 `"pong"` 반환 — liveness 프로브로 유용하나 버전 없음. 빌드 버전 + 워크스페이스 경로는 `htmlook_workspace_info` 호출, 응답은 `{ app_version, launch_cwd, workspace_root }`.
 
 ## 다음
 
