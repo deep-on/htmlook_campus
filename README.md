@@ -1,150 +1,160 @@
 # HTMLook Campus
 
-> HTMLook Pro 를 처음 사용하는 사람을 위한 **8 step 튜토리얼**. 한 step 씩
-> 차례로 따라가면 30-40 분 안에 install → 첫 파일 → BYOM → editing →
-> command → save-as-skill → bundled profiles → 자기 profile 작성까지 완주.
+<p align="center">
+  <b>English</b> | <a href="README.ko.md">한국어</a> | <a href="README.ja.md">日本語</a> | <a href="README.de.md">Deutsch</a> | <a href="README.fr.md">Français</a> | <a href="README.es.md">Español</a> | <a href="README.pt.md">Português</a> | <a href="README.it.md">Italiano</a>
+</p>
 
-이 레포는 **HTMLook Pro v1.0 release-candidate** (정식 출시 2026 mid 예정)
-기준으로 작성됐습니다. 데스크탑 앱은 [htmlook.app](https://htmlook.app) 에서
-14 일 무료 체험. BYOM (Bring-Your-Own-Model) 이라 토큰 마진 0 — Claude · GPT ·
-Gemini · DeepSeek · Mistral · Together · Groq · Cerebras · Ollama 어느 모델이든
-사용자의 키로 직접 호출.
+> An **8-step tutorial** for people new to HTMLook Pro. Walk one step at a time
+> and you'll go from install → first file → BYOM → editing → command → save-as-skill
+> → bundled profiles → writing your own profile in 30–40 minutes.
+
+This repo tracks **HTMLook Pro v1.0 release-candidate** (GA mid 2026).
+The desktop app is at [htmlook.app](https://htmlook.app) — 14-day free trial.
+BYOM (Bring-Your-Own-Model) means zero token markup — Claude · GPT · Gemini ·
+DeepSeek · Mistral · Together · Groq · Cerebras · Ollama, whichever model you
+prefer, called directly with your own key.
 
 ## Tutorial Path
 
-위에서 아래로 순서대로. 각 step 은 앞 step 의 동작 위에 쌓입니다.
+Top to bottom. Each step builds on the previous one.
 
-| Step | 폴더 | 무엇을 합니까 | 시간 |
+| Step | Folder | What you do | Time |
 |---|---|---|---|
-| 1 | [`01-getting-started/`](01-getting-started/) | install · 첫 launch · drag-drop · open folder | 3 min |
-| 2 | [`02-first-file/`](02-first-file/) | md / html / pdf / 영상 4 종 + 분할뷰 + outline | 5 min |
-| 3 | [`03-byom-setup/`](03-byom-setup/) | vendor 1 개 골라서 키 등록 (또는 Ollama) | 5 min |
+| 1 | [`01-getting-started/`](01-getting-started/) | install · first launch · drag-drop · open folder | 3 min |
+| 2 | [`02-first-file/`](02-first-file/) | md / html / pdf / video — 4 file types, split view, outline | 5 min |
+| 3 | [`03-byom-setup/`](03-byom-setup/) | pick one vendor and register the key (or Ollama) | 5 min |
 | 4 | [`04-editing/`](04-editing/) | element pick · region paint · sentence-id · cite anchor | 5 min |
-| 5 | [`05-command/`](05-command/) | chat · terminal CLI · apply_edit · 26 페르소나 walkthrough | 10 min |
-| 6 | [`06-save-as-skill/`](06-save-as-skill/) | 워크플로우 캡처 → ⌘K 카탈로그 카드 | 5 min |
-| 7 | [`07-bundled-profiles/`](07-bundled-profiles/) | HyperFrames · Slidev · Quarto · D2 · Astro Starlight · Marimo · Excalidraw · Manim 둘러보기 | 5 min |
-| 8 | [`08-extend/`](08-extend/) | 자기 profile 작성 + 카탈로그 PR | 선택 |
+| 5 | [`05-command/`](05-command/) | chat · terminal CLI · apply_edit · 26 persona walkthroughs | 10 min |
+| 6 | [`06-save-as-skill/`](06-save-as-skill/) | capture a workflow → ⌘K catalog card | 5 min |
+| 7 | [`07-bundled-profiles/`](07-bundled-profiles/) | HyperFrames · Slidev · Quarto · D2 · Astro Starlight · Marimo · Excalidraw · Manim | 5 min |
+| 8 | [`08-extend/`](08-extend/) | write your own profile + submit a catalog PR | optional |
 
-> 빠르게 둘러보기만 원하면 [`01-getting-started/LEARNING_PATH.md`](01-getting-started/LEARNING_PATH.md)
-> 의 step → 영상 mapping 을 참고. 각 영상 30-70 초.
+> If you just want a quick tour, see [`01-getting-started/LEARNING_PATH.md`](01-getting-started/LEARNING_PATH.md)
+> for the step → video mapping. Each video is 30–70 seconds.
 
 ## Reference Manual (Wiki)
 
-8-step 튜토리얼이 *처음부터 끝까지 한 번* 흐름을 보여준다면, [`wiki/`](wiki/) 는
-*기능별로 찾아 보는* 레퍼런스 매뉴얼. 사이드바 · 탭 · 뷰어 · 마크다운 에디터 ·
-PDF · 영상/오디오 플레이어 · 터미널 · AI 어시스턴트 · Paint · 음성 메모 · Skill ·
-Export · Settings · 단축키. 인간 사용자 트랙과 AI 어시스턴트 (MCP/스키마) 트랙
-두 갈래.
+The 8-step tutorial shows you the flow *once, end-to-end*. The
+[`wiki/`](wiki/) is the **feature-by-feature reference** you reach for
+afterwards: Sidebar · Tabs · Viewer · Markdown editor · PDF · Video/Audio
+player · Terminal · AI Assistant · Paint · Voice memos · Skill · Export ·
+Settings · keyboard shortcuts. Two parallel tracks — one for human users,
+one for AI assistants (MCP / schema).
 
-| 갈래 | 시작 | 언어 |
+| Track | Entry | Languages |
 |---|---|---|
-| 사람용 매뉴얼 | [`wiki/Home.md`](wiki/Home.md) · [한국어](wiki/Home-ko.md) | EN / KO |
-| AI 어시스턴트 가이드 | [`wiki/AI-Overview.md`](wiki/AI-Overview.md) · [한국어](wiki/AI-Overview-ko.md) | EN / KO |
+| Human-user manual | [`wiki/Home.md`](wiki/Home.md) · [Korean](wiki/Home-ko.md) | EN / KO |
+| AI-assistant guide | [`wiki/AI-Overview.md`](wiki/AI-Overview.md) · [Korean](wiki/AI-Overview-ko.md) | EN / KO |
 
-튜토리얼은 한 번만 따라가면 됩니다; wiki 는 앱을 쓰는 내내 손이 닿는 곳에
-둡니다 (앱 내 *Help → Documentation* 으로 바로 열림).
+You walk the tutorial once; the wiki sits within arm's reach every day
+(open it from the app via *Help → Documentation*).
 
-## 에디션
+## Editions
 
-- **HTMLook Pro** (v1.0) — 파워 유저용. BYOM 채팅 + 내장 PTY terminal +
-  CLI 어댑터 (claude / codex / gemini) + MCP bridge + paint canvas + region
-  capture + element pick + save-as-skill + 8 bundled Profile + 49 seed.
-- **HTMLook Easier** *(soon)* — 처음 쓰는 사람용 에디션, 재정의 중.
+- **HTMLook Pro** (v1.0) — for power users. BYOM chat + built-in PTY terminal
+  + CLI adapters (claude / codex / gemini) + MCP bridge + paint canvas +
+  region capture + element pick + save-as-skill + 8 bundled profiles + 49 seeds.
+- **HTMLook Easier** *(soon)* — entry-level edition, being redefined.
 
-## Step 1 — 설치 + 첫 launch
+## Step 1 — Install + first launch
 
-[`01-getting-started/README.md`](01-getting-started/README.md) 부터 시작.
+Start at [`01-getting-started/README.md`](01-getting-started/README.md).
 
-[htmlook.app](https://htmlook.app) 에서 .dmg 받고, Applications 로 끌고,
-첫 파일을 drag-drop 해 보세요.
+Grab the .dmg from [htmlook.app](https://htmlook.app), drag to Applications,
+and drag-drop your first file.
 
-## Step 2 — 첫 파일 (HTML / MD / PDF / 영상)
+## Step 2 — First file (HTML / MD / PDF / video)
 
-[`02-first-file/README.md`](02-first-file/README.md). 4 가지 파일 종류를
-분할뷰 + outline + thumbnail 로 navigate.
+[`02-first-file/README.md`](02-first-file/README.md). Navigate four file
+types with split view + outline + thumbnails.
 
-영상: BASIC #3 #4 #6 + ADV multi-pane / thumbnail / outline. mp4 본체는
-[`videos/features/`](videos/features/).
+Videos: BASIC #3 #4 #6 + ADV multi-pane / thumbnail / outline. mp4s
+themselves live at [`videos/features/`](videos/features/).
 
-## Step 3 — BYOM 설정 (한 vendor 만)
+## Step 3 — BYOM setup (just one vendor)
 
-[`03-byom-setup/README.md`](03-byom-setup/README.md). 자세한 AI 가이드는
-[`03-byom-setup/AI_GUIDE.md`](03-byom-setup/AI_GUIDE.md), 외부 MCP 클라이언트
-샘플 설정은 [`03-byom-setup/.htmlook/mcp-config.example.json`](03-byom-setup/.htmlook/mcp-config.example.json).
+[`03-byom-setup/README.md`](03-byom-setup/README.md). For the full AI guide
+see [`03-byom-setup/AI_GUIDE.md`](03-byom-setup/AI_GUIDE.md); a sample
+configuration for an external MCP client is at
+[`03-byom-setup/.htmlook/mcp-config.example.json`](03-byom-setup/.htmlook/mcp-config.example.json).
 
-## Step 4 — 화면 위에서 *어디인가* 짚기
+## Step 4 — Pointing *at* something on screen
 
-[`04-editing/README.md`](04-editing/README.md). element pick · region paint ·
-sentence-id · range select 4 가지. 핵심 영상: BASIC #5 ⭐ region-cite (AI
-진입점).
+[`04-editing/README.md`](04-editing/README.md). Four ways: element pick ·
+region paint · sentence-id · range select. Anchor video: BASIC #5 ⭐ region-cite
+(the AI entry point).
 
-## Step 5 — 명령으로 바꾸기 (cite + apply_edit)
+## Step 5 — Changing it through commands (cite + apply_edit)
 
-[`05-command/README.md`](05-command/README.md). 캠퍼스의 deepest part — 26
-페르소나 walkthrough 가 [`05-command/personas/`](05-command/personas/) 에
-있습니다 (직군 별 grouping, 각 폴더에 follow-along WALKTHROUGH.md +
-before/after).
+[`05-command/README.md`](05-command/README.md). The deepest part of the
+campus — 26 persona walkthroughs live at
+[`05-command/personas/`](05-command/personas/) (grouped by role, each with a
+follow-along WALKTHROUGH.md + before/after).
 
-페르소나 카탈로그: [`05-command/personas/INDEX.md`](05-command/personas/INDEX.md).
+Persona catalog: [`05-command/personas/INDEX.md`](05-command/personas/INDEX.md).
 
-## Step 6 — 자주 쓰는 워크플로우 → Skill
+## Step 6 — Repeated workflows → Skills
 
-[`06-save-as-skill/README.md`](06-save-as-skill/README.md). 우측 AI 패널
-*Save as Skill* 다이얼로그. 3 줄로 끝.
+[`06-save-as-skill/README.md`](06-save-as-skill/README.md). Right-hand AI
+panel, *Save as Skill* dialog. Three lines and you're done.
 
-## Step 7 — Bundled Profiles 8 종
+## Step 7 — The 8 Bundled Profiles
 
 [`07-bundled-profiles/README.md`](07-bundled-profiles/README.md). HyperFrames /
-Slidev / Quarto / D2 / Astro Starlight / Marimo / Excalidraw / Manim. profile
-시드 본체는 [`profiles/`](profiles/) (catalog.json 빌더가 직접 읽음).
+Slidev / Quarto / D2 / Astro Starlight / Marimo / Excalidraw / Manim. The
+profile seeds themselves live at [`profiles/`](profiles/) (the catalog.json
+builder reads from there directly).
 
-## Step 8 — 자기 Profile 작성 + 영상 표준
+## Step 8 — Write your own Profile + video standard
 
-[`08-extend/README.md`](08-extend/README.md). 자기 도메인 profile 을 만들고
-카탈로그에 add. 영상 표준 + 역검증 절차는 [`08-extend/PRODUCTION.md`](08-extend/PRODUCTION.md),
-17 feature 영상 카탈로그는 [`08-extend/FEATURES.md`](08-extend/FEATURES.md).
+[`08-extend/README.md`](08-extend/README.md). Build a profile for your own
+domain and add it to the catalog. The video standard + reverse-verification
+process is at [`08-extend/PRODUCTION.md`](08-extend/PRODUCTION.md); the
+17-feature video catalog is at [`08-extend/FEATURES.md`](08-extend/FEATURES.md).
 
-## 자료 위치 (참고)
+## Asset locations (reference)
 
-캠퍼스 root 에 step 폴더 (01~08) 와 함께 다음 *공용 asset 디렉토리* 가
-있습니다 (catalog.json + 앱이 이 경로를 직접 참조하므로 step 안으로 이동
-하지 않음):
+Alongside the step folders (01~08), the campus root holds these *shared
+asset directories* (catalog.json + the app reference them by path, so they
+don't move into individual step folders):
 
-| 폴더 | 내용 |
+| Folder | What |
 |---|---|
-| [`videos/`](videos/) | 17 feature mp4 + 26 페르소나 mp4 (총 ~340 MB) |
-| [`profiles/`](profiles/) | 8 종 Profile 시드 (`profile.json` + `SKILL.md` + `seed/`) |
-| [`sample_workspaces/`](sample_workspaces/) | 75 종 도메인 시드 (`hf-*` 페르소나 26 + 프로파일 시드 49) |
-| [`catalog.json`](catalog.json) | 83 entries (8 profile + 75 workspace seed) — 앱 Wizard fresh-fetch (24 h cache) |
+| [`videos/`](videos/) | 17 feature mp4 + 26 persona mp4 (~340 MB total) |
+| [`profiles/`](profiles/) | 8 profile seeds (`profile.json` + `SKILL.md` + `seed/`) |
+| [`sample_workspaces/`](sample_workspaces/) | 75 domain seeds (`hf-*` 26 personas + 49 profile seeds) |
+| [`catalog.json`](catalog.json) | 83 entries (8 profile + 75 workspace seed) — fresh-fetched by the app's Wizard (24 h cache) |
 | [`scripts/`](scripts/) | `build-catalog.mjs` |
-| [`infra/`](infra/) | 라이센스 worker (별도 서비스) |
-| [`docs/`](docs/) | 생성 artifact 작업 공간 (gitignored) |
+| [`infra/`](infra/) | license worker (separate service) |
+| [`docs/`](docs/) | scratch space for generation artifacts (gitignored) |
 
-## 두 layer 의 학습 — 영상 + 인터랙티브
+## Two layers of learning — videos + interactive
 
-캠퍼스 영상은 *what (무엇이 되는지)*. HTMLook Pro 내장 인터랙티브
-walkthrough (*Help → Interactive Tutorials…*) 는 *how (어떻게 하는지)*. 영상에
-등장하는 17 feature 모두 인터랙티브 가이드가 1:1 매칭.
+The campus videos are *what (what's possible)*. The HTMLook Pro built-in
+interactive walkthrough (*Help → Interactive Tutorials…*) is *how (how to do
+it)*. Every one of the 17 features in the videos has a matching interactive
+guide, one-to-one.
 
-| Layer | 어디서 | 길이 | 역할 |
+| Layer | Where | Length | Role |
 |---|---|---|---|
-| 영상 (캠퍼스) | `videos/features/`, `videos/` | 30 s / 60-70 s | 결과 보여주기 |
-| 인터랙티브 (앱) | HTMLook Pro · Help → Interactive Tutorials… | 4 step | 직접 따라하기 |
+| Video (campus) | `videos/features/`, `videos/` | 30 s / 60–70 s | shows the result |
+| Interactive (app) | HTMLook Pro · Help → Interactive Tutorials… | 4 steps | hands-on practice |
 
-## 역검증 약속 (Reverse Verification)
+## Reverse-verification promise
 
-이 캠퍼스의 모든 영상은 **실제 HTMLook 동작과 일치하는 claim 만** 합니다.
-없는 기능은 광고하지 않습니다. 자세한 검증 절차 + fix 된 false claims 목록:
-[`08-extend/PRODUCTION.md`](08-extend/PRODUCTION.md).
+Every video in this campus only **claims things HTMLook actually does**.
+Features that don't exist aren't advertised. Verification process + list of
+fixed false claims: [`08-extend/PRODUCTION.md`](08-extend/PRODUCTION.md).
 
-## 상태
+## Status
 
-이 레포는 **HTMLook Pro v1.0 release-candidate** (정식 출시 2026 mid 예정)
-와 동기화된 학습 자료. v1.0 GA 시점에 함께 public 전환 + 카탈로그 endpoint
-(`htmlook.app/catalog`) 가 이 레포의 raw URL 을 fresh-fetch (24 h cache).
+This repo tracks the **HTMLook Pro v1.0 release-candidate** (GA mid 2026)
+as living teaching material. It will go public alongside v1.0 GA, when the
+catalog endpoint (`htmlook.app/catalog`) starts fresh-fetching this repo's
+raw URLs (24 h cache).
 
-## 라이선스
+## License
 
-- 코드 / 워크스루 텍스트: MIT
-- 영상 mp4: CC BY 4.0 (사용 시 *"HTMLook Campus"* 출처 표기)
-- 샘플 콘텐츠 (PDF / xlsx / md / html): CC0 / public domain — 모두 fictional placeholder
+- Code / walkthrough text: MIT
+- Video mp4: CC BY 4.0 (attribute as *"HTMLook Campus"*)
+- Sample content (PDF / xlsx / md / html): CC0 / public domain — all fictional placeholders
