@@ -12,14 +12,15 @@ First time, macOS will ask for microphone permission. The dialog explains the re
 
 ## Playback player
 
-Voice memos are **attached to documents** — not stand-alone files in the viewer. The bottom **Voice Player** appears when the *active document* has one or more memos linked to it (matched by filename stem in `.htmlook-voice/`). Recording while a document is open auto-files the memo under that document.
+Voice memos are **doc-attached metadata** — the player is bound to the document, not to the audio file. The bottom **Voice Player** drawer appears when the active document has one or more memos linked to it (the link is established by recording while that document is open).
 
-- ◀ / ▶ navigate the memos linked to the active document
-- The waveform shows the loudness envelope
+- ◀ / ▶ navigate memos attached to the active document
+- Waveform shows the loudness envelope
+- Progress bar — drag the playhead to seek anywhere in the memo
 - ⌃ collapses the player (a single ▶︎ button with a badge stays until you expand again)
 - ✏ rename, ✕ delete
 
-Clicking a `.m4a` directly in the sidebar opens it as a generic file (the viewer shows "Preview not available for this file type") — the player is doc-bound, not file-bound. To preview a memo, open the document it's attached to (or use *Voice memos* in the sidebar's filters once a memo exists).
+**Clicking a `.m4a` directly in the sidebar does not open the player** — the viewer treats it as an unrecognised file type and shows a generic "Preview not available" card. To listen, open the document the memo was recorded against.
 
 ## Transcripts
 

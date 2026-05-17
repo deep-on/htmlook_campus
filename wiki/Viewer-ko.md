@@ -17,7 +17,7 @@
 | `.json` `.csv` `.tsv` | 표 + 트리 뷰 | 보기 |
 | 이미지 | 네이티브 뷰어 + zoom · fit · pan | — |
 | 비디오 | 자체 플레이어 (아래) | — |
-| 오디오 (`.m4a` 등) | Generic file fallback ("Preview not available"). 음성 메모는 **문서 기반 Voice Player** drawer 로 재생 — [음성 메모](Voice-Memos-ko.md) 참조. | — |
+| 오디오 (`.m4a` 등) | "Preview not available" 카드. 음성 메모는 문서에 묶인 **Voice Player** drawer 로 재생 — 메모가 녹음된 원래 문서를 여세요 ([음성 메모](Voice-Memos-ko.md)). | — |
 | 소스 코드 | syntax-highlighted | Source 뷰에서 편집 |
 | 미지정 | hex / text fallback | — |
 

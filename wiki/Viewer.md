@@ -17,7 +17,7 @@
 | `.json` `.csv` `.tsv` | Table + tree view | View only |
 | Images | Native viewer with zoom, fit, pan | — |
 | Video | Custom player (see below) | — |
-| Audio (`.m4a` etc.) | Generic file fallback ("Preview not available"). Voice memos play through the **doc-bound Voice Player** drawer — see [Voice memos](Voice-Memos.md). | — |
+| Audio (`.m4a` etc.) | Generic "Preview not available" card. Voice memos play through the doc-bound **Voice Player** drawer — open the document the memo was recorded against (see [Voice memos](Voice-Memos.md)). | — |
 | Source code | Syntax-highlighted code | Source view to edit |
 | Unknown | Hex / text fallback | — |
 
