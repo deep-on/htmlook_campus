@@ -74,7 +74,7 @@ The single argument is `html` (string). The selection must exist on the active v
 }
 ```
 
-`create_file` is not constrained by the workspace `path_guard` the way `apply_edit` is — pass an absolute or workspace-relative path; callers are responsible for keeping it inside the workspace if that's what they want.
+`create_file` does not enforce the workspace-root check the way `apply_edit` does — pass an absolute or workspace-relative path; callers are responsible for keeping it inside the workspace if that's what they want.
 
 ## When the find string isn't reliable
 
@@ -117,7 +117,7 @@ If you're sharing the workspace with other agents (see [Multi-agent collaboratio
 
 ## Consent modal — what the user sees (v1.0.14+)
 
-Before HTMLook lets your `apply_edit` (or any other write tool) execute, the user sees a consent modal. v1.0.14 rewrote it from a raw JSON dump into a human-readable block:
+Before HTMLook lets your `apply_edit` (or any other write tool) execute, the user sees a consent modal:
 
 ```
 ● AI wants to: modify the active document
@@ -131,14 +131,14 @@ Before HTMLook lets your `apply_edit` (or any other write tool) execute, the use
 
 Buttons:
 
-| Choice | Scope | Persists |
-|---|---|---|
-| **Deny** | This call | — |
-| **Allow once** | This call | — |
-| **Always (workspace)** | Future calls in this workspace | `<workspace>/.htmlook/tools.json` |
-| **Always (everywhere)** | Future calls everywhere | `~/.htmlook/state.json` |
+| Choice | Effect |
+|---|---|
+| **Deny** | Reject this call only |
+| **Allow once** | Allow this call only |
+| **Always (workspace)** | Allow future calls of this tool in this workspace |
+| **Always (everywhere)** | Allow future calls of this tool in every workspace |
 
-### Tool descriptor → category
+### How tools map to categories
 
 The modal classifies the tool you're calling into one of six categories. The user's *Settings → AI → Permissions → Tool permission defaults* picks how each category behaves *before* the modal even appears:
 
