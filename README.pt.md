@@ -9,8 +9,8 @@
 > primeiro arquivo → BYOM → edição → comandos → save-as-skill → perfis
 > incluídos → escrever o seu próprio perfil.
 
-Este repositório acompanha o **HTMLook Pro v1.0 release-candidate** (GA
-previsto para meados de 2026). O app desktop está em
+Este repositório acompanha **HTMLook Pro v1.0.14** (lançado em
+2026-05-24). O app desktop está em
 [htmlook.app](https://htmlook.app) — 14 dias de teste gratuito. BYOM
 (Bring-Your-Own-Model) significa margem zero sobre tokens — Claude · GPT ·
 Gemini · DeepSeek · Mistral · Together · Groq · Cerebras · Ollama, chame
@@ -155,10 +155,9 @@ verificação + lista de afirmações falsas corrigidas:
 
 ## Status
 
-Este repositório acompanha o **HTMLook Pro v1.0 release-candidate** (GA
-prevista para meados de 2026) como material didático vivo. Vira público
-junto com o v1.0 GA, quando o endpoint de catálogo
-(`htmlook.app/catalog`) passa a recarregar as URLs raw deste repo (cache
+Este repositório acompanha **HTMLook Pro v1.0.14** (lançado em
+2026-05-24) como material didático vivo. O endpoint de catálogo
+(`htmlook.app/catalog`) recarrega as URLs raw deste repo (cache
 24 h).
 
 ## Licença

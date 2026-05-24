@@ -8,7 +8,7 @@
 > and you'll go from install → first file → BYOM → editing → command → save-as-skill
 > → bundled profiles → writing your own profile in 30–40 minutes.
 
-This repo tracks **HTMLook Pro v1.0 release-candidate** (GA mid 2026).
+This repo tracks **HTMLook Pro v1.0.14** (released 2026-05-24).
 The desktop app is at [htmlook.app](https://htmlook.app) — 14-day free trial.
 BYOM (Bring-Your-Own-Model) means zero token markup — Claude · GPT · Gemini ·
 DeepSeek · Mistral · Together · Groq · Cerebras · Ollama, whichever model you
@@ -148,7 +148,7 @@ fixed false claims: [`08-extend/PRODUCTION.md`](08-extend/PRODUCTION.md).
 
 ## Status
 
-This repo tracks the **HTMLook Pro v1.0 release-candidate** (GA mid 2026)
+This repo tracks the **HTMLook Pro v1.0.14** (released 2026-05-24)
 as living teaching material. It will go public alongside v1.0 GA, when the
 catalog endpoint (`htmlook.app/catalog`) starts fresh-fetching this repo's
 raw URLs (24 h cache).

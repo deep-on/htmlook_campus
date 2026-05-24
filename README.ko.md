@@ -8,7 +8,7 @@
 > 차례로 따라가면 30-40 분 안에 install → 첫 파일 → BYOM → editing →
 > command → save-as-skill → bundled profiles → 자기 profile 작성까지 완주.
 
-이 레포는 **HTMLook Pro v1.0 release-candidate** (정식 출시 2026 mid 예정)
+이 레포는 **HTMLook Pro v1.0.14** (2026-05-24 출시)
 기준으로 작성됐습니다. 데스크탑 앱은 [htmlook.app](https://htmlook.app) 에서
 14 일 무료 체험. BYOM (Bring-Your-Own-Model) 이라 토큰 마진 0 — Claude · GPT ·
 Gemini · DeepSeek · Mistral · Together · Groq · Cerebras · Ollama 어느 모델이든
@@ -143,7 +143,7 @@ walkthrough (*Help → Interactive Tutorials…*) 는 *how (어떻게 하는지)
 
 ## 상태
 
-이 레포는 **HTMLook Pro v1.0 release-candidate** (정식 출시 2026 mid 예정)
+이 레포는 **HTMLook Pro v1.0.14** (2026-05-24 출시)
 와 동기화된 학습 자료. v1.0 GA 시점에 함께 public 전환 + 카탈로그 endpoint
 (`htmlook.app/catalog`) 가 이 레포의 raw URL 을 fresh-fetch (24 h cache).
 
