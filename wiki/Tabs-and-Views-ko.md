@@ -77,7 +77,7 @@ HTMLook 이 launch 시 워크스페이스별 마지막 탭 셋 복원 가능. Se
 ### 윈도우 탭 strip
 
 - 툴바 위에 위치.
-- 가로로 드래그해서 **순서 변경** (Chrome 식 삽입 gap 표시).
+- 가로로 드래그해서 **순서 변경**. 탭이 어디에 놓일지 삽입 gap 으로 표시.
 - 오른쪽 클릭으로 *Focus · Move-out · Close*.
 - Hover 하면 전체 워크스페이스 경로가 적힌 preview 카드.
 - **Color tabs** 가 켜져 있으면 (Settings → General) 각 탭이 워크스페이스에서 파생된 hue 로 칠해집니다.
@@ -97,7 +97,7 @@ HTMLook 이 launch 시 워크스페이스별 마지막 탭 셋 복원 가능. Se
 
 ### 저장된 레이아웃
 
-현재 윈도우 셋 (rect + color 포함) 을 이름 붙여 저장: **Settings → General → Window tabs → Save current layout**. 같은 패널에서 복원. 저장소: `~/.htmlook/window-layouts.json`. 복원 시 *Layout restore* 모드 (*Exact* — 같은 rect, 또는 *Cascade 30 px* — anchor 에서 부채꼴로 펼침) 를 존중합니다.
+현재 윈도우 셋 (rect + color 포함) 을 이름 붙여 저장: **Settings → General → Window tabs → Save current layout**. 같은 패널에서 복원. 복원 시 *Layout restore* 모드 (*Exact* — 같은 rect, 또는 *Cascade 30 px* — anchor 에서 부채꼴로 펼침) 를 존중합니다.
 
 ### Tab mode 끄기
 

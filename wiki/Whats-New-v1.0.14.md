@@ -2,59 +2,50 @@
 
 Released: **2026-05-24** · Download: [htmlook.app](https://htmlook.app)
 
-Released-notes companion to the four-card highlight at
-[htmlook.app/#whats-new](https://htmlook.app/#whats-new). The full
-ChangeLog lives in the desktop repo as `CHANGELOG_v1.0.14.md`; this
-page is the campus-facing reading order.
-
 > Other languages: [한국어](Whats-New-v1.0.14-ko.md)
+
+This is the user-facing summary. Use it to learn what's changed when
+you next launch the app.
 
 ---
 
 ## At a glance
 
-- **Multi-window tab mode** — every window snaps to one rect; Chrome-style tab strip with drag-reorder, color-coded workspaces, named layout save/restore.
-- **AI consent that reads like English** — `"AI wants to: modify foo.md · Reversible: ⌘Z"` replaces the raw JSON dump. Six category defaults (Read / Capture / Annotate / Navigate / Write / Run) skip ~70% of modals automatically.
-- **Terminal that survives restart** — tmux-backed sessions reattach with scrollback intact. In-buffer search `⌘F`, sync input across split panes, detach a pane into its own window, keyboard selection mode `⌃⇧K`.
-- **Markdown WYSIWYG safety net** — edit-collapse guard, NFC/NFD path-form sweep, 196-document round-trip corpus locked to **zero drift**, gated by 1014 tests on every build.
-- **Korean / Hangul polish** — workspace claim, recent list, sidecars, tab dedup, terminal `cwd` polling, and IME duplicate-write all repaired; Hangul-named folders work like any other path.
-- **Sidecars moved into `.htmlook/<category>/`** — `*.annotations.json`, `*.bookmarks.json`, `*.clips.json`, `*.segments.json`, `*.chapters.json` no longer clutter your workspace root.
-- **MCP bridge multi-instance fix** — dev + production no longer race on `~/.htmlook/mcp-bridge.port`; per-PID port file with ping-validated discovery.
+- **Multi-window tab mode** — every Pro window snaps to one rect with a Chrome-style tab strip on top. Drag tabs to reorder, color tabs per workspace, save named layouts.
+- **AI consent that reads like English** — the permission modal now says *"AI wants to: modify foo.md · Reversible: ⌘Z undoes this"* instead of a JSON dump. Six category defaults (Read / Capture / Navigate / Annotate / Write / Run) let most safe reads pass without prompting.
+- **Terminal that survives restart** — turn on tmux persistence and your terminal sessions reattach with their scrollback when you reopen the app. New: in-buffer search ⌘F, sync input across panes, detach a pane into its own window, keyboard selection mode ⌃⇧K.
+- **Markdown WYSIWYG safety net** — live Markdown editing is now safe to use on real workspace documents. Round-trip stability is verified on a large library of real Korean / English documents.
+- **Korean filename polish** — workspace claim, the Recent list, sidecar files, tab dedup, terminal cwd tracking, and IME composition all work the same on Korean-named folders as on any other.
+- **Sidecars moved into `.htmlook/<category>/`** — PDF annotations, video bookmarks, video clips, audio segments, and chapters no longer clutter your workspace root.
 
 ---
 
 ## Multi-window tab mode
 
-The previous v1.0.13 multi-window model treated every Pro window as
-fully independent. v1.0.14 keeps that foundation but layers a "single
-logical window" mode on top:
+Settings → General → **Window tabs → Tab mode**.
 
-- `Settings → General → Window tabs → Tab mode: On`. Every open window
-  snaps to the focused window's rect; drag / resize / +Add propagates
-  so peers follow.
-- Tab strip lives above the toolbar. Each tab = one workspace.
-  Right-click for Focus / Move-out / Close. Hover for a preview card
-  with the full workspace path.
-- Color-coding paints each tab with a workspace-derived hue.
-- Named layout save / restore at `~/.htmlook/window-layouts.json`.
-  Restore honours Layout mode (Exact / Cascade 30 px).
-- `⌘⌃1-9` jumps to the Nth window; `⌘⌃`` cycles forward.
+When Tab mode is on, every open Pro window snaps to the focused
+window's rectangle. From that point on, dragging, resizing, or adding
+a window applies to peers too — they follow.
+
+- **Tab strip lives above the toolbar.** Each tab is one workspace.
+- **Drag a tab** to reorder. Chrome-style insertion gap.
+- **Right-click** a tab for *Focus · Move-out · Close*. Hover for a preview card with the full workspace path.
+- **Color tabs** (Settings → General) paints each tab with a workspace-derived hue.
+- **Save current layout** (also in Settings → General → Window tabs) names and stores the current set of windows + rects. Restore from the same panel.
+- **`⌘⌃1` … `⌘⌃9`** jumps to the Nth window. **`⌘⌃`` cycles forward.
+- **Move-out** (right-click → ↗) shifts a window +60/+60 from its current rect so it visibly separates from the stack.
+
+When you turn Tab mode off, windows cascade 60 px apart so they
+visibly separate without any manual dragging.
 
 → Reference: [Tabs and Views](Tabs-and-Views.md)
 
 ---
 
-## AI consent UX rewrite
+## AI consent — a permission modal that reads like English
 
-The consent modal in ChatPanel used to dump raw JSON:
-
-```
-🔧 Allow LLM to run htmlook_apply_edit?
-arguments
-{"path": "/Users/.../foo.md", "find": "abc", "replace": "xyz"}
-```
-
-Now it reads:
+The AI permission modal used to dump raw JSON. Now:
 
 ```
 ● AI wants to: modify the active document
@@ -63,44 +54,44 @@ Now it reads:
   Category     write
   Reversible   Yes — ⌘Z undoes this
   ▸ Raw call — htmlook_apply_edit
+  [Deny] [Allow once] [Always (workspace)] [Always (everywhere)]
 ```
 
-- Tool descriptor map covers ~70 HTMLook MCP tools.
-- New **Settings → AI → Permissions → Tool permission defaults**: each of
-  six categories gets Auto / Ask / Block. Destructive tools (delete
-  voice memo, close tab, clear annotations) always ask, regardless of
-  default.
-- Default policy: Read / Capture / Navigate → Auto, Annotate / Write /
-  Run → Ask. Eliminates ~70% of modals in a normal session.
+Settings → AI → Permissions → **Tool permission defaults** lets you
+choose, per category, whether the assistant prompts you or not:
 
-→ Reference: [AI Apply Edit](AI-Apply-Edit.md)
+| Category | Default | What it covers |
+|---|---|---|
+| **Read** | Auto | Looking at your file list, the outline, the active file's content |
+| **Capture** | Auto | Taking a screenshot of the viewer, a region, an element |
+| **Navigate** | Auto | Scrolling, jumping between tabs, jumping to a line |
+| **Annotate** | Ask | Adding PDF highlights, PDF comments |
+| **Write** | Ask | Editing the active file, replacing text, creating files |
+| **Run** | Ask | Pasting into the terminal, starting voice recording |
+
+Destructive actions (deleting a voice memo, closing a tab, clearing
+PDF highlights) always ask, regardless of the category default.
+
+→ Reference: [AI Apply Edit](AI-Apply-Edit.md) · [Settings](Settings.md)
 
 ---
 
-## Terminal — tmux backend + persistence
+## Terminal that survives restart
 
-Terminals are now backed by tmux instead of raw PTY ownership. Closing
-and reopening the app drops you back exactly where you left off.
+Settings → Terminal → **Persistence → tmux**.
 
-- **Per-pane stable tmux naming** — `htmlook-<sha8>-tab<N>-pane<M>`,
-  SHA8 of the NFC-normalised workspace path. Deterministic across
-  restarts.
-- **Preset auto-resume** — Claude / Codex / Gemini sessions detect the
-  resume flag and skip the paste step on reattach.
-- **In-buffer search** — `⌘F` opens the SearchAddon overlay with hit
-  counter, `↵` / `⇧↵` to walk hits.
-- **Sync input** — broadcast typing across a pane group (green band on
-  participants).
-- **Drag-swap panes** — drag a pane header onto another to swap.
-- **Detach pane** — `⌘D` (or context menu) lifts the focused pane into
-  its own new window; tmux session moves with it.
-- **Keyboard selection mode** — `⌃⇧K` for arrow-key block selection,
-  Shift+arrow extend, Home/End/PgUp/PgDn, `⌘C` copy. (Was `⌃⇧Space`
-  before macOS Input Sources kept intercepting it.)
-- **Tab close → left neighbour** — closing the rightmost tab moves
-  focus left, not back to tab 0. Matches macOS Terminal / iTerm.
-- **Hangul cwd freeze fix** — fork+exec for `lsof` no longer wedges
-  the Tauri sync worker on Korean cwds.
+In tmux mode your sessions outlive the app process. Close HTMLook,
+reopen, and every pane reappears with its scrollback intact.
+
+Other terminal improvements this release:
+
+- **In-buffer search** — `⌘F` opens an in-pane search overlay with a hit counter. `↵` walks forward, `⇧↵` backward.
+- **Sync input across panes** — pane header context menu → *Sync input with…* paints participating panes with a green band and broadcasts your typing to every one of them.
+- **Drag-swap panes** — drag one pane's header onto another to swap positions.
+- **Detach a pane into a new window** — `⌘D` (or context menu → *Move to new window*) lifts the focused pane into its own window. Its session moves with it.
+- **Keyboard selection mode** — `⌃⇧K` enters arrow-key selection in the active pane. Shift+arrows extend, Home/End/PgUp/PgDn navigate, `⌘C` copies, `⎋` exits.
+- **Closing the rightmost tab** moves focus left (matching macOS Terminal and iTerm) instead of jumping back to tab 0.
+- **Korean cwd works everywhere** — a freeze that previously occurred when opening a Korean-named workspace is fixed.
 
 → Reference: [Terminal](Terminal.md)
 
@@ -108,35 +99,35 @@ and reopening the app drops you back exactly where you left off.
 
 ## Markdown WYSIWYG safety net
 
-A user-reported corruption thread led to a vertical fix slice:
+Live Markdown editing in HTMLook now treats your file with care:
 
-- **Selective tilde escape** — Turndown no longer mis-reads `200~300%`
-  as strikethrough.
-- **Task list loose-paragraph preservation** — checkboxes survive when
-  list items wrap in `<p>`.
-- **Frontmatter / KaTeX / GFM-strikethrough rules** — three Turndown
-  rules so YAML frontmatter, display + inline math, and `~~strike~~`
-  survive a render → edit → save cycle.
-- **File-watcher own-write echo dedup with NFC/NFD dual-key** — after
-  saving, the macOS watcher used to fire the file back and the app
-  reloaded its own write as raw markdown. Fixed.
-- **Disk md backup before every write** — a timestamped copy goes to
-  `~/.htmlook-backup/<basename>.<ts>.md` so a bad round-trip is
+- Round-trip stability is verified against a large library of real
+  Korean and English workspace documents. None of them drift on
+  edit → save → re-open.
+- When the editor detects a problem mid-edit (the kind of state
+  that previously could have produced a one-line corrupted file),
+  it stops the save and warns you instead of writing the bad state
+  to disk.
+- A timestamped backup of the previous on-disk version is written
+  to `~/.htmlook-backup/` before each save, so a bad round-trip is
   recoverable.
-- **Block-collapse guard** — a MutationObserver refuses to commit a
-  write that drops the rendered block count to zero (the WKWebView
-  contenteditable failure mode).
-- **196-document round-trip corpus** — runs on every CI build with a
-  9-bucket drift classifier. Current genuine drift: **0**.
+
+Specific symptoms that v1.0.14 fixes:
+
+- Numbers like `200~300%` no longer get misread as strikethrough
+  during a round-trip.
+- Task-list checkboxes survive even when the item's text wraps to
+  a paragraph.
+- Saving a file no longer causes the live view to reload its own
+  write as raw markdown text.
 
 → Reference: [Markdown Editor](Markdown-Editor.md)
 
 ---
 
-## Sidecars now live under `.htmlook/<category>/`
+## Sidecars moved into `.htmlook/<category>/`
 
-Five categories of co-located JSON sidecars used to clutter workspace
-folders so badly that `ls` and Finder views were noisy:
+Files HTMLook creates next to your media used to sit alongside them:
 
 - `*.annotations.json` — PDF annotations
 - `*.bookmarks.json` — video bookmarks
@@ -144,104 +135,49 @@ folders so badly that `ls` and Finder views were noisy:
 - `*.segments.json` — audio segments
 - `*.chapters.json` — audio / video chapters
 
-All five now live under `<workspace>/.htmlook/<category>/<source>.json`
-— invisible to the sidebar's hidden-folder filter and out of every
-file picker.
-
-- Read-time auto-migration: every read tries the new path first,
-  rename-migrates legacy on miss.
-- Eager scan on workspace claim moves all matching files in the
-  background.
-- Pretty-printed JSON now; empty bodies delete the file instead of
-  being written back.
+All five now live under `<workspace>/.htmlook/<category>/`. Your
+workspace root stays clean. Existing files are migrated the first
+time HTMLook reads them, in the background — you don't need to do
+anything.
 
 ---
 
-## Korean / Hangul polish
+## Korean filename polish
 
-A long-tail dogfooding effort on a Hangul-named workspace surfaced
-five separate NFD-vs-NFC alignment gaps. All five repaired:
+If you've worked with Korean (or other multi-codepoint) filenames
+inside HTMLook before, you may have hit:
 
-1. **Voice memo indicator** — `voice_list_for_dir` returned NFD keys
-   while JS `activeFileStem()` produced NFC; voice player + sidebar
-   indicator both rendered empty for Hangul filenames.
-2. **Workspace claim** — same Hangul workspace claimable twice under
-   NFC + NFD forms by different windows.
-3. **Recent workspaces** — same workspace as two entries.
-4. **Sidecar paths** — `.htmlook/<category>/<name>.json` written
-   under inconsistent forms.
-5. **Tab dedup** — opening the same Hangul file from two sources
-   created two tabs.
+- A voice memo indicator that didn't appear next to Korean-named files.
+- A workspace that landed twice in the Recent list under the same name.
+- Two tabs for the same Korean-named file when opened from different sources.
+- A freeze when opening a workspace whose path contained Korean.
 
-Plus the v1.0.14 ship-blocker: a Hangul cwd would cause
-`proc_pidinfo` to return empty, falling back to `lsof` shell-out —
-which was holding a Mutex through a 200–800 ms fork+exec and
-beachballing every Tauri sync command behind it. Fixed by moving the
-lsof off the sync worker (spawn_blocking) and dropping the lock
-before the fork.
-
----
-
-## MCP bridge multi-instance fix
-
-When two Pro instances ran concurrently (dev + prod), the second to
-start overwrote `~/.htmlook/mcp-bridge.port` with its own port. When
-that instance closed, the file stayed pointing at a dead port, and
-any `htmlook --mcp-server` subprocess spawned by Claude Code / Codex
-CLI / Cursor connected to nothing.
-
-Now: each instance also writes `~/.htmlook/bridges/<pid>.port`. A
-drop guard removes it on graceful shutdown. The subprocess scans the
-dir, ping-validates each candidate (`{"kind":"ping"}` → `"pong"`),
-and uses the first live one. Stale files are pruned opportunistically.
-
-Multi-instance dev workflows now just work.
-
----
-
-## Quality gate — 1014 tests
-
-The test suite expanded substantially this cycle:
-
-- **vitest** (frontend + helpers): **814 passing**
-- **cargo** (Rust, `pro` feature): **200 passing**
-- **Total**: **1014**
-
-Headline coverage:
-- `md-roundtrip.test.ts` — 95 cases + a 196-doc workspace-corpus walk
-  with a 9-bucket drift classifier.
-- `terminal-tab-close.test.ts` — the regression case for the close-tab
-  left-neighbour focus.
-- `korean-jamo.test.ts` + `composer.test.ts` + `scenarios.test.ts` —
-  72 cases covering the KoreanComposer state machine.
-- `mcp_server`, `tools_manifest`, `llm_adapter::permissions`,
-  `workspace_meta`, `tools_diag` — Rust-side coverage growing fastest.
-
-Full catalog: [`docs/TEST_SUITE.md`](https://github.com/deep-on/htmlook/blob/main/docs/TEST_SUITE.md)
-in the desktop repo.
+All of these are fixed. Korean-named folders and files behave the
+same as ASCII paths everywhere in the app.
 
 ---
 
 ## Smaller polish
 
-- **License dev bypass** — `pnpm tauri dev` builds short-circuit to
-  `'pro'` so dogfooding against an expired trial doesn't silently
-  disable Edit / Save / AI affordances.
-- **Settings polish** — `Saved ✓` flash on immediate-save settings,
-  AI-tab named sections (Model / Capabilities / Permissions / Usage),
-  Window-tabs settings wrapped in a card with proper hierarchy.
-- **macOS chrome** — Settings moves to app menu, PRO badge inside
-  toolbar, window min-size enforced, viewport pills auto-hide below
-  1000 px, viewer AI-state chip top-right.
-- **Sidebar polish** — Name column +12 px (Korean filenames stop
-  truncating mid-syllable), drag-drop scoped per-window so a Finder
-  drop into one window doesn't copy into every sidebar.
+- **`Saved ✓` flash** — settings that save immediately (toggles,
+  dropdowns) now show a small `Saved ✓` pill in the dialog header
+  for 1.5 s after each change. No more guessing whether it took.
+- **AI settings sub-sections** — the AI tab now reads as four
+  named groups: *Model Connection* · *Capabilities* · *Permissions*
+  · *Usage*. Same fields, clearer hierarchy.
+- **macOS chrome polish** — Settings opens from the app menu (`⌘,`)
+  where macOS users expect it, the PRO badge moved inside the
+  toolbar, a minimum window size keeps the layout from breaking
+  on resize.
+- **Sidebar polish** — the Name column gets +12 px so Korean
+  filenames stop truncating mid-syllable. Drag-and-drop into a
+  window only affects that window's sidebar.
 
 ---
 
-## Where to read more
+## Where to go next
 
-- Full ChangeLog: `CHANGELOG_v1.0.14.md` in the desktop repo
-- Test catalog: [`docs/TEST_SUITE.md`](https://github.com/deep-on/htmlook/blob/main/docs/TEST_SUITE.md)
-- Round-trip testing deep-dive: [`docs/MD_ROUNDTRIP_TESTING.md`](https://github.com/deep-on/htmlook/blob/main/docs/MD_ROUNDTRIP_TESTING.md)
-- Marketing-facing highlight: [htmlook.app/#whats-new](https://htmlook.app/#whats-new)
+- [Tabs and Views](Tabs-and-Views.md) — multi-window tab mode in full
+- [Terminal](Terminal.md) — tmux persistence and the new pane tools
+- [AI Apply Edit](AI-Apply-Edit.md) — the new consent modal in detail
+- [Settings](Settings.md) — every new toggle, where to find it

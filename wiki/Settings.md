@@ -43,7 +43,7 @@ About → Reset confirms, then clears settings. Workspace data (your files, side
 
 ## "Saved ✓" flash
 
-Immediate-save settings (toggles, dropdowns, font sizes) used to be silent — you couldn't tell if they persisted. v1.0.14 added a small `Saved ✓` pill in the dialog header that flashes for 1.5 s after each user-driven change, then fades. The flash is filtered when the change came from a different window (cross-window sync), so a multi-window setup doesn't strobe.
+Immediate-save settings (toggles, dropdowns, font sizes) used to be silent — you couldn't tell if they persisted. v1.0.14 added a small `Saved ✓` pill in the dialog header that flashes for 1.5 s after each change you make in the dialog, then fades.
 
 ## Next
 

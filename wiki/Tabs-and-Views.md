@@ -77,7 +77,7 @@ Turn on **Settings → General → Window tabs → Tab mode**. Every open Pro wi
 ### Window tab strip
 
 - Lives above the toolbar.
-- Drag tabs horizontally to **reorder** (Chrome-style insertion gap).
+- Drag tabs horizontally to **reorder**. An insertion gap shows where the tab will land.
 - Right-click for *Focus · Move-out · Close*.
 - Hover for a preview card showing the full workspace path.
 - Each tab is painted in a workspace-derived hue when **Color tabs** is on (Settings → General).
@@ -97,7 +97,7 @@ Right-click a tab → *Move-out* — the window shifts +60 / +60 px from its cur
 
 ### Saved layouts
 
-Save the current set of windows (with rects + colors) as a named layout: **Settings → General → Window tabs → Save current layout**. Restore from the same panel. Storage: `~/.htmlook/window-layouts.json`. Restore honours the *Layout restore* mode — *Exact* (same rects) or *Cascade 30 px* (fan out from anchor).
+Save the current set of windows (with rects + colors) as a named layout: **Settings → General → Window tabs → Save current layout**. Restore from the same panel. Restore honours the *Layout restore* mode — *Exact* (same rects) or *Cascade 30 px* (fan out from anchor).
 
 ### Turning Tab mode off
 

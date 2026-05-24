@@ -72,8 +72,8 @@ Turn on in **Settings → Terminal → Persistence → tmux**. (The legacy *visu
 ### What tmux mode gets you
 
 - **Reattach in place** — close the app, reopen, every pane's scrollback returns. The tab labels reflect the *real* foreground process (`claude`, `codex`, your shell), not what HTMLook *thinks* should be there.
-- **Preset auto-resume** — a tab created with the Claude / Codex preset detects an existing session for the workspace and silently picks up `--continue --fork-session` instead of starting fresh.
-- **Per-pane stable names** — tmux session naming is `htmlook-<sha8>-tab<N>-pane<M>`, sha8 of the NFC-normalised workspace path. Deterministic across restarts and across macOS APFS NFD/NFC quirks.
+- **Preset auto-resume** — a tab created with the Claude / Codex preset notices that the workspace already has a session and quietly resumes it instead of starting fresh.
+- **Reattach survives Korean folder names** — your tmux sessions reattach to the same workspace whether your folder is `~/Works/project` or `~/Works/배터리진단`.
 
 ### In-buffer search
 
@@ -85,7 +85,7 @@ Open the pane context menu (⌃ click the pane header) → *Sync input with…* 
 
 ### Drag-swap panes
 
-Drag a pane header onto another pane header to swap positions. Cursor-based drag with snapshot centers — no HTML5 drop interception issues.
+Drag a pane header onto another pane header to swap positions.
 
 ### Detach a pane into its own window
 
@@ -107,15 +107,15 @@ ActivityBar tmux button shows every htmlook tmux session on the machine — *Thi
 | `⌘C` | Copy selected text |
 | `⎋` | Exit selection mode |
 
-(Default was `⌃⇧Space` before — macOS Input Sources kept intercepting it. If you upgraded from an early v1.0.14, the binding migrates automatically.)
+You can change the binding in Settings → Terminal → *Selection mode shortcut*.
 
 ### Tab close → left neighbour
 
 Closing the rightmost terminal tab moves focus to its **left neighbour**, matching macOS Terminal / iTerm. Previously this jumped back to tab 0.
 
-### Hangul cwd
+### Korean-named workspaces
 
-Korean-named cwds (`/Users/you/Works/배터리진단`) work in every pane. v1.0.14 specifically fixed a freeze where `proc_pidinfo` returned empty on Hangul paths and the `lsof` fallback wedged the Tauri sync worker.
+Terminal panes work in Korean-named workspaces (`/Users/you/Works/배터리진단`) the same as any other path. v1.0.14 fixed a freeze that previously occurred when opening such a workspace.
 
 ## Next
 

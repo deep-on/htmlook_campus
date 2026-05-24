@@ -72,8 +72,8 @@ preset 툴바가 특정 CLI 로 실행되는 새 탭을 엽니다:
 ### tmux 모드가 주는 것
 
 - **그 자리에 reattach** — 앱 닫고 다시 열면 각 pane 의 scrollback 이 그대로. 탭 라벨은 *실제* 포그라운드 프로세스 (`claude`, `codex`, 셸) 를 반영, HTMLook 의 추측이 아닌.
-- **Preset 자동 resume** — Claude / Codex preset 으로 만든 탭이 워크스페이스에 기존 세션이 있으면 silent 하게 `--continue --fork-session` 으로 이어받음.
-- **Pane 별 안정 이름** — tmux 세션 명명은 `htmlook-<sha8>-tab<N>-pane<M>`, sha8 은 NFC 정규화된 워크스페이스 path. 재시작 / APFS NFD/NFC quirks 모두 deterministic.
+- **Preset 자동 resume** — Claude / Codex preset 으로 만든 탭이 워크스페이스에 기존 세션이 있으면 silent 하게 이어받음.
+- **한글 폴더에서도 같은 자리로 reattach** — 워크스페이스가 `~/Works/project` 든 `~/Works/배터리진단` 이든 동일하게 tmux 세션이 같은 워크스페이스에 다시 붙음.
 
 ### 버퍼 내 검색
 
@@ -85,7 +85,7 @@ Pane 헤더 ⌃ 클릭으로 컨텍스트 메뉴 → *Sync input with…* → �
 
 ### Pane 드래그-swap
 
-Pane 헤더를 다른 pane 헤더 위로 드래그해 위치 교환. cursor-based 드래그 + snapshot centers — HTML5 drop interception 문제 없음.
+Pane 헤더를 다른 pane 헤더 위로 드래그해 위치 교환.
 
 ### Pane 을 새 윈도우로 detach
 
@@ -107,15 +107,15 @@ ActivityBar 의 tmux 버튼이 machine 의 모든 htmlook tmux 세션 표시 —
 | `⌘C` | 선택 텍스트 복사 |
 | `⎋` | 선택 모드 종료 |
 
-(이전엔 `⌃⇧Space` 였으나 macOS Input Sources 가 가로채서 변경. v1.0.14 초기 버전에서 업그레이드 시 바인딩 자동 마이그레이션.)
+Settings → Terminal → *선택 모드 단축키* 에서 변경 가능.
 
 ### 탭 close → 왼쪽 이웃
 
 가장 오른쪽 터미널 탭을 닫으면 포커스가 **왼쪽 이웃** 으로 이동, macOS Terminal / iTerm 과 일치. 이전엔 탭 0 으로 튀었음.
 
-### 한글 cwd
+### 한글 이름 워크스페이스
 
-한글 cwd (`/Users/you/Works/배터리진단`) 모든 pane 에서 정상 동작. v1.0.14 에서 `proc_pidinfo` 가 한글 path 에 empty 반환하고 `lsof` fallback 이 Tauri sync worker 를 wedge 시키던 freeze 버그를 fix.
+터미널 pane 은 한글 이름 워크스페이스 (`/Users/you/Works/배터리진단`) 에서도 다른 path 와 동일하게 동작합니다. v1.0.14 가 이전엔 그런 워크스페이스를 열 때 발생하던 freeze 를 fix.
 
 ## 다음
 
