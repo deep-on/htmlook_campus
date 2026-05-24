@@ -115,6 +115,50 @@ Path 안전: 파일이 활성 워크스페이스 root 안으로 resolve 되어�
 | `rate-limited: <tool_name> burst exhausted. Retry after ~<ms> ms.` | 도구별 token bucket | 명시 ms back off |
 | `DEPENDENCY_MISSING:{…}` | 외부 도구 부재 | 특별 — [에러 & 복구](AI-Errors-Recovery-ko.md) 참조 |
 
+## 허가 모달 — 사용자가 보는 것 (v1.0.14+)
+
+HTMLook 이 `apply_edit` (또는 어떤 write tool 이든) 실행을 허락하기 전에 사용자는 허가 모달을 봅니다. v1.0.14 에서 raw JSON 덤프에서 사람이 읽을 수 있는 블록으로 다시 작성됐습니다:
+
+```
+● AI 가 하려는 것: 활성 문서 수정
+  현재 파일에서 find-and-replace 편집
+  범위        foo.md
+  카테고리    write
+  되돌리기    예 — ⌘Z 로 취소 가능
+  ▸ Raw call — htmlook_apply_edit
+  [거부] [한 번만 허용] [항상 (워크스페이스)] [항상 (전역)]
+```
+
+버튼:
+
+| 선택 | 범위 | 영속 |
+|---|---|---|
+| **거부** | 이번 호출 | — |
+| **한 번만 허용** | 이번 호출 | — |
+| **항상 (워크스페이스)** | 이 워크스페이스의 미래 호출 | `<workspace>/.htmlook/tools.json` |
+| **항상 (전역)** | 모든 곳의 미래 호출 | `~/.htmlook/state.json` |
+
+### Tool descriptor → 카테고리
+
+모달은 호출 중인 tool 을 6 개 카테고리 중 하나로 분류합니다. 사용자의 *Settings → AI → Permissions → Tool permission defaults* 가 모달이 뜨기 *전에* 카테고리별 동작을 선택:
+
+| 카테고리 | 기본값 | 예시 |
+|---|---|---|
+| **Read** | Auto | `active_file`, `outline`, `workspace_files` |
+| **Capture** | Auto | `capture_viewport`, `capture_rect`, `region_current_png` |
+| **Navigate** | Auto | `scroll_to`, `jump_to_line`, `focus_tab` |
+| **Annotate** | Ask | `pdf_highlight_add`, `pdf_comment_add` |
+| **Write** | Ask | `apply_edit`, `replace_in_active`, `create_file` |
+| **Run** | Ask | 터미널 paste / spawn, `voice_record_start` |
+
+효과: 일상 세션에서 모달 ~70% 감소 (read / capture / navigate 는 자동 통과). 위험한 tool — `voice_delete`, `close_tab`, `pdf_highlight_clear` — 은 카테고리 default 와 상관없이 항상 묻습니다.
+
+### 에이전트로서 *하지 말 것*
+
+- 거부된 호출 재시도 금지. *Deny* 는 hard signal — 멈추고 사용자에게 surface.
+- `rate-limited:` 에러에 권고된 back-off 보다 빠르게 loop 돌리지 말기 (위 실패 모드 참조).
+- 다른 tool 로 허가 prompt 우회 시도 금지 — 카테고리는 tool 이름이 아니라 underlying action 기준.
+
 ## 다음
 
 - [다중 에이전트 협업 →](AI-Collaboration-ko.md)

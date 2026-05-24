@@ -65,6 +65,44 @@ Untitled tabs (drafts) don't auto-save — they ask for a destination on ⌘S.
 
 HTMLook can restore the last set of tabs per workspace on launch. Settings → General → *On launch* → *Restore last session* (default) or *Start empty*.
 
+## Multi-window tab mode (v1.0.14+)
+
+Two tab levels coexist:
+
+- **File tabs** (covered above) — one per file inside a single window.
+- **Window tabs** — a Chrome-style strip above the toolbar where each tab is a *workspace*.
+
+Turn on **Settings → General → Window tabs → Tab mode**. Every open Pro window snaps to the focused window's rect; drag / resize / +Add propagates so peers follow.
+
+### Window tab strip
+
+- Lives above the toolbar.
+- Drag tabs horizontally to **reorder** (Chrome-style insertion gap).
+- Right-click for *Focus · Move-out · Close*.
+- Hover for a preview card showing the full workspace path.
+- Each tab is painted in a workspace-derived hue when **Color tabs** is on (Settings → General).
+
+### Shortcuts
+
+| Action | Shortcut |
+|---|---|
+| Jump to Nth window | `⌘⌃1` … `⌘⌃9` |
+| Cycle to next window | `⌘⌃`` |
+| Stack windows here (use focused window's rect for all) | `⌘⌃S` |
+| Add a new empty workspace window | `+` button on the strip |
+
+### Move-out (↗)
+
+Right-click a tab → *Move-out* — the window shifts +60 / +60 px from its current rect so it visibly separates from the stack. Use when you want one workspace beside the others.
+
+### Saved layouts
+
+Save the current set of windows (with rects + colors) as a named layout: **Settings → General → Window tabs → Save current layout**. Restore from the same panel. Storage: `~/.htmlook/window-layouts.json`. Restore honours the *Layout restore* mode — *Exact* (same rects) or *Cascade 30 px* (fan out from anchor).
+
+### Turning Tab mode off
+
+Toggling off auto-cascades windows 60 px apart so they visibly separate (no manual dragging required).
+
 ## Next
 
 - [Sidebar →](Sidebar.md)

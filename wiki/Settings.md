@@ -6,11 +6,11 @@
 
 | Section | Where the controls live |
 |---|---|
-| **General** | Theme (System / Light / Dark), On launch (restore last session / start empty), language (auto + 한국어 + English + others), accent colour swatches (Default / Feature Accents / Persona Tones) |
+| **General** | Theme (System / Light / Dark), On launch (restore last session / start empty), language (auto + 한국어 + English + others), accent colour swatches (Default / Feature Accents / Persona Tones), **Window tabs** card — Tab mode toggle · Color tabs toggle · Layout restore mode (Exact / Cascade 30 px) · Save / restore named layouts |
 | **Viewer** | Viewer theme (Built-in / From Persona Videos / Feature Accents), font family + size, OpenType features, print header / footer tokens (`{filename}` `{date}` `{page}` `{pages}`), dual-view sync-scroll default, code-view default for `.md` |
 | **Files** | Workspace defaults, sidebar follow-active-file toggle, hide-dotfiles toggle, default sort, search exclusions |
-| **Terminal** (Pro) | Preset commands (Claude / Codex / Gemini / Shell), Warp-style inline-suggest toggle, zsh-autosuggestions install button, terminal font + size, cursor style, OSC 7 cwd handling |
-| **AI** (Pro) | BYOM providers — add / edit / remove. Each provider holds base URL + key + default model + vision toggle. Permission ledger lives here too (per-tool / per-workspace / global decisions you can revoke) |
+| **Terminal** (Pro) | Preset commands (Claude / Codex / Gemini / Shell), Warp-style inline-suggest toggle, zsh-autosuggestions install button, terminal font + size, cursor style, OSC 7 cwd handling, **Persistence** (off / visual buffer / tmux), **Track cwd in tab title** toggle, **Selection mode** shortcut (default `⌃⇧K`), tmux mouse-mode toggle |
+| **AI** (Pro) | Four named sub-sections: **Model Connection** (BYOM providers — add / edit / remove, each provider holds base URL + key + default model + vision toggle), **Capabilities** (per-provider feature gates), **Permissions** (Tool permission defaults: Read / Capture / Navigate / Annotate / Write / Run × Auto / Ask / Block + revocable per-tool / per-workspace / global ledger), **Usage** (request counts, token cost so far) |
 | **Tools** (Pro) | The `tools.json` editor — built-in tools (Mermaid, D2, Quarto, LibreOffice, …), add-wizard for custom tools, tier badges, install dependencies via Homebrew |
 | **Plans** | Subscription state (Easier) / Pro Solo trial state (Pro), upgrade buttons, license keys |
 | **About** | Version, "Check for updates" button (Pro), system dependencies status (LibreOffice detected ✓ / not detected ●), library credits (pdf.js, LibreOffice for PPTX) |
@@ -40,6 +40,10 @@ There is no sign-in on Pro. The only "account" is whichever AI provider you poin
 ## Reset
 
 About → Reset confirms, then clears settings. Workspace data (your files, sidecars, voice memos, sketches) stays intact — Reset only touches the app's own preferences.
+
+## "Saved ✓" flash
+
+Immediate-save settings (toggles, dropdowns, font sizes) used to be silent — you couldn't tell if they persisted. v1.0.14 added a small `Saved ✓` pill in the dialog header that flashes for 1.5 s after each user-driven change, then fades. The flash is filtered when the change came from a different window (cross-window sync), so a multi-window setup doesn't strobe.
 
 ## Next
 

@@ -63,6 +63,60 @@ Highlight text in the viewer, hit ⌘⌥⇧T (or *View → Send Selection to Ter
 
 Right-click anywhere in the terminal panel for: *Copy* / *Paste* / *Select all* / *Clear scrollback* / *Reset terminal* / *Rename tab* / *Move to new window*.
 
+## Persistence — tmux backend (v1.0.14+)
+
+Terminals are now backed by **tmux** instead of raw PTY ownership. Sessions outlive the app process: close HTMLook, reopen, and you land in the same scrollback.
+
+Turn on in **Settings → Terminal → Persistence → tmux**. (The legacy *visual buffer* mode is still available — restore the rendered output without keeping the shell alive.)
+
+### What tmux mode gets you
+
+- **Reattach in place** — close the app, reopen, every pane's scrollback returns. The tab labels reflect the *real* foreground process (`claude`, `codex`, your shell), not what HTMLook *thinks* should be there.
+- **Preset auto-resume** — a tab created with the Claude / Codex preset detects an existing session for the workspace and silently picks up `--continue --fork-session` instead of starting fresh.
+- **Per-pane stable names** — tmux session naming is `htmlook-<sha8>-tab<N>-pane<M>`, sha8 of the NFC-normalised workspace path. Deterministic across restarts and across macOS APFS NFD/NFC quirks.
+
+### In-buffer search
+
+`⌘F` opens a search overlay inside the active pane. Hit counter shows `M of N`; `↵` walks forward, `⇧↵` backward, `⎋` closes.
+
+### Sync input across panes
+
+Open the pane context menu (⌃ click the pane header) → *Sync input with…* → pick the other panes. A green band marks every pane in the sync group. Type once, every pane receives the keystrokes. Useful for `git pull` in three repos at once, etc.
+
+### Drag-swap panes
+
+Drag a pane header onto another pane header to swap positions. Cursor-based drag with snapshot centers — no HTML5 drop interception issues.
+
+### Detach a pane into its own window
+
+`⌘D` on the focused pane (when terminal is focused) or *Pane context menu → Move to new window*. The tmux session moves with the pane — same scrollback, same running command.
+
+### Workspace tmux popover
+
+ActivityBar tmux button shows every htmlook tmux session on the machine — *This workspace* + *Other workspaces*. Click an orphan to attach back; click a live pane row to focus it in the current window.
+
+### Keyboard selection mode
+
+`⌃⇧K` enters block-selection mode in the active pane:
+
+| Key | Action |
+|---|---|
+| Arrow keys | Move cursor |
+| Shift + arrow | Extend selection |
+| Home / End / PgUp / PgDn | Navigate by line / page |
+| `⌘C` | Copy selected text |
+| `⎋` | Exit selection mode |
+
+(Default was `⌃⇧Space` before — macOS Input Sources kept intercepting it. If you upgraded from an early v1.0.14, the binding migrates automatically.)
+
+### Tab close → left neighbour
+
+Closing the rightmost terminal tab moves focus to its **left neighbour**, matching macOS Terminal / iTerm. Previously this jumped back to tab 0.
+
+### Hangul cwd
+
+Korean-named cwds (`/Users/you/Works/배터리진단`) work in every pane. v1.0.14 specifically fixed a freeze where `proc_pidinfo` returned empty on Hangul paths and the `lsof` fallback wedged the Tauri sync worker.
+
 ## Next
 
 - [AI Assistant →](ChatPanel-BYOM.md)
