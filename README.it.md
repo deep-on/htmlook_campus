@@ -9,8 +9,8 @@
 > BYOM → editing → comandi → save-as-skill → profili inclusi → scrivere il
 > tuo profilo personale.
 
-Questo repo segue **HTMLook Pro v1.0.14** (rilasciato il
-2026-05-24). L'app desktop è su [htmlook.app](https://htmlook.app), con
+Questo repo segue **HTMLook Pro v1.0.15** (rilasciato il
+2026-05-25). L'app desktop è su [htmlook.app](https://htmlook.app), con
 14 giorni di prova gratuita. BYOM (Bring-Your-Own-Model) significa margine
 zero sui token — Claude · GPT · Gemini · DeepSeek · Mistral · Together ·
 Groq · Cerebras · Ollama, chiami il modello che preferisci direttamente con
@@ -154,8 +154,8 @@ verifica + elenco dei claim falsi corretti:
 
 ## Stato
 
-Questo repo segue **HTMLook Pro v1.0.14** (rilasciato il
-2026-05-24) come materiale didattico vivo. L'endpoint del catalogo
+Questo repo segue **HTMLook Pro v1.0.15** (rilasciato il
+2026-05-25) come materiale didattico vivo. L'endpoint del catalogo
 (`htmlook.app/catalog`) ricarica gli URL raw di questo repo
 (cache 24 h).
 
