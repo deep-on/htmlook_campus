@@ -9,7 +9,7 @@
 > 編集 → コマンド → save-as-skill → バンドルプロファイル →
 > 自分のプロファイル作成までひと通り体験できます。
 
-このリポジトリは **HTMLook Pro v1.0.15**（2026-05-25 リリース）と
+このリポジトリは **HTMLook Pro v1.0.16**（2026-05-26 リリース）と
 同期しています。デスクトップアプリは
 [htmlook.app](https://htmlook.app) で 14 日間の無料トライアル。BYOM
 (Bring-Your-Own-Model) なのでトークンマージンはゼロ — Claude · GPT ·
@@ -149,7 +149,7 @@ Slidev / Quarto / D2 / Astro Starlight / Marimo / Excalidraw / Manim。
 
 ## ステータス
 
-このリポジトリは **HTMLook Pro v1.0.15** (2026-05-25 リリース) と
+このリポジトリは **HTMLook Pro v1.0.16** (2026-05-26 リリース) と
 同期した学習素材です。カタログエンドポイント (`htmlook.app/catalog`) が
 このリポジトリの raw URL を fresh-fetch します (24 h キャッシュ)。
 
