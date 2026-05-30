@@ -1,5 +1,5 @@
 ---
-title: acme CLI
+title: Skiff CLI
 description: A workflow runner for production deployments
 template: splash
 hero:
@@ -9,14 +9,14 @@ hero:
 ## Install
 
 ```bash
-brew install acme/tap/cli
-# or: curl -fsSL https://acme.dev/install.sh | sh
+brew install skiff/tap/cli
+# or: curl -fsSL https://skiff.example/install.sh | sh
 ```
 
 ## First run
 
 ```bash
-acme init my-app
+skiff init my-app
 cd my-app
-acme run --config=dev.yaml
+skiff run --config=dev.yaml
 ```

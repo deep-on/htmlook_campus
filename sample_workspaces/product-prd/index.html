@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Lattice OS — 15s polished spec page</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #fafafa;
+        color: #0f172a;
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", "Pretendard",
+          system-ui, sans-serif;
+      }
+      :root {
+        --paper:   #fafafa;
+        --paper-2: #f1f5f9;
+        --ink:     #0f172a;
+        --ink-soft: #475569;
+        --rule:    rgba(15, 23, 42, 0.08);
+        --rule-2:  rgba(15, 23, 42, 0.16);
+        --blue:    #2563eb;
+        --blue-2:  #1d4ed8;
+        --mint:    #10b981;
+      }
+
+      .clip {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        will-change: opacity, transform;
+      }
+      .scene-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 64px 120px;
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      /* Static dotted spec-paper background — no motion */
+      .spec-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 20% 0%, rgba(37, 99, 235, 0.06) 0%, transparent 45%),
+          radial-gradient(circle at 80% 100%, rgba(16, 185, 129, 0.05) 0%, transparent 45%),
+          var(--paper);
+      }
+
+      /* ── Scene 1 — Wordmark + version (0-3s) ──────────────────────── */
+      .wordmark {
+        text-align: center;
+      }
+      .wordmark .glyph {
+        display: inline-grid;
+        grid-template-columns: repeat(3, 18px);
+        grid-template-rows: repeat(3, 18px);
+        gap: 6px;
+        margin-bottom: 32px;
+      }
+      .wordmark .glyph .cell {
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
+        background: var(--rule-2);
+      }
+      .wordmark .glyph .cell.b { background: var(--blue); }
+      .wordmark .glyph .cell.m { background: var(--mint); }
+      .wordmark .name {
+        font-size: 132px;
+        font-weight: 800;
+        letter-spacing: -4px;
+        color: var(--ink);
+        line-height: 1;
+      }
+      .wordmark .name .os {
+        background: linear-gradient(135deg, var(--blue) 0%, var(--mint) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .wordmark .meta {
+        margin-top: 28px;
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 22px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+      }
+      .wordmark .pill {
+        padding: 5px 14px;
+        border-radius: 999px;
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--blue);
+        border: 1px solid rgba(37, 99, 235, 0.25);
+      }
+      .wordmark .pill.muted {
+        background: rgba(15, 23, 42, 0.05);
+        color: var(--ink-soft);
+        border-color: var(--rule-2);
+      }
+      .wordmark .pill.mint {
+        background: rgba(16, 185, 129, 0.1);
+        color: var(--mint);
+        border-color: rgba(16, 185, 129, 0.3);
+      }
+
+      /* ── Scene 2 — Spec rows (3-9s) ──────────────────────────────── */
+      .spec {
+        width: 1500px;
+      }
+      .spec .head {
+        display: grid;
+        grid-template-columns: 60px 1.2fr 1fr 0.7fr;
+        gap: 24px;
+        padding: 0 12px 14px;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 14px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+        border-bottom: 1px solid var(--rule-2);
+      }
+      .spec .head span:nth-child(1) { color: var(--ink-soft); }
+      .spec .head span:nth-child(2) { color: var(--blue); }
+      .spec .head span:nth-child(3) { color: var(--ink); }
+      .spec .head span:nth-child(4) { color: var(--mint); }
+
+      .spec-row {
+        display: grid;
+        grid-template-columns: 60px 1.2fr 1fr 0.7fr;
+        gap: 24px;
+        padding: 22px 12px;
+        align-items: center;
+        border-bottom: 1px solid var(--rule);
+      }
+      .spec-row .num {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 22px;
+        font-weight: 600;
+        color: var(--ink-soft);
+      }
+      .spec-row .req {
+        font-size: 28px;
+        font-weight: 600;
+        color: var(--ink);
+        line-height: 1.3;
+        letter-spacing: -0.5px;
+      }
+      .spec-row .req .scope {
+        display: block;
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--ink-soft);
+        font-family: ui-monospace, monospace;
+        letter-spacing: 1px;
+        margin-top: 4px;
+      }
+
+      /* Wireframe icon — pure CSS sketches */
+      .wire {
+        width: 280px;
+        height: 130px;
+        background: #fff;
+        border: 1.5px solid var(--rule-2);
+        border-radius: 8px;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        position: relative;
+        overflow: hidden;
+      }
+      .wire .wbar {
+        height: 8px;
+        background: var(--rule);
+        border-radius: 3px;
+      }
+      .wire .wbar.short { width: 40%; }
+      .wire .wbar.mid { width: 65%; }
+      .wire .wbar.btn {
+        width: 70px;
+        height: 22px;
+        background: var(--blue);
+        border-radius: 5px;
+        margin-top: auto;
+      }
+      .wire .wgrid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+      }
+      .wire .wcell {
+        height: 22px;
+        background: var(--rule);
+        border-radius: 4px;
+      }
+      .wire .wfilter {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .wire .wchip {
+        height: 18px;
+        padding: 0 8px;
+        background: rgba(37, 99, 235, 0.12);
+        border: 1px solid rgba(37, 99, 235, 0.3);
+        border-radius: 999px;
+        font-size: 9px;
+        line-height: 17px;
+        font-family: ui-monospace, monospace;
+        color: var(--blue);
+        letter-spacing: 1px;
+      }
+      .wire .wchart {
+        flex: 1;
+        background: linear-gradient(180deg, rgba(37, 99, 235, 0.12) 0%, transparent 100%);
+        border-radius: 4px;
+        position: relative;
+      }
+      .wire .wchart::after {
+        content: "";
+        position: absolute;
+        left: 8%; right: 8%; bottom: 30%;
+        height: 2px;
+        background: var(--blue);
+        border-radius: 2px;
+      }
+      .wire .wlabel {
+        position: absolute;
+        top: 8px; right: 10px;
+        font-family: ui-monospace, monospace;
+        font-size: 9px;
+        letter-spacing: 2px;
+        color: var(--mint);
+      }
+
+      .ticket {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 24px;
+        color: var(--blue);
+        font-weight: 600;
+        letter-spacing: 1px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .ticket .id {
+        background: rgba(37, 99, 235, 0.08);
+        border: 1px solid rgba(37, 99, 235, 0.25);
+        border-radius: 6px;
+        padding: 4px 10px;
+        align-self: flex-start;
+      }
+      .ticket .title {
+        font-size: 14px;
+        color: var(--ink-soft);
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
+      }
+
+      /* ── Scene 3 — Stamp (9-12s) ─────────────────────────────────── */
+      .stamp-wrap {
+        text-align: center;
+      }
+      .stamp-block {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 38px 64px;
+        border: 3px solid var(--mint);
+        border-radius: 18px;
+        background: rgba(16, 185, 129, 0.04);
+        position: relative;
+      }
+      .stamp-block::before,
+      .stamp-block::after {
+        content: "";
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        border: 3px solid var(--mint);
+        border-radius: 3px;
+      }
+      .stamp-block::before { top: -8px; left: -8px; border-right: none; border-bottom: none; }
+      .stamp-block::after { bottom: -8px; right: -8px; border-left: none; border-top: none; }
+      .stamp-block .stamp-label {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 28px;
+        letter-spacing: 8px;
+        text-transform: uppercase;
+        color: var(--mint);
+        font-weight: 700;
+        margin-bottom: 14px;
+      }
+      .stamp-block .stamp-line {
+        font-size: 96px;
+        font-weight: 800;
+        letter-spacing: -3px;
+        color: var(--ink);
+        line-height: 1;
+      }
+      .stamp-block .stamp-line .accent {
+        background: linear-gradient(135deg, var(--blue) 0%, var(--mint) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .stamp-block .stamp-meta {
+        margin-top: 22px;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 22px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+      }
+      .stamp-block .stamp-meta .by { color: var(--blue); }
+
+      /* ── Scene 4 — Footer (12-15s) ───────────────────────────────── */
+      .foot {
+        text-align: center;
+      }
+      .foot .doc-title {
+        font-size: 84px;
+        font-weight: 800;
+        letter-spacing: -2px;
+        color: var(--ink);
+        line-height: 1;
+        margin-bottom: 22px;
+      }
+      .foot .doc-title .v {
+        background: linear-gradient(135deg, var(--blue) 0%, var(--mint) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-left: 16px;
+      }
+      .foot .doc-line {
+        margin: 24px auto;
+        width: 360px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--blue), var(--mint));
+        border-radius: 2px;
+        transform-origin: left center;
+      }
+      .foot .doc-meta {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 24px;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+      }
+      .foot .doc-meta .at { color: var(--blue); }
+      .foot .doc-meta .green { color: var(--mint); }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="15"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div class="spec-bg" id="spec-bg" aria-hidden="true"></div>
+
+      <!-- Scene 1 — Wordmark + version (0-3s) -->
+      <div id="s1" class="clip" data-start="0" data-duration="3" data-track-index="1">
+        <div class="scene-content">
+          <div class="wordmark">
+            <div class="glyph" id="s1-glyph">
+              <span class="cell b"></span>
+              <span class="cell"></span>
+              <span class="cell m"></span>
+              <span class="cell"></span>
+              <span class="cell b"></span>
+              <span class="cell"></span>
+              <span class="cell m"></span>
+              <span class="cell"></span>
+              <span class="cell b"></span>
+            </div>
+            <div class="name">Lattice <span class="os">OS</span></div>
+            <div class="meta">
+              <span class="pill">v0.4</span>
+              <span class="pill muted">PRD &middot; Q2 2026</span>
+              <span class="pill mint">Launch · May 28</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 2 — Three spec rows (3-9s) -->
+      <div id="s2" class="clip" data-start="3" data-duration="6" data-track-index="1">
+        <div class="scene-content">
+          <div class="spec">
+            <div class="head">
+              <span>#</span>
+              <span>Requirement</span>
+              <span>Wireframe</span>
+              <span>Ticket</span>
+            </div>
+
+            <div class="spec-row" data-row="1">
+              <div class="num">01</div>
+              <div class="req">
+                Saved Filters in run history
+                <span class="scope">/runs &middot; sidebar &middot; chip rail</span>
+              </div>
+              <div class="wire">
+                <div class="wlabel">SAVED</div>
+                <div class="wbar short"></div>
+                <div class="wfilter">
+                  <span class="wchip">Status</span>
+                  <span class="wchip">Owner</span>
+                  <span class="wchip">+ Add</span>
+                </div>
+                <div class="wgrid">
+                  <span class="wcell"></span><span class="wcell"></span><span class="wcell"></span>
+                  <span class="wcell"></span><span class="wcell"></span><span class="wcell"></span>
+                </div>
+              </div>
+              <div class="ticket">
+                <span class="id">PROD-1234</span>
+                <span class="title">Saved filter component</span>
+              </div>
+            </div>
+
+            <div class="spec-row" data-row="2">
+              <div class="num">02</div>
+              <div class="req">
+                Bulk re-run from selection
+                <span class="scope">/runs &middot; multi-select toolbar</span>
+              </div>
+              <div class="wire">
+                <div class="wbar short"></div>
+                <div class="wbar mid"></div>
+                <div class="wgrid">
+                  <span class="wcell"></span><span class="wcell"></span><span class="wcell"></span>
+                </div>
+                <div class="wbar btn"></div>
+              </div>
+              <div class="ticket">
+                <span class="id">PROD-1235</span>
+                <span class="title">Bulk re-run action</span>
+              </div>
+            </div>
+
+            <div class="spec-row" data-row="3">
+              <div class="num">03</div>
+              <div class="req">
+                Cost-by-workspace chart
+                <span class="scope">/billing &middot; dashboard card</span>
+              </div>
+              <div class="wire">
+                <div class="wbar short"></div>
+                <div class="wbar mid"></div>
+                <div class="wchart"></div>
+              </div>
+              <div class="ticket">
+                <span class="id">PROD-1236</span>
+                <span class="title">Cost chart card</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3 — Ready stamp (9-12s) -->
+      <div id="s3" class="clip" data-start="9" data-duration="3" data-track-index="1">
+        <div class="scene-content">
+          <div class="stamp-wrap">
+            <div class="stamp-block" id="s3-stamp">
+              <div class="stamp-label">— Approved —</div>
+              <div class="stamp-line">Ready for <span class="accent">Eng review</span></div>
+              <div class="stamp-meta">
+                <span class="by">PM</span> &nbsp;A.K.&nbsp;<span style="color:var(--ink-soft)">·</span>&nbsp;3 reqs &middot; 3 tickets
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 4 — Footer (12-15s) -->
+      <div id="s4" class="clip" data-start="12" data-duration="3" data-track-index="1">
+        <div class="scene-content">
+          <div class="foot">
+            <div class="doc-title">Lattice OS &middot; PRD <span class="v">v0.4</span></div>
+            <div class="doc-line" id="s4-line"></div>
+            <div class="doc-meta">
+              <span class="at">lattice.so/</span>specs/v0-4
+              <span style="margin:0 14px;color:var(--ink-soft)">·</span>
+              <span class="green">Eng review &middot; May 02</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+
+      // ── Scene 1 — Wordmark (0-3s) ──
+      tl.fromTo("#s1", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0);
+      tl.from("#s1-glyph .cell", {
+        opacity: 0,
+        scale: 0,
+        duration: 0.35,
+        stagger: 0.04,
+        ease: "back.out(1.5)",
+        transformOrigin: "50% 50%",
+      }, 0.15);
+      tl.from("#s1 .name", { opacity: 0, y: 16, duration: 0.65, ease: "power3.out" }, 0.55);
+      tl.from("#s1 .meta .pill", {
+        opacity: 0,
+        y: 10,
+        duration: 0.45,
+        stagger: 0.12,
+        ease: "power2.out",
+      }, 1.0);
+      tl.to("#s1", { opacity: 0, duration: 0.4, ease: "power2.in" }, 2.55);
+      tl.set("#s1", { opacity: 0 }, 3);
+
+      // ── Scene 2 — Spec rows (3-9s) ──
+      tl.set("#s2", { opacity: 1 }, 3);
+      tl.from("#s2 .head", { opacity: 0, y: 8, duration: 0.45, ease: "power2.out" }, 3.05);
+      // Row 1 stagger across all 4 columns
+      tl.from("#s2 [data-row='1'] .num", { opacity: 0, x: -10, duration: 0.4, ease: "power2.out" }, 3.5);
+      tl.from("#s2 [data-row='1'] .req", { opacity: 0, x: -10, duration: 0.4, ease: "power2.out" }, 3.65);
+      tl.from("#s2 [data-row='1'] .wire", { opacity: 0, scale: 0.96, duration: 0.45, ease: "power3.out", transformOrigin: "50% 50%" }, 3.8);
+      tl.from("#s2 [data-row='1'] .ticket", { opacity: 0, x: 10, duration: 0.4, ease: "power2.out" }, 3.95);
+      // Row 2
+      tl.from("#s2 [data-row='2'] .num", { opacity: 0, x: -10, duration: 0.4, ease: "power2.out" }, 4.6);
+      tl.from("#s2 [data-row='2'] .req", { opacity: 0, x: -10, duration: 0.4, ease: "power2.out" }, 4.75);
+      tl.from("#s2 [data-row='2'] .wire", { opacity: 0, scale: 0.96, duration: 0.45, ease: "power3.out", transformOrigin: "50% 50%" }, 4.9);
+      tl.from("#s2 [data-row='2'] .ticket", { opacity: 0, x: 10, duration: 0.4, ease: "power2.out" }, 5.05);
+      // Row 3
+      tl.from("#s2 [data-row='3'] .num", { opacity: 0, x: -10, duration: 0.4, ease: "power2.out" }, 5.7);
+      tl.from("#s2 [data-row='3'] .req", { opacity: 0, x: -10, duration: 0.4, ease: "power2.out" }, 5.85);
+      tl.from("#s2 [data-row='3'] .wire", { opacity: 0, scale: 0.96, duration: 0.45, ease: "power3.out", transformOrigin: "50% 50%" }, 6.0);
+      tl.from("#s2 [data-row='3'] .ticket", { opacity: 0, x: 10, duration: 0.4, ease: "power2.out" }, 6.15);
+      tl.to("#s2", { opacity: 0, duration: 0.4, ease: "power2.in" }, 8.55);
+      tl.set("#s2", { opacity: 0 }, 9);
+
+      // ── Scene 3 — Stamp (9-12s) ──
+      tl.set("#s3", { opacity: 1 }, 9);
+      tl.fromTo("#s3-stamp", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.5)", transformOrigin: "50% 50%" }, 9.05);
+      tl.from("#s3 .stamp-label", { opacity: 0, y: 6, duration: 0.45, ease: "power2.out" }, 9.4);
+      tl.from("#s3 .stamp-line", { opacity: 0, y: 12, duration: 0.55, ease: "power3.out" }, 9.7);
+      tl.from("#s3 .stamp-meta", { opacity: 0, y: 8, duration: 0.5, ease: "power2.out" }, 10.2);
+      tl.to("#s3", { opacity: 0, duration: 0.4, ease: "power2.in" }, 11.55);
+      tl.set("#s3", { opacity: 0 }, 12);
+
+      // ── Scene 4 — Footer (12-15s) ──
+      tl.set("#s4", { opacity: 1 }, 12);
+      tl.from("#s4 .doc-title", { opacity: 0, y: 14, duration: 0.6, ease: "power3.out" }, 12.05);
+      tl.from("#s4-line", { scaleX: 0, duration: 0.85, ease: "power3.out" }, 12.55);
+      tl.from("#s4 .doc-meta", { opacity: 0, y: 8, duration: 0.55, ease: "power2.out" }, 12.9);
+      tl.to("#s4 .doc-meta", { opacity: 0.85, duration: 0.6 }, 14.4);
+    </script>
+  </body>
+</html>

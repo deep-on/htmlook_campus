@@ -1,3 +1,3 @@
 # Astro Starlight · CLI Tool Documentation
 
-acme CLI 명령 + flag 레퍼런스 — OSS docs 정통 패턴.
+Skiff CLI command + flag reference for the fictional **Skiff** workflow runner — the classic OSS docs pattern.

@@ -1,0 +1,45 @@
+LLM prompts for the mobile-news scenario — English ×5.
+Drop any of these into Claude / local Llama / Codex with the
+HTMLook MCP attached.
+
+The artifact is a portrait 9:16 (1080×1920) news card deck
+(×4) — TLDR, key data, quote pull, source link. Black + red
++ white palette. Newsroom voice.
+
+────────────────────────────────────────────────────────────────────
+English ×5
+────────────────────────────────────────────────────────────────────
+
+[1] Simple request (main)
+Read article.md (a 1500-word piece on the AI workflow market in
+2026). Generate a 4-card portrait deck, 1080×1920 each. Card 1
+is TLDR (3 bullets ≤12 words each). Card 2 is the key data
+point ("$8.4B" market size + 1-line context). Card 3 is the
+headline quote pull ("the moat is the workflow"). Card 4 is
+source + @workflowmag + Issue 47 + URL. Black #0a0a0a + red
+#dc2626 + white #fafafa palette per brand.txt. Lint clean,
+render.
+
+[2] Refinement — refine attribution
+The quote on card 3 reads stronger if the attribution is
+right-aligned under a horizontal red bar. Cite that card,
+move "— Sarah Lin · CTO, WorkflowKit" below a 200px red bar.
+Same wording.
+
+[3] Refinement — apply_edit four cards at once
+Use one apply_edit call to update all four cards: bump issue
+from "Issue 47" to "Issue 48", update the date from
+"April 2026" to "May 2026", and tighten card 1's third
+bullet from 12 words to 8.
+
+[4] Domain variant
+Same template, switch from AI workflow market to "the open-source
+LLM tooling stack in 2026". TLDR should cite Ollama, vLLM,
+llama.cpp; key data is the GitHub-stars delta YoY; quote pulls
+from a maintainer. Issue stays 47.
+
+[5] 16:9 landscape variant
+Re-author this composition for 1920×1080 landscape — the four
+cards become a 2×2 grid on a single frame (no swipe, all
+visible at once). Headline spans the top, source line spans
+the bottom. Keep the black + red + white palette.

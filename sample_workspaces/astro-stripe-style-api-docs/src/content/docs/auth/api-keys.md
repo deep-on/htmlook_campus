@@ -12,8 +12,8 @@ Dashboard → Developers → API keys → "Create new key". Secret keys begin `s
 ## Use
 
 ```bash
-curl https://api.acme.example/v1/orders \\
-  -H "Authorization: Bearer $ACME_KEY"
+curl https://api.vellum.example/v1/orders \\
+  -H "Authorization: Bearer $VELLUM_KEY"
 ```
 
 | key prefix | scope |
@@ -24,4 +24,4 @@ curl https://api.acme.example/v1/orders \\
 
 ## Rotate
 
-Rotate keys monthly. POST `/v1/keys/rotate` returns new key + 24h grace on old.
+Rotate keys monthly. POST `/v1/keys/rotate` returns a new key + 24h grace on the old one.

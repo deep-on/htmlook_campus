@@ -162,7 +162,11 @@
       ],
       "size_kb": 2,
       "path": "sample_workspaces/astro-design-system-docs/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -179,7 +183,11 @@
       ],
       "size_kb": 2,
       "path": "sample_workspaces/astro-developer-portal/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -196,7 +204,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/astro-faq-landing/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -213,7 +225,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/astro-product-changelog/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -230,7 +246,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/astro-rfc-docs/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -281,7 +301,11 @@
       ],
       "size_kb": 2,
       "path": "sample_workspaces/d2-data-mesh/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -298,7 +322,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/d2-disaster-recovery/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -315,7 +343,11 @@
       ],
       "size_kb": 2,
       "path": "sample_workspaces/d2-event-driven-arch/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -332,7 +364,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/d2-k8s-topology/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -349,7 +385,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/d2-saas-tenant-isolation/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -366,7 +406,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/d2-sequence-auth/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -383,7 +427,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/excalidraw-debugging-memo/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -400,7 +448,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/excalidraw-mind-map/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -417,7 +469,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/excalidraw-pre-mortem/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -434,7 +490,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/excalidraw-refactor-plan/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -451,7 +511,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/excalidraw-retro-board/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -468,7 +532,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/excalidraw-system-arch-sketch/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -485,7 +553,11 @@
       ],
       "size_kb": 3,
       "path": "sample_workspaces/excalidraw-system-design-interview/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -944,7 +1016,11 @@
       ],
       "size_kb": 2,
       "path": "sample_workspaces/manim-calculus-intro/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -961,7 +1037,11 @@
       ],
       "size_kb": 0,
       "path": "sample_workspaces/manim-eigenvalues/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -978,7 +1058,11 @@
       ],
       "size_kb": 3,
       "path": "sample_workspaces/manim-fourier-transform/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -995,7 +1079,11 @@
       ],
       "size_kb": 2,
       "path": "sample_workspaces/manim-graph-traversal/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1012,7 +1100,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/manim-matrix-mult/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1029,7 +1121,11 @@
       ],
       "size_kb": 2,
       "path": "sample_workspaces/manim-ml-fundamentals/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1046,7 +1142,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/manim-sorting-algos/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1080,7 +1180,11 @@
       ],
       "size_kb": 2,
       "path": "sample_workspaces/marimo-funnel-analyzer/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1097,7 +1201,11 @@
       ],
       "size_kb": 2,
       "path": "sample_workspaces/marimo-ml-feature-drift/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1114,7 +1222,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/marimo-nlp-exploration/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1148,7 +1260,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/marimo-retail-forecasting/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1165,7 +1281,11 @@
       ],
       "size_kb": 3,
       "path": "sample_workspaces/marimo-timeseries-anomaly/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1182,7 +1302,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/quarto-academic-syllabus/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1199,7 +1323,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/quarto-blog-post/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1233,7 +1361,11 @@
       ],
       "size_kb": 3,
       "path": "sample_workspaces/quarto-epidemiology-report/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1267,7 +1399,11 @@
       ],
       "size_kb": 3,
       "path": "sample_workspaces/quarto-meta-analysis/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1284,7 +1420,11 @@
       ],
       "size_kb": 3,
       "path": "sample_workspaces/quarto-policy-brief/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1301,7 +1441,11 @@
       ],
       "size_kb": 2,
       "path": "sample_workspaces/slidev-architecture-review/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1318,7 +1462,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/slidev-code-review/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1352,7 +1500,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/slidev-demo-day/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1369,7 +1521,11 @@
       ],
       "size_kb": 1,
       "path": "sample_workspaces/slidev-lightning-talk/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",
@@ -1386,7 +1542,11 @@
       ],
       "size_kb": 2,
       "path": "sample_workspaces/slidev-postmortem/",
-      "license": "CC0"
+      "license": "CC0",
+      "depths": [
+        "lite",
+        "rich"
+      ]
     },
     {
       "type": "workspace_seed",

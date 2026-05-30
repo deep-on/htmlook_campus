@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>WorkflowKit — 15s PR shipped teaser</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #0a0a0a;
+        font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+        color: #e6f4ea;
+      }
+      :root {
+        --green: #22c55e;
+        --cyan: #67e8f9;
+        --bg: #0a0a0a;
+        --ink: #ffffff;
+        --soft: rgba(225, 235, 230, 0.55);
+        --line: rgba(34, 197, 94, 0.18);
+      }
+
+      .clip {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        will-change: opacity, transform;
+      }
+      .scene-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 80px 120px;
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      /* Faint scanline / grid for terminal vibe — static, not animated */
+      .grid-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(0deg, transparent 0%, transparent 49.5%, rgba(34, 197, 94, 0.04) 50%, transparent 50.5%, transparent 100%) 0 0 / 100% 28px,
+          radial-gradient(ellipse at 50% 50%, rgba(34, 197, 94, 0.08) 0%, transparent 60%),
+          var(--bg);
+      }
+
+      /* ── Scene 1 — Intro tag (0-3s) ──────────────────────────── */
+      .intro {
+        text-align: center;
+      }
+      .intro .tag {
+        font-size: 30px;
+        letter-spacing: 8px;
+        color: var(--soft);
+        text-transform: uppercase;
+        font-weight: 500;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      }
+      .intro .tag .cur {
+        display: inline-block;
+        width: 14px;
+        height: 28px;
+        background: var(--cyan);
+        vertical-align: middle;
+        margin-left: 10px;
+        transform: translateY(-2px);
+      }
+      .intro .bar {
+        margin-top: 28px;
+        width: 280px;
+        height: 3px;
+        background: linear-gradient(90deg, var(--green), var(--cyan));
+        border-radius: 2px;
+        transform-origin: left center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      /* ── Scene 2 — Stat triple (3-8s) ────────────────────────── */
+      .stats {
+        text-align: center;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      }
+      .stats .row {
+        font-size: 140px;
+        font-weight: 800;
+        letter-spacing: -4px;
+        line-height: 1.05;
+      }
+      .stats .row + .row { margin-top: 8px; }
+      .stats .row .label {
+        color: var(--ink);
+      }
+      .stats .row .num {
+        color: var(--green);
+      }
+      .stats .row.muted {
+        font-size: 110px;
+        color: var(--cyan);
+      }
+      .stats .plus { color: var(--green); }
+      .stats .minus { color: #f87171; }
+      .stats .slash { color: var(--soft); margin: 0 14px; }
+
+      /* ── Scene 3 — Faux git graph (8-12s) ────────────────────── */
+      .graph-wrap {
+        width: 1100px;
+        height: 360px;
+        position: relative;
+      }
+      .graph-wrap svg {
+        width: 100%;
+        height: 100%;
+      }
+      .graph-label {
+        position: absolute;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 22px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .graph-label.feature {
+        top: 22px;
+        left: 60px;
+        color: var(--cyan);
+      }
+      .graph-label.main {
+        bottom: 22px;
+        left: 60px;
+        color: var(--soft);
+      }
+      .graph-label.merge {
+        top: 50%;
+        right: 60px;
+        transform: translateY(-50%);
+        color: var(--green);
+        font-size: 26px;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        font-weight: 700;
+      }
+      .graph-label.merge .check {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--green);
+        color: #0a0a0a;
+        font-size: 16px;
+        text-align: center;
+        line-height: 24px;
+        margin-right: 10px;
+        font-weight: 900;
+      }
+
+      /* ── Scene 4 — Outro (12-15s) ────────────────────────────── */
+      .outro {
+        text-align: center;
+      }
+      .outro .merged {
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", "Pretendard", system-ui, sans-serif;
+        font-size: 130px;
+        font-weight: 800;
+        letter-spacing: -4px;
+        line-height: 1;
+      }
+      .outro .merged .word {
+        display: inline-block;
+      }
+      .outro .merged .word.green {
+        background: linear-gradient(135deg, var(--green) 0%, var(--cyan) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .outro .repo {
+        margin-top: 38px;
+        font-size: 36px;
+        font-weight: 500;
+        color: var(--soft);
+        letter-spacing: 3px;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      }
+      .outro .repo .at {
+        color: var(--green);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="15"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- Static terminal grid — sits below every scene -->
+      <div class="grid-bg" id="grid-bg" aria-hidden="true"></div>
+
+      <!-- Scene 1 — intro tag (0-3s) -->
+      <div id="s1" class="clip" data-start="0" data-duration="3" data-track-index="1">
+        <div class="scene-content">
+          <div class="intro">
+            <div class="tag">PR #847<span class="cur" id="s1-cursor"></span></div>
+            <div class="bar"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 2 — stat triple (3-8s) -->
+      <div id="s2" class="clip" data-start="3" data-duration="5" data-track-index="1">
+        <div class="scene-content">
+          <div class="stats">
+            <div class="row" data-stat="0">
+              <span class="num">3</span>&nbsp;<span class="label">files changed</span>
+            </div>
+            <div class="row muted" data-stat="1">
+              PR&nbsp;#847
+            </div>
+            <div class="row" data-stat="2">
+              <span class="plus">+128</span><span class="slash">/</span><span class="minus">-42</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3 — faux git graph (8-12s) -->
+      <div id="s3" class="clip" data-start="8" data-duration="4" data-track-index="1">
+        <div class="scene-content">
+          <div class="graph-wrap">
+            <svg viewBox="0 0 1100 360" xmlns="http://www.w3.org/2000/svg">
+              <!-- main branch (horizontal, bottom) -->
+              <path id="g-main"
+                d="M 60 280 H 1040"
+                fill="none" stroke="rgba(225, 235, 230, 0.35)"
+                stroke-width="3" stroke-linecap="round" />
+              <!-- feature branch curves up, runs, then merges back -->
+              <path id="g-feature"
+                d="M 220 280 C 260 280, 280 100, 360 100 H 800 C 880 100, 900 280, 940 280"
+                fill="none" stroke="#67e8f9"
+                stroke-width="4" stroke-linecap="round" />
+              <!-- commit dots on feature branch -->
+              <circle class="g-dot" cx="420" cy="100" r="11" fill="#67e8f9" />
+              <circle class="g-dot" cx="580" cy="100" r="11" fill="#67e8f9" />
+              <circle class="g-dot" cx="740" cy="100" r="11" fill="#67e8f9" />
+              <!-- merge node -->
+              <circle id="g-merge" cx="940" cy="280" r="16" fill="#22c55e"
+                stroke="#0a0a0a" stroke-width="4" />
+            </svg>
+            <div class="graph-label feature">feature/query-jobs</div>
+            <div class="graph-label main">main</div>
+            <div class="graph-label merge"><span class="check">✓</span>merged</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 4 — outro (12-15s) -->
+      <div id="s4" class="clip" data-start="12" data-duration="3" data-track-index="1">
+        <div class="scene-content">
+          <div class="outro">
+            <div class="merged">
+              <span class="word">merged</span>
+              <span class="word">to</span>
+              <span class="word green">main</span>
+            </div>
+            <div class="repo">
+              <span class="at">github.com/</span>workflowkit/workflowkit
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+
+      // Cursor blink in scene 1 — drives via timeline so render is deterministic.
+      tl.to("#s1-cursor", { opacity: 0, duration: 0, repeat: 5, yoyo: true, repeatDelay: 0.25 }, 0.2);
+
+      // ── Scene 1 — intro (0-3 s) ──
+      tl.fromTo("#s1", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0);
+      tl.from("#s1 .tag", { opacity: 0, y: 12, duration: 0.6, ease: "power3.out" }, 0.15);
+      tl.from("#s1 .bar", { scaleX: 0, duration: 0.85, ease: "power3.out" }, 0.55);
+      tl.to("#s1", { opacity: 0, duration: 0.4, ease: "power2.in" }, 2.55);
+      tl.set("#s1", { opacity: 0 }, 3);
+
+      // ── Scene 2 — stat triple (3-8 s) ──
+      tl.set("#s2", { opacity: 1 }, 3);
+      tl.from("#s2 [data-stat='0']", { opacity: 0, y: 40, duration: 0.45, ease: "power3.out" }, 3.05);
+      tl.from("#s2 [data-stat='1']", { opacity: 0, y: 40, duration: 0.45, ease: "power3.out" }, 4.0);
+      tl.from("#s2 [data-stat='2']", { opacity: 0, y: 40, duration: 0.45, ease: "power3.out" }, 5.0);
+      // small pulse to hold the eye on the +/- numbers
+      tl.to("#s2 [data-stat='2']", { scale: 1.04, duration: 1.2, ease: "sine.inOut" }, 5.8);
+      tl.to("#s2", { opacity: 0, duration: 0.45, ease: "power2.in" }, 7.4);
+      tl.set("#s2", { opacity: 0 }, 8);
+
+      // ── Scene 3 — git graph (8-12 s) ──
+      tl.set("#s3", { opacity: 1 }, 8);
+      // main line just fades in
+      tl.from("#s3 #g-main", { opacity: 0, duration: 0.4, ease: "power2.out" }, 8.1);
+      // feature branch: stroke-dashoffset draw-on
+      tl.set("#s3 #g-feature", { strokeDasharray: 1400, strokeDashoffset: 1400 }, 8);
+      tl.to("#s3 #g-feature", { strokeDashoffset: 0, duration: 1.4, ease: "power2.inOut" }, 8.3);
+      // commit dots pop in sequence
+      tl.from("#s3 .g-dot", {
+        opacity: 0,
+        scale: 0,
+        duration: 0.35,
+        ease: "back.out(2)",
+        stagger: 0.18,
+        transformOrigin: "50% 50%",
+      }, 9.2);
+      // merge node + label
+      tl.from("#s3 #g-merge", {
+        opacity: 0,
+        scale: 0,
+        duration: 0.5,
+        ease: "back.out(1.8)",
+        transformOrigin: "50% 50%",
+      }, 10.1);
+      tl.from("#s3 .graph-label.feature", { opacity: 0, x: -12, duration: 0.4, ease: "power2.out" }, 8.4);
+      tl.from("#s3 .graph-label.main", { opacity: 0, x: -12, duration: 0.4, ease: "power2.out" }, 8.4);
+      tl.from("#s3 .graph-label.merge", { opacity: 0, x: 16, duration: 0.45, ease: "power3.out" }, 10.4);
+      tl.to("#s3", { opacity: 0, duration: 0.4, ease: "power2.in" }, 11.55);
+      tl.set("#s3", { opacity: 0 }, 12);
+
+      // ── Scene 4 — outro (12-15 s) ──
+      tl.set("#s4", { opacity: 1 }, 12);
+      tl.from("#s4 .merged .word", {
+        opacity: 0,
+        y: 30,
+        duration: 0.55,
+        ease: "power3.out",
+        stagger: 0.14,
+      }, 12.1);
+      tl.from("#s4 .repo", { opacity: 0, y: 14, duration: 0.6, ease: "power2.out" }, 12.85);
+      tl.to("#s4 .repo", { opacity: 0.85, duration: 0.6 }, 14.4);
+    </script>
+  </body>
+</html>

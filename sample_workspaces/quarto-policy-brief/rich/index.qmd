@@ -1,0 +1,106 @@
+---
+title: "AI Regulation: A Comparative Policy Brief"
+subtitle: "EU AI Act · NIST AI RMF · Korea AI Act · and two emerging regimes"
+author: "Meridian Policy Lab · Technology & Trade Practice"
+date: "2026-05-08"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    code-fold: true
+    theme: cosmo
+---
+
+## Executive Summary {.unnumbered}
+
+> **Recommendation.** Exporters of AI-enabled products to multiple markets
+> should adopt the EU AI Act risk-classification as their internal baseline by
+> Q3 2026. It is the most prescriptive regime, so building to it first reduces
+> rework when conforming to the lighter US (NIST RMF) and UK frameworks. Firms
+> selling only domestically in Korea should prioritize KR AI Act tier-2
+> documentation instead.
+
+The five regimes surveyed below differ sharply on whether compliance is
+mandatory, how heavy the penalties are, and how long a conformity assessment
+takes. The chart in the [Data](#data) section quantifies that last dimension —
+the *lead time* a vendor needs before a product can ship — which is often the
+binding constraint in practice, not the headline penalty.
+
+## Background
+
+"AI regulation" is not one thing. By mid-2026 the landscape splits into two
+philosophies:
+
+- **Prescriptive, mandatory regimes** that classify systems into risk tiers and
+  attach hard penalties — the EU AI Act, Korea's AI Act, and Canada's proposed
+  AIDA.
+- **Principles-based, voluntary frameworks** that offer a structured process
+  but no statutory penalty — the US NIST AI Risk Management Framework and the
+  UK's "pro-innovation" approach.
+
+A vendor selling across these markets cannot pick one. The practical question
+is which framework to build to *first* so the others come cheaply.
+
+## Data {#data}
+
+The comparison matrix lives in `data/regulation_matrix.csv`. The chunk below
+loads it with pandas, renders it as a table, and plots the conformity lead time
+each regime demands.
+
+```{python}
+#| label: tbl-matrix
+#| tbl-cap: "Regulatory comparison matrix (source: data/regulation_matrix.csv)"
+import pandas as pd
+
+reg = pd.read_csv("data/regulation_matrix.csv")
+reg
+```
+
+```{python}
+#| label: fig-leadtime
+#| fig-cap: "Conformity lead time before a product can ship (months)"
+import matplotlib.pyplot as plt
+
+ordered = reg.sort_values("conformity_lead_months", ascending=True)
+
+plt.figure(figsize=(6, 3.2))
+plt.barh(ordered["jurisdiction"], ordered["conformity_lead_months"])
+plt.xlabel("Lead time to conformity (months)")
+plt.tight_layout()
+plt.show()
+```
+
+The voluntary regimes (UK, NIST) clear in 2–3 months; the EU AI Act's
+high-risk conformity path is the longest at nine months. That gap, not the fine
+schedule, is what determines launch dates.
+
+## Findings
+
+1. **Mandatory ≠ slow, but prescriptive does.** The EU and Canada regimes carry
+   both the largest penalties and the longest lead times. Korea is mandatory yet
+   noticeably faster to clear.
+2. **Voluntary frameworks are becoming de-facto mandatory.** NIST RMF has no
+   statutory penalty, but it is increasingly written into US federal and
+   enterprise procurement contracts, so ignoring it costs deals rather than fines.
+3. **The EU is the binding baseline.** Because it is the strictest on every
+   axis, a product built to EU high-risk standards largely satisfies the others
+   with documentation mapping rather than re-engineering.
+
+## Recommendations
+
+| If your product is... | Then prioritize |
+|------------------------|-----------------|
+| EU-bound, high-risk    | EU AI Act conformity assessment — start ≥ 9 months out |
+| US federal-bound       | NIST RMF mapping + contract clauses |
+| KR domestic only       | KR AI Act tier-2 documentation |
+| Multi-jurisdiction     | EU AI Act baseline, then map to the rest |
+| Early-stage / UK pilot | UK pro-innovation self-assessment, revisit at scale |
+
+## Methodology
+
+Penalty figures are normalized to USD millions for comparability and are
+indicative ceilings, not expected fines. Lead-time estimates synthesize
+published conformity-assessment guidance and practitioner interviews; they
+describe a mid-sized vendor (~$10M ARR) without prior compliance tooling. The
+underlying values are editable in `data/regulation_matrix.csv` — re-render to
+update every table and chart.

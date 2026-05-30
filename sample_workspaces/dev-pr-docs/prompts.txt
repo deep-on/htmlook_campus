@@ -1,0 +1,51 @@
+LLM prompts for the dev-pr-docs scenario — English ×5.
+Drop any of these into your LLM (Claude, Codex, Llama via Ollama,
+Gemini, GPT, etc.) with the HTMLook MCP attached. The two named
+moves — find drift, draft patch — are [1] and [3].
+
+Copy each prompt verbatim. The LLM is reviewing PR #847 of the
+fictional WorkflowKit repo.
+
+────────────────────────────────────────────────────────────────────
+[1] Find drift (the main move)
+────────────────────────────────────────────────────────────────────
+You are reviewing PR #847 of WorkflowKit. The diff is open on the
+left pane and docs/api.md is open on the right. Use htmlook_cite to
+read both panes. Show me which lines in docs/api.md describe code
+that this diff changes — quote the doc line numbers and pair each
+one with the diff hunk that invalidates it. Do not propose a fix
+yet, just the drift map.
+
+────────────────────────────────────────────────────────────────────
+[2] Cite a stale paragraph
+────────────────────────────────────────────────────────────────────
+Look at lines L42 to L58 of docs/api.md (htmlook_cite right
+L42-L58). That paragraph still calls the method `listJobs(limit)`
+and returns a flat array. The diff renames it to `queryJobs(cursor,
+limit)` and returns a cursor envelope. Confirm the drift in one
+sentence and quote the exact stale wording.
+
+────────────────────────────────────────────────────────────────────
+[3] Draft a docs patch (the second main move)
+────────────────────────────────────────────────────────────────────
+Now draft the corrected version of L42-L58 inline with the new
+queryJobs signature, the cursor envelope shape, and a one-line
+note on backwards compatibility ("listJobs() is deprecated, removed
+in v0.9"). Return it as a unified diff against docs/api.md so I
+can htmlook_apply_edit it directly.
+
+────────────────────────────────────────────────────────────────────
+[4] Sweep the rest of the docs
+────────────────────────────────────────────────────────────────────
+Scan the rest of docs/api.md (everything outside L42-L58) for any
+other reference to listJobs, the old return shape, or pre-cursor
+paging language. Cite each one with htmlook_cite and note whether
+it needs the same treatment or just a name swap.
+
+────────────────────────────────────────────────────────────────────
+[5] Add a CHANGELOG entry
+────────────────────────────────────────────────────────────────────
+Open docs/CHANGELOG.md on the right pane (htmlook_set_pane right
+docs/CHANGELOG.md). Add an entry under the unreleased section for
+PR #847: rename, deprecation note, migration snippet. Keep the
+existing voice (terse, past tense, no marketing). Return as a diff.

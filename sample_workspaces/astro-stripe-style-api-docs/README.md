@@ -1,9 +1,9 @@
-<!-- Wave A · High Quality -->
 # Astro Starlight · Stripe-quality API Reference ⭐
 
-REST API 사이트 — endpoint 트리 + cURL/JS/Python 샘플 + 버전 관리.
+REST API site for the fictional **Vellum** commerce platform — endpoint tree + cURL/JS/Python samples + version management.
 
-## 시작
+## Getting started
+
 ```
 pnpm install
 pnpm dev   # http://localhost:4321

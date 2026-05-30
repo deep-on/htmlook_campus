@@ -1,0 +1,110 @@
+# Quillwind — data mesh: domain products + self-serve platform + governance
+# Layout: elk · render with the D2 pane (.d2 ↔ live SVG)
+
+direction: right
+
+sales: Sales domain {
+  style.fill: "#dbeafe"
+  raw: Salesforce · HubSpot {
+    shape: cylinder
+  }
+  product: "data product\norders / pipeline" {
+    shape: hexagon
+  }
+  port: output port (SQL + REST)
+  raw -> product: dbt models
+  product -> port: publish
+}
+
+product_dom: Product domain {
+  style.fill: "#fef3c7"
+  raw: clickstream events {
+    shape: queue
+  }
+  product: "data product\nfunnel / cohort" {
+    shape: hexagon
+  }
+  port: output port (SQL + REST)
+  raw -> product: stream → table
+  product -> port: publish
+}
+
+finance: Finance domain {
+  style.fill: "#dcfce7"
+  raw: GL · NetSuite {
+    shape: cylinder
+  }
+  product: "data product\nrevenue / COGS" {
+    shape: hexagon
+  }
+  port: output port (SQL + REST)
+  raw -> product: reconciled
+  product -> port: publish
+}
+
+ops: Ops domain {
+  style.fill: "#ede9fe"
+  raw: Datadog · Sentry {
+    shape: cylinder
+  }
+  product: "data product\nuptime / errors" {
+    shape: hexagon
+  }
+  port: output port (SQL + REST)
+  raw -> product: rollups
+  product -> port: publish
+}
+
+platform: Self-serve data platform {
+  style.fill: "#f8fafc"
+  ingest: ingestion + storage {
+    shape: cylinder
+  }
+  catalog: catalog + discovery
+  iam: access control
+  observ: SLA + lineage monitor
+}
+
+governance: Federated governance council {
+  shape: hexagon
+  label: "Federated governance\nschema · SLA · PII policy"
+}
+
+# Domains build on the platform
+sales.product -> platform.ingest: managed by
+product_dom.product -> platform.ingest: managed by
+finance.product -> platform.ingest: managed by
+ops.product -> platform.ingest: managed by
+
+# Output ports register in the shared catalog
+sales.port -> platform.catalog: register
+product_dom.port -> platform.catalog: register
+finance.port -> platform.catalog: register
+ops.port -> platform.catalog: register
+
+# Cross-domain consumption
+consumer: Cross-domain analytics {
+  shape: hexagon
+  label: "Cross-domain analytics\n(revenue per cohort)"
+}
+platform.catalog -> consumer: discover + grant
+finance.port -> consumer: revenue
+product_dom.port -> consumer: cohort
+
+# Governance applies org-wide standards (dashed policy edges)
+governance -> platform.iam: PII + access policy {
+  style.stroke-dash: 3
+}
+governance -> platform.observ: SLA targets {
+  style.stroke-dash: 3
+}
+
+note: |md
+  ## Four principles
+
+  1. **Domain ownership** — each team owns its product end-to-end.
+  2. **Data as a product** — discoverable, documented output ports.
+  3. **Self-serve platform** — Quillwind provides ingestion, catalog, IAM.
+  4. **Federated governance** — global schema / SLA / PII standards,
+     enforced by the platform, not by a central data team.
+|

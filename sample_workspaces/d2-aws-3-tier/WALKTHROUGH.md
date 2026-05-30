@@ -1,21 +1,21 @@
-# AWS 3-tier Architecture Walkthrough · 30-min Walkthrough
+# AWS 3-tier Architecture Walkthrough
 
-> 🌟 **Wave A · High Quality** — 마케팅 / 데모 자산. 직접 demo recording 가능.
+A short tour of the Northwind Retail 3-tier production architecture.
 
-## 1. 다이어그램 렌더
+## 1. Render the diagram
 ```bash
 brew install d2
 d2 --watch architecture.d2 architecture.svg
 ```
 
 ## 2. Pane pair
-- 좌: architecture.d2 편집
-- 우: HTMLook viewer 가 architecture.svg auto-reload
+- Left: edit architecture.d2
+- Right: the HTMLook viewer auto-reloads architecture.svg
 
-## 3. Region cite 시그니처
-1. Web tier 영역 캡처
-2. AI: "이 영역의 비용 추정 + 대안 제시"
-3. AI 가 cost-estimate 섹션 + alternative pattern 제안
+## 3. Region cite
+1. Capture the Web tier region.
+2. Ask the AI: "Estimate the cost of this region and suggest alternatives."
+3. The AI returns a cost-estimate section plus an alternative pattern.
 
 ## 4. Multi-target
-- internal app 으로 적응 시: ALB → NLB / 도메인 변경 일괄
+- Adapting to an internal app: swap ALB -> NLB and update the domain in one pass.

@@ -1,14 +1,14 @@
-<!-- Wave A · High Quality -->
 # Marimo · Customer Cohort Retention ⭐
 
-가상 SaaS 6개월 cohort retention heatmap + churn 가설 검증. Reactive sliders.
+A 6-month cohort retention heatmap and churn hypothesis check for a fictional
+SaaS (Northwind Labs), with reactive sliders.
 
-## 빠르게 시작
+## Quick start
 ```
 pip install marimo polars plotly
 marimo edit notebook.py
 ```
 
-## HTMLook 시그니처
-- pane pair: 좌 .py ↔ 우 marimo localhost:2718
-- xlsx_cite: events.parquet 의 코호트 셀 → 본문 cite
+## HTMLook signature moves
+- pane pair: notebook.py on the left ↔ marimo at localhost:2718 on the right
+- cite: select a cohort cell in the table and cite it back into your write-up

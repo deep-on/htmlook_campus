@@ -1,18 +1,18 @@
 # Conf Tech Talk Walkthrough · 30-min Walkthrough
 
-> 🌟 **Wave A · High Quality** — 마케팅 / 데모 자산. 직접 demo recording 가능.
+> 🌟 **Wave A · High Quality** — marketing / demo asset. Suitable for direct demo recording.
 
-## 1. 슬라이드 실행
+## 1. Run the slides
 ```bash
 pnpm install
 pnpm dev   # http://localhost:3030
 ```
 
 ## 2. Pane pair · live HMR
-- 좌: slides.md 편집
-- 우: localhost:3030
-- 변경 즉시 슬라이드 반영
+- Left: edit slides.md
+- Right: localhost:3030
+- Changes reflect in the slides instantly
 
-## 3. 발표용 빌드
-- `slidev export --output talk.pdf` — speaker notes 포함
+## 3. Presentation build
+- `slidev export --output talk.pdf` — includes speaker notes
 - `slidev build` — static site for archive

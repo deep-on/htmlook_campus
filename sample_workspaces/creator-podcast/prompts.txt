@@ -1,0 +1,43 @@
+Claude (or any MCP-attached LLM) prompts for the creator-podcast scenario — English ×5.
+Drop any of these into the Claude terminal tab inside HTMLook Pro
+with the HTMLook MCP attached. Copy verbatim.
+
+────────────────────────────────────────────────────────────────────
+English ×5
+────────────────────────────────────────────────────────────────────
+
+[1] Simple request (main)
+Read transcript.json. Find the most quotable 20-second moment about
+"the AI moat" — host says it once. Cite the transcript word range
+(htmlook_cite). Then write the kinetic-caption scenes into
+index.html: warm purple → magenta gradient background, host name
+"Maya Chen" + episode "The AI Moat Isn't the Model" fade in (3 s),
+the pull quote "the AI moat isn't the model — it's the workflow"
+animates word-by-word, host avatar circle in corner, end with the
+wordmark "@workflowcast · Ep. 47". Lint clean, then render.
+
+[2] Refinement — fix one off-cadence word
+Right-pane clip @ 0:11. The word "moat" pops in a beat too fast and
+clips the previous word's tail. Cite transcript words 8 to 14
+(htmlook_cite), retime the kinetic stagger from 0.06 → 0.11 on that
+word only. Keep the 20 s window. Re-render, the sidebar should
+auto-reload v2.
+
+[3] TTS + Whisper alignment variant
+Skip the host's recorded audio for the pull quote. Generate a Kokoro
+TTS for "the AI moat isn't the model — it's the workflow", run
+hyperframes transcribe to align word timestamps, then snap the
+kinetic captions to those new timestamps. Re-render with --audio.
+
+[4] Aspect-ratio variant — 9:16 portrait for TikTok
+Re-author the composition for 1080×1920 portrait. Stack the pull
+quote two words per line, scale type to 90 %, push the host avatar
++ wordmark to the bottom safe area (stay above the TikTok caption
+bar — bottom 320 px reserved). Same 15 s.
+
+[5] Cross-clip pull from the same episode
+Same transcript, but find a *second* quotable moment in the same
+episode about "shipping faster". Build a sibling composition
+clip2/index.html with the same brand palette but mirror the kinetic
+direction (right-to-left instead of left-to-right). Lint both, render
+both, sidebar should show two queued renders.

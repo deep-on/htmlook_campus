@@ -1,0 +1,56 @@
+LLM prompts for the press-editor scenario — English ×5.
+Drop any of these into your LLM (Claude, Codex, Llama via Ollama,
+Gemini, GPT, etc.) with the HTMLook MCP attached. The two named
+moves — quote cite by timestamp, paraphrase patch — are [1] and [3].
+
+Copy each prompt verbatim. The LLM is closing the cover story for
+Workflow Magazine Issue 47, working from interview.mp3 (a 22-minute
+recording with a Whisper word-level transcript.json) and a working
+article.md draft.
+
+────────────────────────────────────────────────────────────────────
+[1] Quote cite by timestamp (the main move)
+────────────────────────────────────────────────────────────────────
+You are closing the cover story for Workflow Magazine Issue 47. The
+left pane has interview.mp3 with a Whisper word-level transcript;
+the right pane is article.md. Use htmlook_cite to read the audio
+range 14:14 to 14:34. Return the verbatim quote, the speaker's
+identity, and the timestamp. Do not edit the article yet — just the
+cite card.
+
+────────────────────────────────────────────────────────────────────
+[2] Find the strongest quote about commoditised models
+────────────────────────────────────────────────────────────────────
+Scan transcript.json between 12:00 and 16:00 for the cleanest
+sentence on why the model is no longer a moat. Use htmlook_cite to
+pin the exact range. Return the quote, the timestamp range
+(MM:SS-MM:SS), and a one-line note on whether it works better as a
+verbatim pull or a paraphrase, given the section's voice.
+
+────────────────────────────────────────────────────────────────────
+[3] Paraphrase a quote into the draft (the second main move)
+────────────────────────────────────────────────────────────────────
+Take the quote you cited in [2] and write the polished paragraph
+that should sit at the top of the "What Actually Defends" section
+in article.md. Keep the voice editorial, not promotional. Record
+the timestamp inline as a cite anchor (e.g. "[14:14-14:34]") so the
+attribution survives later edits. Apply via htmlook_apply_edit and
+let the right pane reload.
+
+────────────────────────────────────────────────────────────────────
+[4] Pull the verbatim quote as a pull-quote
+────────────────────────────────────────────────────────────────────
+For the same range (14:14-14:34), prepare a verbatim pull-quote
+block for the print tear-sheet. Format it as a Markdown blockquote
+with the speaker name, role, and timestamp on a cite line below.
+Apply via htmlook_apply_edit to article.md right above the
+"What Actually Defends" header.
+
+────────────────────────────────────────────────────────────────────
+[5] Sweep the rest of the draft for stale attributions
+────────────────────────────────────────────────────────────────────
+Scan article.md for any quote that lacks a timestamp anchor or
+that paraphrases the speaker without a cite. Use htmlook_cite to
+find the matching range in transcript.json and propose either an
+inline cite anchor or a polish edit. Return as a list of
+htmlook_apply_edit-ready unified diffs.

@@ -1,0 +1,58 @@
+LLM prompts for the corp-deck scenario — English ×5.
+Drop any of these into your LLM (Claude, Codex, Llama via Ollama,
+Gemini, GPT, etc.) with the HTMLook MCP attached. The signature
+move — section-to-slide with speaker notes appended — is [1].
+
+Copy each prompt verbatim. The deck is the Q3 2026 review of the
+fictional company Apex Logistics Inc.
+
+────────────────────────────────────────────────────────────────────
+[1] Section-to-slide (the main move)
+────────────────────────────────────────────────────────────────────
+You are preparing the Apex Logistics Q3 2026 CFO deck. q3_report.md
+is open on the left pane and deck.html is open on the right. Use
+htmlook_cite to read the section "## KPIs" of q3_report.md. Take
+that section and write slide 2 of deck.html: a title, three
+bullets (one per KPI), and a placeholder for a chart. Then in the
+same round trip append a matching paragraph to speaker_notes.md
+under the heading "Slide 2 — KPIs". Use htmlook_apply_edit on both
+files. Do not change any other slide.
+
+────────────────────────────────────────────────────────────────────
+[2] KPI extract (single-section follow-up)
+────────────────────────────────────────────────────────────────────
+Read q3_report.md "## KPIs" again (htmlook_cite left q3_report.md
+KPIs). Pull only the headline numbers — Revenue, EBITDA, NPS — with
+their variance vs plan. Reply as a three-line markdown bullet list
+in the exact shape: "Revenue +12% vs plan" / "EBITDA +8% vs plan" /
+"NPS 67 (+4 pts vs plan)". No commentary, no qualifiers.
+
+────────────────────────────────────────────────────────────────────
+[3] Variance chart (the section-to-chart move)
+────────────────────────────────────────────────────────────────────
+Cite "## Variance" of q3_report.md. Generate slide 3 of deck.html
+as a bar chart placeholder: one bar per business unit, height
+proportional to variance vs plan, color emerald (#10b981) for
+positive variance and orange (#ea580c) for negative. Annotate each
+bar with its variance number. Append to speaker_notes.md under
+"Slide 3 — Variance" the one-sentence reason for each material
+miss.
+
+────────────────────────────────────────────────────────────────────
+[4] Speaker notes pass (cohesion sweep)
+────────────────────────────────────────────────────────────────────
+Open speaker_notes.md (htmlook_set_pane right speaker_notes.md).
+Read every "Slide N — …" heading. Rewrite each paragraph so the
+six paragraphs read as one continuous talk — keep the heading,
+keep the numbers, but smooth the seams. Return as a unified diff
+against speaker_notes.md so I can htmlook_apply_edit it.
+
+────────────────────────────────────────────────────────────────────
+[5] Next-quarter actions (the closing slide)
+────────────────────────────────────────────────────────────────────
+Cite q3_report.md "## Next Quarter". Generate slide 6 of deck.html
+titled "Next Quarter · 3 Actions": three bullets, each in the
+shape "Owner — verb — measurable target". Append to
+speaker_notes.md under "Slide 6 — Next Quarter" a short close
+that ties each action back to a Q3 number from KPIs or Variance.
+Keep it under sixty words.

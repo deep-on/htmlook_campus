@@ -1,9 +1,9 @@
 ---
-title: Acme API Reference
+title: Vellum API Reference
 description: REST API endpoints, authentication, and SDK quickstarts.
 template: splash
 hero:
-  tagline: 5분 안에 첫 API 호출
+  tagline: Your first API call in 5 minutes
   actions:
     - text: Quickstart
       link: /auth/api-keys/
@@ -19,4 +19,4 @@ hero:
 
 ## Versioning
 
-Current: `2026-05-08`. We pin via `Acme-Version` header. Breaking changes ship with 6mo deprecation.
+Current: `2026-05-08`. We pin via the `Vellum-Version` header. Breaking changes ship with a 6-month deprecation window.

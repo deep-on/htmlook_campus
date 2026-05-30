@@ -1,0 +1,13 @@
+study,year,n,rr,ci_low,ci_high,weight,prevention
+Abernathy,2017,3100,0.90,0.77,1.05,5.1,primary
+Smith,2018,4200,0.89,0.78,1.01,7.2,primary
+Lee,2019,8100,0.83,0.71,0.97,8.9,secondary
+Okonkwo,2019,5400,0.95,0.82,1.10,6.0,primary
+Chen,2020,12400,0.92,0.85,1.00,12.1,secondary
+Vasquez,2020,3900,0.97,0.83,1.13,5.4,primary
+Park,2021,6800,0.88,0.74,1.05,6.5,secondary
+Haugen,2021,4700,0.93,0.80,1.08,5.8,primary
+Sharma,2022,22000,0.93,0.88,0.99,14.8,primary
+Moreau,2022,5200,0.84,0.72,0.98,6.3,secondary
+Kim,2023,7500,0.86,0.74,1.00,7.4,secondary
+Delacroix,2024,6900,0.87,0.75,1.01,6.8,secondary

@@ -1,0 +1,139 @@
+# Tidewell Commerce — event-driven order platform
+# Layout: elk · render with the D2 pane (.d2 ↔ live SVG)
+
+direction: right
+
+clients: Storefront & mobile {
+  shape: cloud
+}
+
+# ─────────────────────────── Producers ───────────────────────────
+producers: Producers {
+  style.fill: "#eef6ff"
+
+  order_svc: order-service {
+    label: "order-service\n+ outbox table"
+    shape: hexagon
+  }
+  payment_svc: payment-service {
+    shape: hexagon
+  }
+  shipping_svc: shipping-service {
+    shape: hexagon
+  }
+
+  orders_db: orders DB {
+    shape: cylinder
+  }
+  cdc: Debezium CDC
+
+  order_svc -> orders_db: write order
+  orders_db -> cdc: WAL tail {
+    style.stroke-dash: 3
+  }
+}
+
+# ─────────────────── Schema registry (governance) ────────────────
+registry: Schema Registry {
+  shape: hexagon
+  style.fill: "#fef9c3"
+}
+
+# ─────────────────────── Event bus / broker ──────────────────────
+bus: Kafka cluster · 3 brokers {
+  style.fill: "#f7f8fa"
+
+  order_created: order.created {
+    shape: queue
+  }
+  payment_processed: payment.processed {
+    shape: queue
+  }
+  shipping_dispatched: shipping.dispatched {
+    shape: queue
+  }
+  payment_failed: payment.failed {
+    shape: queue
+  }
+}
+
+# ───────────────── Durable event store (replay) ──────────────────
+store: Event store {
+  label: "Event store\n(append-only log)"
+  shape: cylinder
+  style.fill: "#ede9fe"
+}
+
+# ───────────────────────────── DLQ ───────────────────────────────
+dlq: Dead-letter queue {
+  label: "dead-letter queue\n+ retry topology"
+  shape: queue
+  style.fill: "#fee2e2"
+}
+
+# ───────────── Consumers & downstream projections ────────────────
+consumers: Consumers & read models {
+  style.fill: "#ecfdf5"
+
+  saga: SAGA orchestrator {
+    shape: hexagon
+  }
+  fulfillment_view: Fulfillment read-model {
+    shape: cylinder
+  }
+  analytics: Analytics projection {
+    shape: cylinder
+  }
+  notifier: Notification service
+}
+
+# North-south ingress
+clients -> producers.order_svc: place order
+
+# Producers register & publish schemas
+producers.order_svc -> registry: register avro {
+  style.stroke-dash: 4
+}
+producers.cdc -> bus.order_created: publish
+
+# SAGA choreography (east-west)
+bus.order_created -> consumers.saga: consume
+consumers.saga -> producers.payment_svc: charge
+producers.payment_svc -> bus.payment_processed: emit
+bus.payment_processed -> consumers.saga: consume
+consumers.saga -> producers.shipping_svc: dispatch
+producers.shipping_svc -> bus.shipping_dispatched: emit
+
+# Compensation path
+producers.payment_svc -> bus.payment_failed: on_error
+bus.payment_failed -> consumers.saga: compensate
+consumers.saga -> producers.order_svc: cancel order {
+  style.stroke-dash: 3
+}
+
+# Durable replay — every topic mirrored to the event store
+bus.order_created -> store: archive {
+  style.stroke-dash: 3
+}
+bus.payment_processed -> store: archive {
+  style.stroke-dash: 3
+}
+store -> consumers.analytics: replay {
+  style.stroke-dash: 3
+}
+
+# Downstream projections / read models
+bus.shipping_dispatched -> consumers.fulfillment_view: project
+bus.order_created -> consumers.analytics: project
+bus.payment_processed -> consumers.notifier: notify
+
+# Poison messages → DLQ
+consumers.saga -> dlq: 3 retries exhausted
+dlq -> consumers.saga: manual redrive {
+  style.stroke-dash: 4
+}
+
+# Consumers validate against the registry
+consumers.saga -> registry: fetch schema {
+  style.stroke-dash: 4
+}

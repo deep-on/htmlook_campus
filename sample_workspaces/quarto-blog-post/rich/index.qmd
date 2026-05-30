@@ -1,0 +1,106 @@
+---
+title: "Why we moved our order pipeline from Kafka to SQS"
+subtitle: "A 6-week migration, the numbers behind it, and what we'd do again"
+author: "Lumen Commerce · Platform Engineering"
+date: "2026-05-08"
+categories: [infrastructure, postmortem, cost]
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    code-fold: true
+    theme: cosmo
+---
+
+## TL;DR
+
+We replaced a self-hosted 3-broker Kafka cluster with Amazon SQS + a thin
+consumer library. The result: **$1,500/month** lower infra spend, **~30%**
+less platform-engineer time, and **zero** customer-visible downtime during
+the cutover. Throughput cost was negligible for our volume.
+
+This post walks through how we decided, what the migration looked like, and
+the numbers we measured before and after.
+
+## Background
+
+Lumen Commerce runs a checkout platform for ~400 mid-market merchants. Every
+order fans out to a dozen downstream consumers — inventory, fulfilment,
+fraud scoring, receipts, analytics. For three years that fan-out rode on a
+self-managed Kafka cluster.
+
+Kafka was the right call at the start: we expected 100k+ messages/second and
+wanted replay. Three years later the reality was different.
+
+```{python}
+#| label: tbl-volume
+#| tbl-cap: "Actual vs. provisioned message volume (Apr 2026)"
+import pandas as pd
+
+df = pd.DataFrame({
+    "metric": ["peak msg/s", "median msg/s", "provisioned for", "replay used / mo"],
+    "value":  ["3,100", "740", "100,000", "2 times"],
+})
+df
+```
+
+We had provisioned for a scale we never reached, and paid for it in EC2,
+EBS, and — mostly — on-call attention.
+
+## The decision
+
+We scored three options against the dimensions that actually hurt us.
+
+| Option | Ops load | $/mo | Replay | Migration risk |
+|--------|----------|------|--------|----------------|
+| Stay on Kafka | High | 2,300 | Native | None |
+| Managed Kafka (MSK) | Medium | 2,050 | Native | Low |
+| **SQS + DLQ** | **Low** | **780** | **Re-drive** | **Medium** |
+
+Replay was the only thing Kafka clearly won — and we'd used it twice in a
+year. SQS's dead-letter-queue *re-drive* covered our real recovery need at a
+fraction of the operational cost.
+
+## The migration
+
+Six weeks, dual-write the whole way, zero downtime:
+
+1. **Weeks 1–2** — stand up SQS queues + a typed consumer wrapper
+2. **Weeks 3–4** — dual-write: produce to *both* Kafka and SQS, compare
+3. **Week 5** — shift consumers to SQS one domain at a time
+4. **Week 6** — stop the Kafka producers, decommission the cluster
+
+```{python}
+#| label: fig-latency
+#| fig-cap: "End-to-end order fan-out latency (p99, ms) across the cutover"
+#| code-fold: true
+import matplotlib.pyplot as plt
+
+weeks = ["W1", "W2", "W3", "W4", "W5", "W6"]
+p99   = [210, 208, 215, 205, 190, 188]   # ms
+
+plt.figure(figsize=(6, 3))
+plt.plot(weeks, p99, marker="o")
+plt.axhline(220, ls="--", alpha=0.4, label="old Kafka p99")
+plt.ylabel("p99 latency (ms)")
+plt.legend()
+plt.tight_layout()
+plt.show()
+```
+
+Latency actually improved slightly — fewer network hops, no consumer-group
+rebalances.
+
+## Lessons
+
+- **Managed beats self-hosted** unless you genuinely need 100k msg/s or
+  native replay. Most teams don't.
+- **DLQ ergonomics** matter as much as raw throughput. The re-drive console
+  saved us more incident time than Kafka replay ever did.
+- **Dual-write is cheap insurance.** Two weeks of comparing outputs turned a
+  scary cutover into a boring one.
+
+## What we'd do differently
+
+Start the consumer abstraction *before* the migration, not during it. Half of
+week 1 was untangling code that talked to Kafka directly.

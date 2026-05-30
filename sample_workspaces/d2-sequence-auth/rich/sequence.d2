@@ -1,0 +1,51 @@
+# Larkspur ID — OAuth 2.1 + OIDC authorization-code flow with PKCE
+# Layout: elk · render with the D2 pane (.d2 ↔ live SVG)
+
+shape: sequence_diagram
+
+user: User (browser)
+spa: Larkspur SPA {
+  shape: hexagon
+}
+authz: Larkspur ID · Authorization Server
+resource: Ledger API · Resource Server
+jwks: JWKS endpoint {
+  shape: cylinder
+}
+
+# --- Discovery + PKCE setup ---
+spa -> authz: GET /.well-known/openid-configuration
+authz -> spa: issuer, endpoints, supported scopes
+spa -> spa: generate code_verifier\n+ S256 code_challenge
+
+# --- Authorization request ---
+user -> spa: click "Sign in"
+spa -> authz: /authorize\nresponse_type=code, challenge, state, nonce
+authz -> user: render login + consent
+user -> authz: credentials + grant consent
+
+login_check: {
+  authz -> authz: validate password + MFA
+}
+
+authz -> spa: 302 redirect ?code=...&state=...
+
+# --- Token exchange ---
+spa -> authz: POST /token\ncode + code_verifier + client_id
+authz -> authz: verify challenge == SHA256(verifier)
+authz -> spa: access_token (JWT) + id_token + refresh_token
+
+# --- Resource access ---
+spa -> resource: GET /accounts\nAuthorization: Bearer <access_token>
+resource -> jwks: fetch signing keys (cached) {
+  style.stroke-dash: 3
+}
+jwks -> resource: RSA public keys
+resource -> resource: verify signature, exp, aud, scope
+resource -> spa: 200 accounts JSON
+
+# --- Silent refresh ---
+refresh: {
+  spa -> authz: POST /token\ngrant_type=refresh_token
+  authz -> spa: new access_token (rotated refresh_token)
+}

@@ -20,20 +20,20 @@ Create a new order.
 ### Example
 
 ```bash
-curl https://api.acme.example/v1/orders \\
-  -H "Authorization: Bearer $ACME_KEY" \\
+curl https://api.vellum.example/v1/orders \\
+  -H "Authorization: Bearer $VELLUM_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{"sku":"WIDGET-1","qty":3,"customer_id":"cus_abc"}'
 ```
 
 ```js
-const order = await acme.orders.create({
+const order = await vellum.orders.create({
   sku: 'WIDGET-1', qty: 3, customer_id: 'cus_abc',
 });
 ```
 
 ```python
-order = acme.orders.create(sku="WIDGET-1", qty=3, customer_id="cus_abc")
+order = vellum.orders.create(sku="WIDGET-1", qty=3, customer_id="cus_abc")
 ```
 
 ### Response · `201 Created`

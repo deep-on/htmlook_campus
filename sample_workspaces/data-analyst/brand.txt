@@ -1,0 +1,41 @@
+Pulse Analytics — fictional SaaS metrics product for the data-analyst scenario.
+
+Tagline:        Query, see, decide
+URL:            pulseanalytics.app
+Insight shown:  MRR up 18% MoM — driven by enterprise tier
+One-liner:      Cite the column. Patch the query. The chart redraws.
+
+Palette
+  --bg          #0c1c2e   dark navy, board-deck background
+  --bg-elev     #11263d   elevated surfaces, cards
+  --cyan        #22d3ee   primary brand (electric cyan)
+  --lime        #84cc16   annotation / call-out highlight
+  --ink         #f8fafc   soft white body text
+  --muted       #64748b   muted slate
+  --line        rgba(34, 211, 238, 0.18)   thin cyan rule
+  --warn        #f59e0b   row outlier
+  --good        #84cc16   positive delta
+
+Typography
+  Display       Inter / Pretendard, 700-800 weight, tight tracking
+  Mono (SQL,
+   numbers)     SF Mono / Menlo / ui-monospace, 1-2px tracking
+  Numerals      tabular-nums where possible, no comma-driven jiggle
+
+Motion language
+  Insight number lands with a brief motion-blur kinetic intro
+  (one chunk, never letter-stagger). Bar chart fills bottom-up
+  on a single ease-out. Annotation pulses once, holds. Supporting
+  metrics stagger in left-to-right. No background drift — the
+  navy stays still and analytical.
+
+Copy guardrails
+  Hook line:           "MRR +18% MoM" / "driven by enterprise tier"
+  Three metrics:       "NRR 124%" / "logo churn 1.8%" / "ACV $24.3k"
+  Outro mark:          "Pulse Analytics" wordmark + URL
+  Voice:               quiet, factual, board-deck tone. Past tense
+                       on results. No exclamation marks. No emoji.
+                       Numbers read as numbers, not adjectives.
+  Avoid:               "skyrocket", "explosive", "AI-powered",
+                       "magic" — this is for an analyst preparing
+                       a board readout, not a launch.

@@ -1,0 +1,63 @@
+# Finch platform — production EKS topology
+# Layout: elk · render with the D2 pane (.d2 ↔ live SVG)
+
+direction: right
+
+internet: Internet {
+  shape: cloud
+}
+
+alb: Application Load Balancer {
+  shape: hexagon
+}
+
+cluster: EKS · prod (us-east-1) {
+  style.fill: "#f7f8fa"
+
+  ns_edge: ns/edge {
+    gateway: "deploy/api-gateway · 4 pods"
+    web: "deploy/web · 6 pods"
+  }
+
+  ns_app: ns/app {
+    orders: "deploy/orders · 8 pods"
+    payments: "deploy/payments · 4 pods"
+    worker: "deploy/worker · 3 pods (HPA)"
+  }
+
+  ns_data: ns/data {
+    redis: "sts/redis · 3 replicas"
+    pg_proxy: "deploy/pgbouncer · 2 pods"
+  }
+}
+
+managed: Managed services {
+  style.fill: "#eef6ff"
+  rds: RDS Postgres (multi-AZ) {
+    shape: cylinder
+  }
+  sqs: SQS · order-events {
+    shape: queue
+  }
+  secrets: Secrets Manager
+}
+
+# North-south traffic
+internet -> alb: HTTPS
+alb -> cluster.ns_edge.gateway: ":443"
+alb -> cluster.ns_edge.web: ":443"
+
+# East-west
+cluster.ns_edge.gateway -> cluster.ns_app.orders: REST
+cluster.ns_edge.gateway -> cluster.ns_app.payments: REST
+cluster.ns_app.orders -> cluster.ns_data.redis: cache
+cluster.ns_app.orders -> cluster.ns_data.pg_proxy: sql
+cluster.ns_app.payments -> cluster.ns_data.pg_proxy: sql
+cluster.ns_app.orders -> managed.sqs: publish
+managed.sqs -> cluster.ns_app.worker: consume
+
+# Data plane
+cluster.ns_data.pg_proxy -> managed.rds: pooled
+cluster.ns_app.payments -> managed.secrets: fetch keys {
+  style.stroke-dash: 3
+}

@@ -1,0 +1,57 @@
+WorkflowMag 2026 — fictional tech publication for the
+mobile-news scenario. Long-form articles split into 4-card
+mobile decks (Threads / X / Substack 9:16).
+
+Tagline:        Long article, four cards.
+URL:            workflowmag.com
+One-liner:      Article in. Card deck out. Citable.
+
+Format
+  Frame         9:16 portrait, 1080×1920
+  Sections      header (publication + issue) → headline +
+                tldr (3 bullets) → key data point → quote
+                pull → source + handle
+  Footer        "@workflowmag · Issue 47" wordmark + URL
+
+Palette
+  --bg          #fafafa   off-white background, modern news vibe
+  --ink         #0a0a0a   near-black headline + body
+  --paper       #ffffff   card surface
+  --red         #dc2626   primary accent (issue pill, key data)
+  --red-2       #b91c1c   accent shadow / hover
+  --grey        #525252   secondary body
+  --line        #e5e5e5   divider, card border
+  --muted       #a3a3a3   metadata, captions
+
+Typography
+  Display       Inter / Pretendard, 800 weight, very tight
+                tracking. Headline is the visual hook.
+  Body          Inter / Pretendard, 500-600 weight. Tldr bullets
+                in monospace for that "ticker" feel.
+  Mono          SF Mono / Menlo, used for issue number, handle,
+                source line.
+
+Motion language
+  Entry         Header drops in from -10px with a subtle red
+                bar accent. Headline wipes left-to-right
+                (clip-path). Tldr bullets stagger 0.15s. Key
+                data number scales up with back.out. Quote
+                fades in with a left-border slide. Source line
+                dissolves last.
+  Pacing        Newsroom-calm. No bounce. Authoritative.
+
+Copy guardrails
+  Headline      One line, ≤8 words, present tense.
+  Tldr          3 bullets, each ≤12 words. Verb-led.
+  Key data      One number with a unit + 1-line context.
+  Quote         ≤20 words. Always cited (handle + role).
+  Source        @handle + Issue # + URL. Mono.
+  No emoji. No exclamation marks. Newsroom voice.
+
+Distinct from the four other personas
+  Where Macro Brief is navy+gold financial card and FlashCards
+  is clean cobalt+yellow study deck and RecipeCards is warm
+  beige+tomato kitchen card, WorkflowMag is black+red+white
+  modern news — a mobile editorial card, not a data card. The
+  headline wipe is the visual hook, the quote pull is the
+  emotional hook.

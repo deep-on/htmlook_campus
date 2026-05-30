@@ -1,0 +1,44 @@
+kid-coding — fictional first-Python scenario.
+
+Tagline:        Type. Run. Smile.
+Audience:       Elementary / middle-school first-time coders (KO)
+Project shown:  star.py — 15-line turtle star drawing
+One-liner:      내 첫 코드. 별 하나가 그려졌다.
+
+Palette
+  --bg          #fef3c7   warm cream, paper-like canvas
+  --cyan        #22d3ee   primary accent (turtle pen color)
+  --magenta     #ec4899   secondary accent (fill star)
+  --yellow      #fbbf24   tertiary accent (highlight, sun)
+  --ink         #1e293b   body text on cream
+  --soft        #64748b   muted slate for captions
+  --paper       #ffffff   pane background
+  --line        #fde68a   soft yellow rule lines
+
+Typography
+  Display       "Comic Neue", "M PLUS Rounded 1c", rounded sans-serif
+                — friendly, schoolbook feel. 700 weight on titles.
+  Mono (code)   ui-monospace, "SF Mono", Menlo. 16-18 px so the
+                kid can read it at arm's length.
+  Body          system-ui, Pretendard fallback for Korean.
+
+Motion language
+  Stars draw stroke-by-stroke (5 line segments, one per beat).
+  Colors stagger in like crayon swatches dropped onto paper.
+  No hard cuts — every transition fades or slides. The cream
+  background does NOT move (a kid needs a still page to read).
+  Cursor blink in the terminal is gentle (0.5 Hz, not strobe).
+
+Copy guardrails
+  Hook copy:           "Code on the left. See it run on the right."
+  Brand mark:          "Type. Run. Smile."
+  Voice:               warm, kind, plain Korean. Honorifics only
+                       when the kid asks (the LLM tutors a child).
+                       Short sentences. One concept per sentence.
+  Avoid:               jargon ("compile", "syntax error",
+                       "abstraction"), all caps, exclamation pile-ups,
+                       English idioms. Never say "wrong" — say
+                       "다시 해 볼까?".
+  Encouragement:       always end an explanation with a next-step
+                       challenge ("색깔 바꿔볼까?", "각도를 72 로
+                       바꿔보면 어떻게 될까?").

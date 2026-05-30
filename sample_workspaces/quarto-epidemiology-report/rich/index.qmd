@@ -1,0 +1,179 @@
+---
+title: "Weekly Respiratory Infection Surveillance · Wk 18, 2026"
+subtitle: "Riverdale National Health Surveillance Unit — sentinel network bulletin"
+author: "Riverdale NHSU · Field Epidemiology Section"
+date: "2026-05-08"
+categories: [surveillance, influenza, outbreak]
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    code-fold: true
+    theme: cosmo
+---
+
+## Executive Summary
+
+For **Week 18 (2026-04-27 to 2026-05-03)**, the national incidence of
+acute respiratory infection reached **142 cases per 100,000**, nearly
+three times the epidemic threshold of 50. Incidence has now stayed above
+threshold for four consecutive weeks. The time-varying reproduction number
+**R(t) = 1.42** (95% CI 1.28–1.58) indicates sustained transmission with a
+doubling time of roughly nine days.
+
+Transmission is geographically concentrated: the **Riverdale Metropolitan
+Area** alone accounts for 38% of the national caseload. Children aged 0–4
+carry the highest age-specific rate. Influenza A (H1N1) dominates the
+laboratory-confirmed mix.
+
+## Background
+
+The Riverdale sentinel surveillance network comprises **501 reporting
+sites** — primary-care clinics, emergency departments, and four reference
+laboratories — covering an estimated 64% of the national population.
+Sites report syndromic counts daily and submit a sampling fraction for
+laboratory confirmation. Population denominators are drawn from the 2025
+mid-year civil registry.
+
+The epidemic threshold of 50 per 100,000 is the upper bound of the
+Serfling-model baseline computed over the five preceding non-epidemic
+seasons. Crossing it triggers this enhanced weekly bulletin.
+
+## Methods
+
+- **Case definition.** ICD-10 J09–J18 (influenza and pneumonia) with
+  symptom onset in the reporting week.
+- **Surveillance type.** Passive syndromic reporting plus an active
+  laboratory-confirmation arm at the four reference labs.
+- **R(t) estimation.** Cori et al. instantaneous method over a sliding
+  7-day window, assuming a serial interval of mean 3.6 days (SD 1.8).
+- **Denominators.** 2025 civil-registry mid-year population, stratified
+  by the four standard age bands.
+
+## Data
+
+The weekly incidence series below is the raw input for every figure in
+this bulletin. The full eighteen-week record lives in
+`data/weekly_cases.csv`.
+
+```{python}
+#| label: tbl-recent
+#| tbl-cap: "Most recent eight weeks of national surveillance data"
+#| echo: false
+import pandas as pd
+
+cases = pd.read_csv("data/weekly_cases.csv")
+recent = cases.tail(8).copy()
+recent["over_threshold"] = recent["cases_per_100k"] > recent["threshold"]
+recent = recent.rename(columns={
+    "week": "Wk",
+    "cases_per_100k": "Cases/100k",
+    "threshold": "Threshold",
+    "r_t": "R(t)",
+    "hospitalizations": "Hosp.",
+    "deaths": "Deaths",
+    "over_threshold": "Above thr.",
+})
+recent
+```
+
+The epidemic curve makes the threshold breach and the sustained climb
+explicit. The dashed line marks the epidemic threshold; the shaded span
+highlights the four weeks of continuous exceedance.
+
+```{python}
+#| label: fig-epicurve
+#| fig-cap: "Epidemic curve — weekly incidence vs. epidemic threshold (cases per 100k)"
+#| code-fold: true
+import matplotlib.pyplot as plt
+
+over = cases[cases["cases_per_100k"] > cases["threshold"]]
+breach_start = int(over["week"].iloc[0]) if not over.empty else None
+
+fig, ax1 = plt.subplots(figsize=(7, 3.5))
+ax1.bar(cases["week"], cases["cases_per_100k"],
+        color="#c0392b", alpha=0.85, label="Cases/100k")
+ax1.axhline(50, ls="--", color="#34495e", label="Epidemic threshold")
+if breach_start is not None:
+    ax1.axvspan(14.5, 18.5, color="#f39c12", alpha=0.12,
+                label="4 weeks above threshold")
+ax1.set_xlabel("Epidemiological week")
+ax1.set_ylabel("Cases per 100,000")
+
+ax2 = ax1.twinx()
+ax2.plot(cases["week"], cases["r_t"], color="#2c3e50",
+         marker="o", ms=3, label="R(t)")
+ax2.axhline(1.0, ls=":", color="#7f8c8d")
+ax2.set_ylabel("R(t)")
+ax2.set_ylim(0.8, 1.6)
+
+ax1.legend(loc="upper left", fontsize=8)
+plt.tight_layout()
+plt.show()
+```
+
+Incidence and R(t) rise together through the season; R(t) never returns
+below the containment line of 1.0.
+
+## Results
+
+### Age stratification
+
+| Age group | Cases per 100k | Year-over-year |
+|-----------|---------------:|---------------:|
+| 0–4       | 198            | +24%           |
+| 5–17      | 156            | +18%           |
+| 18–64     | 132            | +14%           |
+| 65+       | 122            | +9%            |
+
+Children aged 0–4 are disproportionately affected, consistent with
+school- and daycare-driven transmission early in the wave.
+
+### Geographic distribution
+
+| Region                  | Cases/100k | Status        |
+|-------------------------|-----------:|---------------|
+| Riverdale Metropolitan  | 198        | exceeded ⚠    |
+| Greenfield County       | 168        | exceeded ⚠    |
+| Bayside District        | 134        | exceeded ⚠    |
+| Dunmore Region          | 102        | exceeded ⚠    |
+| All other regions       | 88         | approaching   |
+
+### Etiology
+
+Among laboratory-confirmed specimens this week: **Influenza A (H1N1) 63%**,
+RSV 22%, SARS-CoV-2 9%, and other respiratory viruses 6%. The H1N1
+dominance is unchanged from Week 16.
+
+## Discussion
+
+Four consecutive weeks above threshold, an R(t) holding near 1.4, and a
+nine-day doubling time together describe an outbreak that is still
+expanding rather than plateauing. The age profile — heaviest in the
+under-fives — points to schools and daycare as primary amplifiers, while
+the concentration in the Riverdale Metropolitan Area suggests a
+metropolitan seeding event that has not yet fully diffused outward.
+
+Hospitalizations have risen broadly in step with incidence (see the data
+table), but the case-fatality count remains low, consistent with a
+seasonal H1N1 signature rather than a novel-strain emergence.
+
+## Recommendations
+
+1. **Vaccination push** — current 65+ uptake is 47%; target 70% by Wk 20.
+2. **School advisory** — enhanced hygiene and symptomatic isolation in the
+   Riverdale Metropolitan Area and Greenfield County.
+3. **Hospital surge readiness** — national ICU reserve sits at 12%; trigger
+   the surge plan if Week 19 incidence exceeds 160 per 100,000.
+
+## Limitations
+
+Passive syndromic reporting under-ascertains mild cases, so the true
+incidence is higher than reported. Laboratory confirmation covers only a
+sampling fraction, and the R(t) estimate is sensitive to the assumed serial
+interval. Regional denominators predate the 2026 census update.
+
+## Next Update
+
+The Week 19 bulletin (covering 2026-05-04 to 2026-05-10) is scheduled for
+release on **2026-05-15**.

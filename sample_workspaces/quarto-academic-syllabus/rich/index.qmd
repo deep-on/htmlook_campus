@@ -1,0 +1,112 @@
+---
+title: "DATA 5310 · Introduction to Data Engineering"
+subtitle: "Building, testing, and operating data pipelines · Fall 2026"
+author: "Dr. Mara Okonkwo · School of Computing, Westbridge University"
+date: "2026-09-01"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    theme: litera
+---
+
+## Course Description
+
+Data engineering is the practice of moving data reliably from where it is
+produced to where it is used. This course teaches the full lifecycle: ingesting
+raw events, modeling and storing them, transforming them into analytics-ready
+tables, and operating the whole thing in production without paging someone at
+3 a.m.
+
+Students build a working pipeline incrementally across the semester — from a
+single ingestion script in Week 2 to a scheduled, tested, monitored ELT system
+by the final project. We favor open-source tooling (Python, dbt, Airflow,
+DuckDB, Postgres) so nothing here is locked to one vendor.
+
+**Prerequisites:** DATA 2100 (Intro to Python) and one database course, or
+instructor permission. Comfort with the command line and basic SQL is assumed.
+
+## Learning Outcomes
+
+By the end of the course, a successful student will be able to:
+
+1. Design a dimensional data model from messy source records and justify the
+   grain of each table.
+2. Implement idempotent batch ingestion and explain why idempotency matters
+   for retries and backfills.
+3. Write transformation logic as version-controlled, tested SQL using dbt.
+4. Orchestrate multi-step pipelines with explicit dependencies and schedules.
+5. Add data-quality tests and basic observability, and triage a failed run from
+   logs alone.
+
+## Weekly Schedule
+
+| Wk | Topic | Reading | Lab / Deliverable |
+|----|-------|---------|-------------------|
+| 1  | What is data engineering; the modern data stack | Reis & Housley Ch. 1–2 | Environment setup |
+| 2  | Ingestion patterns: batch vs. streaming | Kleppmann Ch. 11 | Lab 1 — ingest an API feed |
+| 3  | Storage & file formats (CSV, Parquet, columnar) | Reis & Housley Ch. 6 | – |
+| 4  | Relational modeling & normalization | Kimball Ch. 1–2 | Lab 2 — design a schema |
+| 5  | Dimensional modeling: facts & dimensions | Kimball Ch. 3 | – |
+| 6  | Transformation with SQL + dbt | dbt docs | Lab 3 — first dbt model |
+| 7  | Testing & data quality | Great Expectations guide | Midterm review |
+| 8  | **Midterm exam** | — | Midterm |
+| 9  | Orchestration concepts & DAGs | Airflow concepts | Lab 4 — schedule a DAG |
+| 10 | Incremental models & backfills | dbt incremental docs | – |
+| 11 | Observability, logging, alerting | Petrella, *Fundamentals of DQ* | – |
+| 12 | Cost & performance: partitioning, pruning | DuckDB docs | Project checkpoint |
+| 13 | Streaming primer: Kafka & change data capture | Kleppmann Ch. 11 | – |
+| 14 | Data contracts & governance | guest lecture | – |
+| 15 | Project work week | — | Office hours only |
+| 16 | **Final project presentations** | — | Final project due |
+
+## Grading
+
+Final grades are weighted as follows:
+
+| Component | Weight | Notes |
+|-----------|--------|-------|
+| Labs (4 × 8%) | 32% | Hands-on pipeline assignments |
+| Midterm exam | 18% | Modeling + ingestion concepts |
+| Final project | 35% | End-to-end ELT pipeline + write-up |
+| Participation & quizzes | 15% | In-class quizzes, lab peer review |
+
+Letter grades use the standard scale: A ≥ 93, A− ≥ 90, B+ ≥ 87, B ≥ 83,
+B− ≥ 80, C+ ≥ 77, C ≥ 73, and so on. There is no curve; if everyone earns an
+A, everyone gets an A.
+
+### Final Project
+
+Teams of two build an end-to-end pipeline against a public dataset of their
+choosing: ingestion → storage → dbt transformations → at least three
+data-quality tests → an orchestrated schedule. Deliverables are a running repo,
+a short architecture write-up, and a 10-minute presentation.
+
+## Policies
+
+**Late work.** Labs may be submitted up to 48 hours late for a 15% penalty.
+After 48 hours a lab earns no credit unless an extension was arranged in
+advance. The final project deadline is firm.
+
+**Collaboration.** Discussing concepts is encouraged. Labs are individual: the
+code you submit must be your own. The final project is explicitly a team effort.
+Cite any external code you adapt.
+
+**Generative AI.** You may use AI assistants for boilerplate and debugging, but
+you must be able to explain every line you submit. Unexplainable code is treated
+as uncited external work.
+
+**Accessibility.** Students needing accommodations should contact the
+Disability Services office in the first two weeks. Arrangements are confidential
+and applied without penalty.
+
+**Communication.** Course announcements go through the LMS. Email responses
+within one business day; for code questions, the course discussion forum is
+faster and helps your classmates too.
+
+## Office Hours
+
+| Who | When | Where |
+|-----|------|-------|
+| Dr. Okonkwo | Tue 14:00–16:00 | Carver Hall 312 |
+| TA — Priya Raman | Thu 10:00–12:00 | Lab Annex B / online |

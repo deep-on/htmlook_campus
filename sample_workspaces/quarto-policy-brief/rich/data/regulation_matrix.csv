@@ -1,0 +1,6 @@
+jurisdiction,risk_tiers,max_penalty_usd_m,effective_year,mandatory,conformity_lead_months
+EU AI Act,4,38.0,2026,Yes,9
+NIST AI RMF,0,0.0,2024,Voluntary,3
+KR AI Act,3,2.2,2026,Yes,6
+UK pro-innovation,0,0.0,2025,Voluntary,2
+Canada AIDA,3,18.0,2027,Yes,8

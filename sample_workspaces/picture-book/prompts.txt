@@ -1,0 +1,59 @@
+LLM prompts for the picture-book scenario — English ×5.
+Drop any of these into your LLM (Claude, Codex, Llama via Ollama,
+Gemini, GPT, etc.) with the HTMLook MCP attached. The two named
+moves — tune the rhythm, shorten the caption — are [1] and [2].
+
+Copy each prompt verbatim. The LLM is reviewing the working draft of
+"달팽이의 학교" — page 4 spread (펼침면). Left page = three Korean
+verse lines. Right page = an illustration placeholder with a small
+caption underneath.
+
+────────────────────────────────────────────────────────────────────
+[1] Tune the rhythm (the main move)
+────────────────────────────────────────────────────────────────────
+You are reading page 4 of "달팽이의 학교". The left page has three
+verse lines, the right page has a watercolor placeholder. Use
+htmlook_cite to read line 2 of book.md ("학교 가는 길에"). Korean
+children's verse on this page is meant to read at four syllables per
+line — count the syllables on line 2 and propose a tweak that gets
+to four while keeping the meaning. Return one option as a unified
+diff against book.md so I can htmlook_apply_edit it directly.
+
+────────────────────────────────────────────────────────────────────
+[2] Shorten the right-page caption
+────────────────────────────────────────────────────────────────────
+Look at the small caption under the right-page illustration ("갓 핀
+민들레") via htmlook_cite right caption. The publisher wants captions
+under five Korean characters when the illustration is wordless. The
+current caption is five but the rhythm with the verse on the facing
+page wants something a little softer — try one tweak that adds a
+warmth-syllable without inflating the line count. Return as a
+unified diff against spread.html.
+
+────────────────────────────────────────────────────────────────────
+[3] Suggest a watercolor illustration
+────────────────────────────────────────────────────────────────────
+The right-page placeholder for page 4 is currently a blank pastel
+wash. Read the three verse lines on the left page (htmlook_cite left
+L1-L3). Suggest one illustration brief that an illustrator could
+take to the easel: subject, mood, palette guardrails (mint and pink
+on ivory), and one small detail that ties back to the verse rhythm
+(four-syllable cadence). Keep it under 60 words.
+
+────────────────────────────────────────────────────────────────────
+[4] Pace the next page
+────────────────────────────────────────────────────────────────────
+Page 4 ends with "민들레 한 송이". The reader's eye is sitting on a
+single dandelion. What pacing should page 5 open with — same
+syllable count, more lines, or a wordless spread? Cite the rhythm
+on page 4 (htmlook_cite left L1-L3) and recommend one of the three,
+with one sentence on why.
+
+────────────────────────────────────────────────────────────────────
+[5] Hook for the next page
+────────────────────────────────────────────────────────────────────
+Open book.md on the right pane (htmlook_set_pane right book.md).
+Below the page-4 stanza, draft a one-line hook for page 5 that
+turns the camera away from the dandelion without losing the
+달팽이 walking rhythm. Match the existing voice (present tense,
+child-facing, no exclamation marks). Return as a unified diff.

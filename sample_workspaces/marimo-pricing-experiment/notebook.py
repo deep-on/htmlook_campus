@@ -14,7 +14,7 @@ def __():
 @app.cell
 def __(mo):
     mo.md("""
-    # Bayesian A/B Pricing · Acme Pro
+    # Bayesian A/B Pricing · Northwind Pro
 
     60-day experiment, 3 arms ($29 / $49 / $79), n=2,400. Posterior on conversion ×
     ARPU = expected revenue per visitor. Decision rule: pick the arm whose 89% HDI

@@ -1,0 +1,25 @@
+---
+title: "DATA 5310 · Introduction to Data Engineering · Fall 2026"
+author: "Dr. Mara Okonkwo · School of Computing, Westbridge University"
+date: "2026-09-01"
+format: html
+---
+
+## Course Description
+The full data-pipeline lifecycle — ingestion, modeling, transformation, and
+operating an ELT system in production.
+
+## Schedule
+| Wk | Topic | Reading | Lab |
+|----|-------|---------|-----|
+| 1 | The modern data stack | Reis & Housley Ch. 1–2 | Environment setup |
+| 2 | Ingestion: batch vs. streaming | Kleppmann Ch. 11 | Ingest an API feed |
+| 3 | Dimensional modeling | Kimball Ch. 3 | Design a schema |
+| 4 | Transformation with dbt | dbt docs | First dbt model |
+| ... | | | |
+
+## Grading
+- 4 labs (8% each) = 32%
+- midterm = 18%
+- final project = 35%
+- participation & quizzes = 15%

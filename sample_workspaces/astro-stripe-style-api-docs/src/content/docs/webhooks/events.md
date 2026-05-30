@@ -3,7 +3,7 @@ title: Webhook events
 sidebar: { order: 1 }
 ---
 
-We POST events to your endpoint with HMAC-SHA256 signature in `Acme-Signature` header.
+We POST events to your endpoint with an HMAC-SHA256 signature in the `Vellum-Signature` header.
 
 ## Event types
 

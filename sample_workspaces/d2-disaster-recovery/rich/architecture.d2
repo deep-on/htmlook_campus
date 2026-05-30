@@ -1,0 +1,86 @@
+# Halcyon Pay — active/passive disaster-recovery topology
+# Layout: elk · render with the D2 pane (.d2 ↔ live SVG)
+
+direction: right
+
+internet: Internet {
+  shape: cloud
+}
+
+dns: Route 53 · failover routing {
+  shape: hexagon
+  label: "Route 53\nfailover routing + health checks"
+}
+
+primary: us-east-1 · ACTIVE {
+  style.fill: "#dcfce7"
+  alb: Application Load Balancer {
+    shape: hexagon
+  }
+  asg: App ASG (4-8 pods)
+  redis: ElastiCache {
+    shape: queue
+  }
+  rds_p: RDS Aurora · writer {
+    shape: cylinder
+  }
+  alb -> asg: :443
+  asg -> redis: session
+  asg -> rds_p: read/write
+  ops: |md
+    **state:** hot · live traffic
+    **cost:** $$$ full fleet
+    **RTO 0 · RPO 0**
+  |
+}
+
+standby: us-west-2 · WARM STANDBY {
+  style.fill: "#fef9c3"
+  style.stroke-dash: 4
+  alb: ALB (idle) {
+    shape: hexagon
+    style.opacity: 0.6
+  }
+  asg: App ASG (0-2 pods) {
+    style.opacity: 0.6
+  }
+  rds_r: RDS Aurora · reader {
+    shape: cylinder
+  }
+  alb -> asg: :443
+  asg -> rds_r: read-only
+  ops: |md
+    **state:** warm · scaled down
+    **cost:** $ database only
+    **RTO 5 min · RPO < 30 s**
+  |
+}
+
+backup: Cross-region backup {
+  style.fill: "#eff6ff"
+  s3: S3 · versioned snapshots {
+    shape: cylinder
+  }
+}
+
+# North-south routing
+internet -> dns: HTTPS
+dns -> primary.alb: weight 100 · primary
+dns -> standby.alb: weight 0 · failover
+
+# Replication + backup
+primary.rds_p -> standby.rds_r: Aurora global replication\nlag < 30 s
+primary.rds_p -> backup.s3: continuous snapshot {
+  style.stroke-dash: 3
+}
+
+playbook: |md
+  ## Failover playbook (~5 min)
+
+  1. CloudWatch alarm: writer health check fails (0:00)
+  2. On-call SRE acks + confirms regional outage (1:00)
+  3. Promote `us-west-2` reader to writer (2:30)
+  4. Scale standby ASG 0 → 6 pods (4:00)
+  5. Route 53 health check flips weights to standby (4:30)
+  6. Smoke-test checkout, then open incident review (5:00)
+|

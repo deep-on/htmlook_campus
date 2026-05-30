@@ -1,0 +1,103 @@
+# Tessellate Cloud — multi-tenant isolation reference
+# Layout: elk · render with the D2 pane (.d2 ↔ live SVG)
+
+direction: right
+
+internet: Tenant requests {
+  shape: cloud
+}
+
+router: Tenant router {
+  shape: hexagon
+  label: "Tenant router\nresolve tenant_id from subdomain + JWT"
+}
+
+pool: POOL tier · shared everything {
+  style.fill: "#eef6ff"
+  app: shared app cluster {
+    label: "shared app cluster\n(tenant_id in every query)"
+  }
+  db: shared Postgres {
+    shape: cylinder
+    label: "shared Postgres\nrow-level security on tenant_id"
+  }
+  cache: shared Redis {
+    shape: queue
+    label: "shared Redis\nkey prefix: t:<id>:"
+  }
+  app -> db: RLS query
+  app -> cache: namespaced
+}
+
+hybrid: HYBRID tier · siloed schema {
+  style.fill: "#fff7ed"
+  app: pooled app cluster
+  db: Postgres · schema-per-tenant {
+    shape: cylinder
+  }
+  app -> db: SET search_path = tenant_x
+}
+
+silo: SILO tier · enterprise {
+  style.fill: "#f0fdf4"
+  tenant_a: Tenant Vireo {
+    app: app stack {
+      shape: hexagon
+    }
+    db: dedicated Postgres {
+      shape: cylinder
+    }
+    app -> db
+  }
+  tenant_b: Tenant Marlin {
+    app: app stack {
+      shape: hexagon
+    }
+    db: dedicated Postgres {
+      shape: cylinder
+    }
+    app -> db
+  }
+}
+
+control: Control plane {
+  style.fill: "#faf5ff"
+  registry: tenant registry {
+    shape: cylinder
+  }
+  keys: per-tenant KMS keys
+  meter: usage metering
+}
+
+# Routing fan-out
+internet -> router: HTTPS
+router -> pool.app: pool tenants
+router -> hybrid.app: mid-market tenants
+router -> silo.tenant_a.app: enterprise
+router -> silo.tenant_b.app: enterprise
+
+# Control-plane wiring
+router -> control.registry: lookup tier
+silo.tenant_a.db -> control.keys: envelope encrypt {
+  style.stroke-dash: 3
+}
+silo.tenant_b.db -> control.keys: envelope encrypt {
+  style.stroke-dash: 3
+}
+pool.app -> control.meter: emit usage
+hybrid.app -> control.meter: emit usage
+
+tradeoff: |||md
+  ## Picking a tier
+
+  | dimension          | pool   | hybrid | silo       |
+  |--------------------|--------|--------|------------|
+  | infra cost         | $      | $$     | $$$        |
+  | blast radius       | wide   | medium | per-tenant |
+  | noisy-neighbor risk| high   | medium | none       |
+  | compliance audit   | hard   | medium | easy       |
+  | per-tenant scaling | hard   | medium | trivial    |
+
+  Default new signups to **pool**; promote a tenant to **silo** when
+  contractual isolation or data-residency rules demand it.
+|||

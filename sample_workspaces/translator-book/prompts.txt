@@ -1,0 +1,58 @@
+LLM prompts for the translator-book scenario — English ×5.
+Drop any of these into your LLM (Claude, Codex, Llama via Ollama,
+Gemini, GPT, etc.) with the HTMLook MCP attached. The named moves
+are paragraph-by-paragraph translation passes.
+
+Copy each prompt verbatim. The LLM is translating Chapter 3 of
+"Hammers, Nails, and Other Lies" (E. R. Halloran) into Korean,
+with the source PDF on the left pane and the Korean draft on the
+right pane.
+
+────────────────────────────────────────────────────────────────────
+[1] Translate paragraph 1 (the first iteration)
+────────────────────────────────────────────────────────────────────
+You are translating Chapter 3 of "Hammers, Nails, and Other Lies"
+into Korean. The source PDF is open on the left pane; the Korean
+draft is open on the right pane (chapter-03.ko.md). Use
+htmlook_cite("left", "p.47, ¶1") to read the first paragraph
+verbatim. Translate it into Korean preserving the author's dry,
+mid-Atlantic voice. Reuse glossary terms from glossary.md. Return
+a unified diff against chapter-03.ko.md so I can htmlook_apply_edit
+it directly.
+
+────────────────────────────────────────────────────────────────────
+[2] Translate paragraph 2 (continue the iteration)
+────────────────────────────────────────────────────────────────────
+Now do paragraph 2. htmlook_cite("left", "p.47, ¶2") and read
+both the source and the Korean draft you just spliced. The
+paragraph is a transition into the workshop scene — match the
+register from paragraph 1, do not lean formal. Return a unified
+diff for chapter-03.ko.md.
+
+────────────────────────────────────────────────────────────────────
+[3] Translate paragraph 3 with footnotes
+────────────────────────────────────────────────────────────────────
+Paragraph 3 references "the maker's mark" — a culturally
+specific term. htmlook_cite("left", "p.47, ¶3") and translate.
+Add a translator's footnote (¹) explaining the term for Korean
+readers. Append the footnote text at the bottom of the page,
+hung-indent. Return a unified diff covering both the paragraph
+and the footnote.
+
+────────────────────────────────────────────────────────────────────
+[4] Glossary consistency sweep
+────────────────────────────────────────────────────────────────────
+Scan paragraphs 1-3 of chapter-03.ko.md for glossary drift. For
+every term in glossary.md, htmlook_cite the Korean draft and
+confirm the rendering matches the glossary entry. Flag any
+inconsistency with the line number and propose a fix. Do not
+rewrite anything yet — just the drift map.
+
+────────────────────────────────────────────────────────────────────
+[5] Read-through pass
+────────────────────────────────────────────────────────────────────
+Read paragraphs 1-3 in Korean only (right pane). Flag any
+sentence that reads as translation rather than native Korean
+prose. Propose minimal-touch rewrites that keep the source
+meaning but improve flow. Return as a single unified diff for
+chapter-03.ko.md so I can htmlook_apply_edit the whole pass.

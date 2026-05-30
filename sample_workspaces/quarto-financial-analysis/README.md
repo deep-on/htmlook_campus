@@ -1,32 +1,36 @@
-<!-- Wave A · High Quality -->
-# Quarto · DCF Valuation Report ⭐
+# Quarto · DCF Valuation Report
 
-5분 walkthrough 가능한 가상 SaaS (Acme · Series B) 의 5년 DCF 모델 + 본문이 xlsx 셀을 cite 해서 데이터 변경 시 prose 자동 갱신.
+A 5-year DCF model for a fictional SaaS company (Brightwave · Series B). The
+prose cites CSV cells, so changing the data updates the narrative automatically.
 
-## 시드 콘텐츠
+## Seed content
 
-- `index.qmd` — Executive summary + DCF 본문 + 민감도 분석 6 sections
-- `_quarto.yml` — HTML + PDF 양 format
-- `data/financial_model.csv` — 5년 가정 (revenue / margin / WACC / terminal)
-- `references.bib` — Damodaran / McKinsey 인용
+- `index.qmd` — executive summary + DCF body + sensitivity analysis (6 sections)
+- `_quarto.yml` — both HTML and PDF formats
+- `data/financial_model.csv` — 5-year assumptions (revenue / margin / WACC / terminal)
+- `references.bib` — Damodaran / McKinsey citations
 
-## 빠르게 시작
+## Quick start
 
 ```bash
 quarto preview index.qmd        # http://localhost:4848 live
 quarto render index.qmd --to pdf
 ```
 
-## HTMLook 활용
+## Working in HTMLook
 
-- **xlsx_cite ⭐**: financial_model.csv 의 셀을 본문에서 cite. 셀 변경 → 본문 EBITDA / EV 자동 갱신.
-- **Multi-target apply_edit**: 여러 sections 의 동일 회사명 일괄 변경 (Acme → 자기 회사).
-- **Pane pair**: 좌 .qmd ↔ 우 quarto preview (localhost:4848).
+- **Cell citation**: cite a `financial_model.csv` cell in the prose. Change the
+  cell and the EBITDA / EV figures in the body update.
+- **Multi-target edit**: rename the company across every section in one pass
+  (e.g. Brightwave → your own company).
+- **Pane pair**: `.qmd` on the left, `quarto preview` on the right
+  (localhost:4848).
 
-## 외부 의존
+## External dependencies
 
-- Quarto CLI · TinyTeX (PDF) · 한글 폰트 (Pretendard 권장)
+- Quarto CLI · TinyTeX (for PDF output)
 
-## 데이터 swap
+## Swapping in your data
 
-`data/financial_model.csv` 만 자기 회사 숫자로 교체 → render. WACC 는 default 8.5%, terminal growth 2%.
+Replace the numbers in `data/financial_model.csv` with your own and re-render.
+WACC defaults to 8.5%, terminal growth to 2%.

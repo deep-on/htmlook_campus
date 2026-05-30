@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Pulse Analytics — 15s April insight card</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #0c1c2e;
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", "Pretendard", system-ui, sans-serif;
+        color: #f8fafc;
+      }
+      :root {
+        --bg: #0c1c2e;
+        --bg-elev: #11263d;
+        --cyan: #22d3ee;
+        --lime: #84cc16;
+        --ink: #f8fafc;
+        --muted: #64748b;
+        --line: rgba(34, 211, 238, 0.18);
+        --warn: #f59e0b;
+      }
+
+      .clip {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        will-change: opacity, transform;
+      }
+      .scene-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 80px 120px;
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      /* Subtle grid backdrop — static, board-deck */
+      .grid-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(0deg, transparent 0%, transparent 49.6%, rgba(34, 211, 238, 0.05) 50%, transparent 50.4%, transparent 100%) 0 0 / 100% 64px,
+          linear-gradient(90deg, transparent 0%, transparent 49.6%, rgba(34, 211, 238, 0.04) 50%, transparent 50.4%, transparent 100%) 0 0 / 64px 100%,
+          radial-gradient(ellipse at 50% 40%, rgba(34, 211, 238, 0.10) 0%, transparent 65%),
+          var(--bg);
+      }
+
+      /* ── Scene 1 — Hook insight (0-3s) ───────────────────────── */
+      .hook {
+        text-align: center;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      }
+      .hook .eyebrow {
+        font-size: 30px;
+        letter-spacing: 8px;
+        color: var(--muted);
+        text-transform: uppercase;
+        font-weight: 500;
+        margin-bottom: 28px;
+      }
+      .hook .number {
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", "Pretendard", system-ui, sans-serif;
+        font-size: 220px;
+        font-weight: 800;
+        letter-spacing: -8px;
+        line-height: 1;
+        color: var(--cyan);
+      }
+      .hook .number .pct { color: var(--cyan); }
+      .hook .number .arrow { color: var(--lime); margin-right: 16px; }
+      .hook .driver {
+        margin-top: 32px;
+        font-size: 38px;
+        color: var(--ink);
+        font-weight: 500;
+        letter-spacing: 1px;
+      }
+      .hook .driver .accent {
+        color: var(--lime);
+        font-weight: 600;
+      }
+
+      /* ── Scene 2 — Bar chart + annotation (3-8s) ─────────────── */
+      .chart-card {
+        width: 1280px;
+        height: 620px;
+        background: var(--bg-elev);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 38px 48px;
+        position: relative;
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+      }
+      .chart-card .head {
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 18px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
+      .chart-card .title {
+        font-size: 36px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: var(--ink);
+        margin-bottom: 30px;
+      }
+      .chart-card .title .delta {
+        color: var(--lime);
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 28px;
+        margin-left: 16px;
+        font-weight: 600;
+      }
+      .chart-svg {
+        width: 100%;
+        height: 420px;
+      }
+      .chart-x-label {
+        fill: var(--muted);
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 16px;
+      }
+      .chart-y-axis {
+        stroke: var(--line);
+        stroke-width: 1;
+      }
+      .chart-y-tick {
+        fill: var(--muted);
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 13px;
+      }
+      .annot-line {
+        stroke: var(--lime);
+        stroke-width: 2;
+        stroke-dasharray: 4 6;
+      }
+      .annot-pill {
+        fill: var(--lime);
+      }
+      .annot-pill-text {
+        fill: #0c1c2e;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+        font-size: 16px;
+        font-weight: 700;
+      }
+
+      /* ── Scene 3 — Three supporting metrics (8-12s) ──────────── */
+      .metrics {
+        display: flex;
+        gap: 36px;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      }
+      .metric {
+        width: 360px;
+        height: 260px;
+        background: var(--bg-elev);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 32px 28px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .metric .label {
+        font-size: 18px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .metric .value {
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", "Pretendard", system-ui, sans-serif;
+        font-size: 96px;
+        font-weight: 800;
+        letter-spacing: -3px;
+        line-height: 1;
+        color: var(--ink);
+      }
+      .metric .value .unit {
+        font-size: 48px;
+        color: var(--cyan);
+        margin-left: 4px;
+      }
+      .metric .delta {
+        font-size: 18px;
+        color: var(--muted);
+        letter-spacing: 1px;
+      }
+      .metric .delta .up { color: var(--lime); }
+      .metric .delta .dn { color: var(--warn); }
+
+      /* ── Scene 4 — Brand outro (12-15s) ──────────────────────── */
+      .outro {
+        text-align: center;
+      }
+      .outro .wordmark {
+        font-size: 140px;
+        font-weight: 800;
+        letter-spacing: -4px;
+        line-height: 1;
+        background: linear-gradient(135deg, var(--cyan) 0%, var(--lime) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .outro .tag {
+        margin-top: 28px;
+        font-size: 32px;
+        color: var(--ink);
+        font-weight: 500;
+        letter-spacing: 4px;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      }
+      .outro .url {
+        margin-top: 32px;
+        font-size: 28px;
+        color: var(--muted);
+        letter-spacing: 3px;
+        font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      }
+      .outro .url .at { color: var(--cyan); }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="15"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- Static board-deck grid — sits below every scene -->
+      <div class="grid-bg" id="grid-bg" aria-hidden="true"></div>
+
+      <!-- Scene 1 — Hook insight (0-3s) -->
+      <div id="s1" class="clip" data-start="0" data-duration="3" data-track-index="1">
+        <div class="scene-content">
+          <div class="hook">
+            <div class="eyebrow">April · MRR readout</div>
+            <div class="number" id="s1-number">
+              <span class="arrow">▲</span>+18<span class="pct">%</span>
+            </div>
+            <div class="driver">MoM, driven by <span class="accent">enterprise tier</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 2 — Bar chart + annotation (3-8s) -->
+      <div id="s2" class="clip" data-start="3" data-duration="5" data-track-index="1">
+        <div class="scene-content">
+          <div class="chart-card">
+            <div class="head">MRR by tier · last 6 months</div>
+            <div class="title">Enterprise tier overtakes Pro<span class="delta">+18% MoM</span></div>
+            <svg class="chart-svg" viewBox="0 0 1180 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+              <!-- Y axis line -->
+              <line class="chart-y-axis" x1="80" y1="20" x2="80" y2="370" />
+              <line class="chart-y-axis" x1="80" y1="370" x2="1160" y2="370" />
+              <!-- Y ticks -->
+              <text class="chart-y-tick" x="50" y="375" text-anchor="end">0</text>
+              <text class="chart-y-tick" x="50" y="288" text-anchor="end">100k</text>
+              <text class="chart-y-tick" x="50" y="201" text-anchor="end">200k</text>
+              <text class="chart-y-tick" x="50" y="114" text-anchor="end">300k</text>
+              <text class="chart-y-tick" x="50" y="27" text-anchor="end">400k</text>
+
+              <!-- Six month groups, three bars each (free / pro / enterprise) -->
+              <!-- Nov -->
+              <g class="bar-group" data-mo="0">
+                <rect class="bar bar-free" x="120" y="370" width="32" height="0" fill="#64748b"/>
+                <rect class="bar bar-pro"  x="156" y="370" width="32" height="0" fill="#22d3ee"/>
+                <rect class="bar bar-ent"  x="192" y="370" width="32" height="0" fill="#84cc16"/>
+                <text class="chart-x-label" x="172" y="395" text-anchor="middle">Nov</text>
+              </g>
+              <!-- Dec -->
+              <g class="bar-group" data-mo="1">
+                <rect class="bar bar-free" x="282" y="370" width="32" height="0" fill="#64748b"/>
+                <rect class="bar bar-pro"  x="318" y="370" width="32" height="0" fill="#22d3ee"/>
+                <rect class="bar bar-ent"  x="354" y="370" width="32" height="0" fill="#84cc16"/>
+                <text class="chart-x-label" x="334" y="395" text-anchor="middle">Dec</text>
+              </g>
+              <!-- Jan -->
+              <g class="bar-group" data-mo="2">
+                <rect class="bar bar-free" x="444" y="370" width="32" height="0" fill="#64748b"/>
+                <rect class="bar bar-pro"  x="480" y="370" width="32" height="0" fill="#22d3ee"/>
+                <rect class="bar bar-ent"  x="516" y="370" width="32" height="0" fill="#84cc16"/>
+                <text class="chart-x-label" x="496" y="395" text-anchor="middle">Jan</text>
+              </g>
+              <!-- Feb -->
+              <g class="bar-group" data-mo="3">
+                <rect class="bar bar-free" x="606" y="370" width="32" height="0" fill="#64748b"/>
+                <rect class="bar bar-pro"  x="642" y="370" width="32" height="0" fill="#22d3ee"/>
+                <rect class="bar bar-ent"  x="678" y="370" width="32" height="0" fill="#84cc16"/>
+                <text class="chart-x-label" x="658" y="395" text-anchor="middle">Feb</text>
+              </g>
+              <!-- Mar -->
+              <g class="bar-group" data-mo="4">
+                <rect class="bar bar-free" x="768" y="370" width="32" height="0" fill="#64748b"/>
+                <rect class="bar bar-pro"  x="804" y="370" width="32" height="0" fill="#22d3ee"/>
+                <rect class="bar bar-ent"  x="840" y="370" width="32" height="0" fill="#84cc16"/>
+                <text class="chart-x-label" x="820" y="395" text-anchor="middle">Mar</text>
+              </g>
+              <!-- Apr (highlighted month) -->
+              <g class="bar-group" data-mo="5">
+                <rect class="bar bar-free" x="930"  y="370" width="32" height="0" fill="#64748b"/>
+                <rect class="bar bar-pro"  x="966"  y="370" width="32" height="0" fill="#22d3ee"/>
+                <rect class="bar bar-ent"  x="1002" y="370" width="32" height="0" fill="#84cc16"/>
+                <text class="chart-x-label" x="982" y="395" text-anchor="middle" fill="#84cc16">Apr</text>
+              </g>
+
+              <!-- Annotation pointing at April enterprise bar -->
+              <g id="annot" opacity="0">
+                <line class="annot-line" x1="1018" y1="120" x2="1018" y2="60" />
+                <rect class="annot-pill" x="900" y="20" width="240" height="40" rx="20" />
+                <text class="annot-pill-text" x="1020" y="46" text-anchor="middle">+18% MoM · enterprise</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 3 — Three supporting metrics (8-12s) -->
+      <div id="s3" class="clip" data-start="8" data-duration="4" data-track-index="1">
+        <div class="scene-content">
+          <div class="metrics">
+            <div class="metric" data-m="0">
+              <div class="label">NRR</div>
+              <div class="value">124<span class="unit">%</span></div>
+              <div class="delta"><span class="up">▲ +6 pts</span> vs Q1</div>
+            </div>
+            <div class="metric" data-m="1">
+              <div class="label">Logo churn</div>
+              <div class="value">1.8<span class="unit">%</span></div>
+              <div class="delta"><span class="up">▼ −0.3 pts</span> vs Q1</div>
+            </div>
+            <div class="metric" data-m="2">
+              <div class="label">ACV</div>
+              <div class="value">$24.3<span class="unit">k</span></div>
+              <div class="delta"><span class="up">▲ +$2.1k</span> vs Q1</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scene 4 — Brand outro (12-15s) -->
+      <div id="s4" class="clip" data-start="12" data-duration="3" data-track-index="1">
+        <div class="scene-content">
+          <div class="outro">
+            <div class="wordmark">Pulse Analytics</div>
+            <div class="tag">Query, see, decide</div>
+            <div class="url"><span class="at">pulseanalytics.app</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+
+      // Bar heights (px from y=370 baseline). Apr enterprise = the spike.
+      const bars = [
+        // Nov
+        { sel: "#s2 [data-mo='0'] .bar-free", h: 38  },
+        { sel: "#s2 [data-mo='0'] .bar-pro",  h: 88  },
+        { sel: "#s2 [data-mo='0'] .bar-ent",  h: 120 },
+        // Dec
+        { sel: "#s2 [data-mo='1'] .bar-free", h: 42  },
+        { sel: "#s2 [data-mo='1'] .bar-pro",  h: 110 },
+        { sel: "#s2 [data-mo='1'] .bar-ent",  h: 150 },
+        // Jan
+        { sel: "#s2 [data-mo='2'] .bar-free", h: 46  },
+        { sel: "#s2 [data-mo='2'] .bar-pro",  h: 132 },
+        { sel: "#s2 [data-mo='2'] .bar-ent",  h: 175 },
+        // Feb
+        { sel: "#s2 [data-mo='3'] .bar-free", h: 50  },
+        { sel: "#s2 [data-mo='3'] .bar-pro",  h: 158 },
+        { sel: "#s2 [data-mo='3'] .bar-ent",  h: 198 },
+        // Mar
+        { sel: "#s2 [data-mo='4'] .bar-free", h: 54  },
+        { sel: "#s2 [data-mo='4'] .bar-pro",  h: 184 },
+        { sel: "#s2 [data-mo='4'] .bar-ent",  h: 222 },
+        // Apr (the spike)
+        { sel: "#s2 [data-mo='5'] .bar-free", h: 58  },
+        { sel: "#s2 [data-mo='5'] .bar-pro",  h: 206 },
+        { sel: "#s2 [data-mo='5'] .bar-ent",  h: 290 },
+      ];
+
+      // ── Scene 1 — Hook (0-3s) ──
+      tl.fromTo("#s1", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 0);
+      tl.from("#s1 .eyebrow", { opacity: 0, y: 12, duration: 0.5, ease: "power3.out" }, 0.15);
+      tl.from("#s1-number", {
+        opacity: 0,
+        y: 40,
+        filter: "blur(20px)",
+        duration: 0.85,
+        ease: "power3.out",
+      }, 0.4);
+      tl.from("#s1 .driver", { opacity: 0, y: 16, duration: 0.55, ease: "power2.out" }, 1.05);
+      tl.to("#s1", { opacity: 0, duration: 0.4, ease: "power2.in" }, 2.55);
+      tl.set("#s1", { opacity: 0 }, 3);
+
+      // ── Scene 2 — Bar chart fill + annotation (3-8s) ──
+      tl.set("#s2", { opacity: 1 }, 3);
+      tl.from("#s2 .chart-card", { opacity: 0, scale: 0.96, y: 20, duration: 0.5, ease: "power3.out" }, 3);
+      tl.from("#s2 .head", { opacity: 0, x: -10, duration: 0.4, ease: "power2.out" }, 3.25);
+      tl.from("#s2 .title", { opacity: 0, x: -10, duration: 0.45, ease: "power2.out" }, 3.4);
+      tl.from("#s2 .chart-y-tick, #s2 .chart-y-axis", { opacity: 0, duration: 0.4, ease: "power2.out", stagger: 0.04 }, 3.5);
+      // Bars fill bottom-up: animate y down from 370 by h, then the height up to h.
+      bars.forEach((b, i) => {
+        const startAt = 3.7 + (Math.floor(i / 3) * 0.18);
+        tl.fromTo(b.sel,
+          { attr: { y: 370, height: 0 } },
+          { attr: { y: 370 - b.h, height: b.h }, duration: 0.55, ease: "power2.out" },
+          startAt + (i % 3) * 0.06);
+      });
+      // Annotation pulse — pin onto April enterprise spike
+      tl.fromTo("#annot", { opacity: 0, attr: { transform: "translate(0, -8)" } }, { opacity: 1, attr: { transform: "translate(0, 0)" }, duration: 0.5, ease: "back.out(1.6)" }, 6.4);
+      tl.fromTo("#annot .annot-pill", { attr: { width: 240 } }, { duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 1, scale: 1.04, transformOrigin: "1020px 40px" }, 6.9);
+      tl.to("#s2", { opacity: 0, duration: 0.4, ease: "power2.in" }, 7.55);
+      tl.set("#s2", { opacity: 0 }, 8);
+
+      // ── Scene 3 — Supporting metrics (8-12s) ──
+      tl.set("#s3", { opacity: 1 }, 8);
+      tl.from("#s3 [data-m='0']", { opacity: 0, y: 30, duration: 0.5, ease: "power3.out" }, 8.05);
+      tl.from("#s3 [data-m='1']", { opacity: 0, y: 30, duration: 0.5, ease: "power3.out" }, 8.3);
+      tl.from("#s3 [data-m='2']", { opacity: 0, y: 30, duration: 0.5, ease: "power3.out" }, 8.55);
+      // Subtle settle pulse on the cyan unit glyphs
+      tl.from("#s3 .metric .value", { opacity: 0, duration: 0.4, stagger: 0.18, ease: "power2.out" }, 8.4);
+      tl.to("#s3", { opacity: 0, duration: 0.45, ease: "power2.in" }, 11.5);
+      tl.set("#s3", { opacity: 0 }, 12);
+
+      // ── Scene 4 — Brand outro (12-15s) ──
+      tl.set("#s4", { opacity: 1 }, 12);
+      tl.from("#s4 .wordmark", { opacity: 0, y: 30, duration: 0.7, ease: "power3.out" }, 12.1);
+      tl.from("#s4 .tag", { opacity: 0, y: 14, duration: 0.55, ease: "power2.out" }, 12.65);
+      tl.from("#s4 .url", { opacity: 0, y: 14, duration: 0.55, ease: "power2.out" }, 13.0);
+    </script>
+  </body>
+</html>

@@ -1,31 +1,31 @@
 ---
-title: acme run
+title: skiff run
 sidebar: { order: 1 }
 ---
 
-Execute the workflow defined in `acme.yaml`.
+Execute the workflow defined in `skiff.yaml`.
 
 ## Synopsis
 
 ```
-acme run [--config <path>] [--env <name>] [--verbose] [--dry-run]
+skiff run [--config <path>] [--env <name>] [--verbose] [--dry-run]
 ```
 
 ## Description
 
-Reads `acme.yaml` (or path passed via `--config`), resolves dependencies, and executes steps in order. Failures abort by default; use `--continue-on-error` to override.
+Reads `skiff.yaml` (or path passed via `--config`), resolves dependencies, and executes steps in order. Failures abort by default; use `--continue-on-error` to override.
 
 ## Examples
 
 ```bash
 # basic
-acme run
+skiff run
 
 # explicit config + verbose
-acme run --config=prod.yaml --verbose
+skiff run --config=prod.yaml --verbose
 
 # dry run (print what would happen)
-acme run --dry-run
+skiff run --dry-run
 ```
 
 ## Output

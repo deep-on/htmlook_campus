@@ -1,0 +1,58 @@
+FlashCards 2026 — fictional study deck publisher for the
+student-flashcard scenario. Portrait single-page flashcard decks
+for mobile (Anki-style swipeable, 9:16 vertical).
+
+Tagline:        Mobile flashcards from your notes.
+URL:            flashcards.study
+One-liner:      Notes in. Cards out. Swipe-ready.
+
+Format
+  Frame         9:16 portrait, 1080×1920
+  Sections      header → card stack (Q→A flip) → progress dots → wordmark
+  Footer        "FlashCards · 신경계" wordmark + count
+
+Palette
+  --bg          #fafafa   clean off-white background
+  --ink         #0f172a   deep ink slate (body, questions)
+  --cobalt      #2563eb   primary accent (Q label, swipe arrows)
+  --cobalt-2    #1d4ed8   accent shadow / hover
+  --highlight   #fbbf24   formula-yellow highlight (key terms)
+  --muted       #64748b   secondary text (labels, A label)
+  --line        #e2e8f0   divider, card border
+  --card        #ffffff   card surface
+  --green       #16a34a   correct/got-it
+  --red         #dc2626   review again
+
+Typography
+  Display       Inter / Pretendard, 800 weight, used for the
+                question on each card. Tight tracking.
+  Body          Inter / Pretendard, 500-600 weight. Answer body
+                fades in after the card flip. Highlight key terms
+                in formula-yellow.
+  Mono (label)  SF Mono / Menlo / ui-monospace, used for the "Q"
+                / "A" badge on each card.
+
+Motion language
+  Entry         Header pill drops in from -10px. Cards fan in
+                stack-style with 4-card stagger (top card forward,
+                others tilted 2-3°). Q→A flip is a 0.5s rotateY,
+                back face revealed mid-flip. Swipe-out is
+                translateX + rotateZ + opacity.
+  Pacing        Calm, exam-prep tone. No bounce. Confident but
+                quiet — the deck is the message.
+
+Copy guardrails
+  Question      One sentence, ≤14 words. Always end with "?"
+  Answer        One sentence, ≤18 words. Cite the source noun
+                ("뉴런 = 세포체 + 축삭 + 수상돌기" — anchored to
+                notes.md).
+  Header        Subject + section ("FlashCards · 신경계").
+  No emoji. No exclamation marks. Pure exam-prep voice — concise,
+  citable, swipeable.
+
+Distinct from the four other personas
+  Where Macro Brief is navy+gold portrait financial card and
+  Vault Local AI runs amber+coral kinetic teaser, FlashCards is
+  clean cobalt+yellow study deck — a mobile exam-prep card, not
+  a launch teaser. The Q→A flip is the visual hook, the swipe
+  motion is the pedagogical hook.
