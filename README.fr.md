@@ -9,7 +9,7 @@
 > l'installation → premier fichier → BYOM → édition → commande → save-as-skill
 > → profils livrés → écriture de votre propre profil.
 
-Ce dépôt suit le **HTMLook Pro v1.0.15** (sortie le 2026-05-25).
+Ce dépôt suit le **HTMLook Pro v1.0.16** (sortie le 2026-05-26).
 L'application desktop est sur [htmlook.app](https://htmlook.app), avec 14
 jours d'essai gratuit. BYOM (Bring-Your-Own-Model) signifie zéro marge sur
 les tokens — Claude · GPT · Gemini · DeepSeek · Mistral · Together · Groq ·
@@ -157,7 +157,7 @@ Procédure de vérification + liste des fausses affirmations corrigées :
 
 ## État
 
-Ce dépôt suit le **HTMLook Pro v1.0.15** (sortie le 2026-05-25)
+Ce dépôt suit le **HTMLook Pro v1.0.16** (sortie le 2026-05-26)
 en tant que matériel pédagogique vivant. Il bascule en public en même temps
 que la v1.0 GA, moment où l'endpoint catalogue (`htmlook.app/catalog`)
 commencera à recharger à chaud les URLs raw de ce dépôt (cache 24 h).
