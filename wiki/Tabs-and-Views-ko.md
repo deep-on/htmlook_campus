@@ -65,44 +65,6 @@ Markdown / HTML 탭은 마지막 키 입력 1.5 s 후 자동 저장. 상태바�
 
 HTMLook 이 launch 시 워크스페이스별 마지막 탭 셋 복원 가능. Settings → General → *On launch* → *마지막 세션 복원* (기본) 또는 *빈 상태 시작*.
 
-## 멀티 윈도우 탭 모드 (v1.0.14+)
-
-두 단계의 탭이 공존합니다:
-
-- **파일 탭** (위 내용) — 한 윈도우 안의 파일별 탭.
-- **윈도우 탭** — 툴바 위쪽의 Chrome 스타일 strip. 각 탭이 *워크스페이스 한 개*.
-
-**Settings → General → Window tabs → Tab mode** 를 켭니다. 열린 모든 Pro 윈도우가 포커스된 윈도우의 rect 로 정렬되고, 그 후로 드래그 / 리사이즈 / +Add 가 peer 들에게 전파됩니다.
-
-### 윈도우 탭 strip
-
-- 툴바 위에 위치.
-- 가로로 드래그해서 **순서 변경**. 탭이 어디에 놓일지 삽입 gap 으로 표시.
-- 오른쪽 클릭으로 *Focus · Move-out · Close*.
-- Hover 하면 전체 워크스페이스 경로가 적힌 preview 카드.
-- **Color tabs** 가 켜져 있으면 (Settings → General) 각 탭이 워크스페이스에서 파생된 hue 로 칠해집니다.
-
-### 단축키
-
-| 동작 | 단축키 |
-|---|---|
-| N 번째 윈도우로 점프 | `⌘⌃1` … `⌘⌃9` |
-| 다음 윈도우 cycle | `⌘⌃`` |
-| 윈도우 여기에 쌓기 (포커스된 rect 로 모두) | `⌘⌃S` |
-| 빈 워크스페이스 윈도우 추가 | strip 의 `+` 버튼 |
-
-### Move-out (↗)
-
-탭 오른쪽 클릭 → *Move-out* — 윈도우가 현재 rect 에서 +60 / +60 px 만큼 이동해 stack 에서 시각적으로 분리됩니다. 한 워크스페이스만 옆에 두고 싶을 때.
-
-### 저장된 레이아웃
-
-현재 윈도우 셋 (rect + color 포함) 을 이름 붙여 저장: **Settings → General → Window tabs → Save current layout**. 같은 패널에서 복원. 복원 시 *Layout restore* 모드 (*Exact* — 같은 rect, 또는 *Cascade 30 px* — anchor 에서 부채꼴로 펼침) 를 존중합니다.
-
-### Tab mode 끄기
-
-토글 해제 시 윈도우들이 60 px 간격으로 자동 cascade 되어 시각적으로 분리됩니다 (수동 드래그 불필요).
-
 ## 다음
 
 - [사이드바 →](Sidebar-ko.md)

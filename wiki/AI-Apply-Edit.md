@@ -74,7 +74,7 @@ The single argument is `html` (string). The selection must exist on the active v
 }
 ```
 
-`create_file` does not enforce the workspace-root check the way `apply_edit` does — pass an absolute or workspace-relative path; callers are responsible for keeping it inside the workspace if that's what they want.
+`create_file` is not constrained by the workspace `path_guard` the way `apply_edit` is — pass an absolute or workspace-relative path; callers are responsible for keeping it inside the workspace if that's what they want.
 
 ## When the find string isn't reliable
 
@@ -114,50 +114,6 @@ If you're sharing the workspace with other agents (see [Multi-agent collaboratio
 | `refused: HTMLook is in Free Viewer mode…` | Trial expired | Surface to the user; can't bypass |
 | `rate-limited: <tool_name> burst exhausted. Retry after ~<ms> ms.` | Per-tool token bucket | Back off the specified ms |
 | `DEPENDENCY_MISSING:{…}` | External tool absent | Special — see [Errors & recovery](AI-Errors-Recovery.md) |
-
-## Consent modal — what the user sees (v1.0.14+)
-
-Before HTMLook lets your `apply_edit` (or any other write tool) execute, the user sees a consent modal:
-
-```
-● AI wants to: modify the active document
-  Find-and-replace edit on the current file
-  Scope        foo.md
-  Category     write
-  Reversible   Yes — ⌘Z undoes this
-  ▸ Raw call — htmlook_apply_edit
-  [Deny] [Allow once] [Always (workspace)] [Always (everywhere)]
-```
-
-Buttons:
-
-| Choice | Effect |
-|---|---|
-| **Deny** | Reject this call only |
-| **Allow once** | Allow this call only |
-| **Always (workspace)** | Allow future calls of this tool in this workspace |
-| **Always (everywhere)** | Allow future calls of this tool in every workspace |
-
-### How tools map to categories
-
-The modal classifies the tool you're calling into one of six categories. The user's *Settings → AI → Permissions → Tool permission defaults* picks how each category behaves *before* the modal even appears:
-
-| Category | Default | Examples |
-|---|---|---|
-| **Read** | Auto | `active_file`, `outline`, `workspace_files` |
-| **Capture** | Auto | `capture_viewport`, `capture_rect`, `region_current_png` |
-| **Navigate** | Auto | `scroll_to`, `jump_to_line`, `focus_tab` |
-| **Annotate** | Ask | `pdf_highlight_add`, `pdf_comment_add` |
-| **Write** | Ask | `apply_edit`, `replace_in_active`, `create_file` |
-| **Run** | Ask | terminal paste / spawn, `voice_record_start` |
-
-Effect: ~70 % fewer modals in a normal session (reads / captures / navigations clear automatically). Risky tools — `voice_delete`, `close_tab`, `pdf_highlight_clear` — always ask regardless of category default.
-
-### What you (the agent) should *not* do
-
-- Don't retry a denied call. Treat *Deny* as a hard signal and stop, surface to the user.
-- Don't loop on `rate-limited:` errors faster than the suggested back-off (see Failure modes above).
-- Don't try to bypass the consent prompt with a different tool — the categories are based on the underlying action, not the tool name.
 
 ## Next
 

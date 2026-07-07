@@ -4,8 +4,6 @@
 
 HTMLook Pro opens whatever you point it at — HTML, Markdown, PDF, images, video, audio memos, terminal sessions, AI chat — and treats the folder on your disk as the source of truth. No cloud lock-in, no sync layer to learn. The app is the lens.
 
-**Recent updates** · [What's new in v1.0.18](Whats-New-v1.0.18.md) (2026-06-13) · [v1.0.17](Whats-New-v1.0.17.md) (2026-05-31) · [v1.0.16](Whats-New-v1.0.16.md) (2026-05-26)
-
 This wiki has **two tracks**. Pick the one that fits how you'll use HTMLook Pro:
 
 ---
